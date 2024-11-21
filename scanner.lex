@@ -44,7 +44,8 @@ continue                                                                        
 {letter}{letterdigit}*                                                              return ID;
 ([1-9]+{digit}*)b|0b                                                                return NUM_B;
 ([1-9]+{digit}*)|0                                                                  return NUM;
-([0]+{digit}*)|0												                    return ERROR;
 \"({string}|\\{escape}|\\{hex})*\"                                                  return STRING;
+\"({string}|\\{escape}|\\{hex})*\\(.)*\"                                            return ERROR3;
+\"({string}|\\{escape}|\\{hex})*                                                    return ERROR2;
 {whitespace}                                                                        ;
-.                                                                                   return ERROR;
+.                                                                                   return ERROR1;

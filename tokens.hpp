@@ -31,7 +31,9 @@ enum tokentype {
     NUM,
     NUM_B,
     STRING,
-    ERROR
+    ERROR1,
+    ERROR2,
+    ERROR3
 };
 
 extern int yylineno;
