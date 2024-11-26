@@ -1,1 +1,1 @@
-ERROR: Undefined escape sequence 
+ERROR: Unclosed string

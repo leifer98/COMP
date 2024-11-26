@@ -6,7 +6,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Directory containing the tests
-TEST_DIR="tests"
+TEST_DIR="lastTests/tests"
 
 # Iterate over all test input files
 for test_input in $TEST_DIR/*.in; do
@@ -14,10 +14,10 @@ for test_input in $TEST_DIR/*.in; do
     test_output="${TEST_DIR}/${test_number}.in.out"
     test_result="${TEST_DIR}/${test_number}.in.res"
     test_diff="${TEST_DIR}/${test_number}.diff"
-    
+
     # Run the test
-    ../hw1 < "$test_input" >& "$test_result"
-    
+    ./hw1 < "$test_input" >& "$test_result"
+
     # Compare the results
     if diff "$test_result" "$test_output" > /dev/null; then
         echo -e "Test ${test_number} ${GREEN}PASSED${NC}"

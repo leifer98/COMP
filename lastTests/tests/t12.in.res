@@ -146,4 +146,11 @@
 28 SC ;
 29 ID printf
 29 LPAREN (
-ERROR: Undefined escape sequence \\
+29 STRING This\is"an
+examplefor	escapellljQQWc
+29 RPAREN )
+29 SC ;
+30 RETURN return
+30 NUM 11
+30 SC ;
+32 RBRACE }

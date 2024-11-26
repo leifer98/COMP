@@ -1,11 +1,6 @@
-9c9,22
-< ERROR: Undefined escape sequence \"
+14c14,22
+< ERROR: Undefined escape sequence  
 ---
-> 4 STRING Completely legitimate " escape here!
-> 4 RPAREN )
-> 4 SC ;
-> 5 ID print
-> 5 LPAREN (
 > 5 STRING More 
 >  
 >  legitimate " \ 	 escapes!

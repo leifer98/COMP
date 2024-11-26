@@ -1,33 +1,33 @@
 #include "tokens.hpp"
 #include "output.hpp"
 #include <string>
-
+#include <iostream>
 std::string handleStringToken(const char *yytext)
 {
     std::string processedText = std::string(yytext);
 
+    // Replace escape sequences with corresponding characters and handle non-valid ones
+    int arrayLength = 6;
+    std::string escapeStrings[arrayLength] = {"\\\\", "\\\"", "\\n", "\\r", "\\t", "\\0"};
+    char replaceCharacters[arrayLength] = {'\\', '\"', '\n', '\r', '\t', '\0'};
+
     // Replace escape sequences with corresponding characters
     size_t pos;
-    while ((pos = processedText.find("\\t")) != std::string::npos)
-    {
-        processedText.replace(pos, 2, "\t");
+    for (int i=0; i<arrayLength; i++) {
+        while ((pos = processedText.find(escapeStrings[i])) != std::string::npos)
+        {
+            processedText.replace(pos, 2, std::string(1, replaceCharacters[i]));
+        }
     }
-    while ((pos = processedText.find("\\n")) != std::string::npos)
-    {
-        processedText.replace(pos, 2, "\n");
-    }
-    while ((pos = processedText.find("\\r")) != std::string::npos)
-    {
-        processedText.replace(pos, 2, "\r");
-    }
-
+    
     // Handle ASCII escape sequences (\xDD)
     while ((pos = processedText.find("\\x")) != std::string::npos)
     {
         // Ensure there are two characters following \x
-        if (pos + 3 >= processedText.length())
+        if (pos + 3 >= processedText.length()-1)
         {
-            output::errorUndefinedEscape("\\x"); // Handle incomplete sequence
+            const char* sequence = processedText.substr(pos + 1, processedText.length() - 1 - (pos + 1)).c_str();
+            output::errorUndefinedEscape(sequence); // Handle incomplete sequence
             return "";
         }
 
@@ -35,7 +35,7 @@ std::string handleStringToken(const char *yytext)
         const char *hexValue = processedText.substr(pos + 2, 2).c_str();
         if (!isxdigit(hexValue[0]) || !isxdigit(hexValue[1]))
         {
-            output::errorUndefinedEscape(processedText.substr(pos, 4).c_str()); // Handle invalid \xDD
+            output::errorUndefinedEscape(processedText.substr(pos + 1, 3).c_str()); // Handle invalid \xDD
             return "";
         }
 
@@ -45,25 +45,12 @@ std::string handleStringToken(const char *yytext)
         // Check if the character is printable
         if (!isprint(asciiChar))
         {
-            output::errorUndefinedEscape(processedText.substr(pos, 4).c_str()); // Handle non-printable \xDD
+            output::errorUndefinedEscape(processedText.substr(pos + 1, 3).c_str()); // Handle non-printable \xDD
             return "";
         }
 
         // Replace \xDD with the corresponding ASCII character
         processedText.replace(pos, 4, std::string(1, asciiChar));
-    }
-
-    // Handle undefined escape sequences
-    while ((pos = processedText.find("\\")) != std::string::npos)
-    {
-        // Check if it is not a known escape sequence
-        if (processedText[pos + 1] != 't' && processedText[pos + 1] != 'n' &&
-            processedText[pos + 1] != 'r' && processedText[pos + 1] != 'x')
-        {
-            const char sequence[3] = {processedText[pos], processedText[pos + 1], '\0'}; // Capture undefined sequence
-            output::errorUndefinedEscape(sequence);                                      // Call output::errorUndefinedEscape
-            return "";
-        }
     }
 
     // Remove enclosing quotes
@@ -158,15 +145,15 @@ int main()
             std::string textWithoutQuotes = handleStringToken(yytext);
             output::printToken(yylineno, token, textWithoutQuotes.c_str());
         }
-        else if (token == ERROR1)
+        else if (token == ERROR_UNKNOWN_CHAR)
         {
             output::errorUnknownChar(yytext[0]);
         }
-        else if (token == ERROR2)
+        else if (token == ERROR_UNCLOSED_STRING)
         {
             output::errorUnclosedString();
         }
-        else if (token == ERROR3)
+        else if (token == ERROR_UNDEF_ESCAPE)
         {
             handleSequenceError(yytext);
         }

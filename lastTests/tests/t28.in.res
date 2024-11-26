@@ -1,1 +1,1 @@
-ERROR: Undefined escape sequence \x01
+ERROR: Undefined escape sequence x01

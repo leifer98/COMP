@@ -31,9 +31,9 @@ enum tokentype {
     NUM,
     NUM_B,
     STRING,
-    ERROR1,
-    ERROR2,
-    ERROR3
+    ERROR_UNKNOWN_CHAR,
+    ERROR_UNCLOSED_STRING,
+    ERROR_UNDEF_ESCAPE
 };
 
 extern int yylineno;

@@ -1,6 +1,2 @@
-3c3,5
-< ERROR: Undefined escape sequence \0
----
-> 1 STRING Hello world 
-> 1 RPAREN )
-> 1 SC ;
+3d2
+< 1 STRING "Hello world \0 shouldn't print this"

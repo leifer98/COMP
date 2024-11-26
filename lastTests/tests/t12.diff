@@ -1,5 +1,5 @@
 149c149,156
-< ERROR: Undefined escape sequence \\
+< ERROR: Undefined escape sequence i
 ---
 > 29 STRING This\is"an
 > examplefor	escapellljQQWc
