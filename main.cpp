@@ -2,6 +2,43 @@
 #include "output.hpp"
 #include <string>
 #include <iostream>
+
+bool isValidHex(std::string hexSequence, char& hexAsChar) {
+    // Validate length:
+    if (hexSequence.length() != 2) {
+        return false;
+    }
+
+    // Check it's really hex digits:
+    if (!isxdigit(hexSequence[0]) || !isxdigit(hexSequence[1])) {
+        return false;
+    }
+
+    // Convert the hexadecimal string to a char:
+    char asciiChar = static_cast<char>(std::stoi(std::string(hexSequence), nullptr, 16));
+
+    // Check if the character is valid (printable or whitespace character):
+    bool isValid = false;
+
+    std::string whitespaceCharacters = "\n\r\t ";
+    for (int i=0; i<whitespaceCharacters.length(); i++) {
+        if (asciiChar == whitespaceCharacters[i]) {
+            isValid = true;
+        }
+    }
+    if (isprint(asciiChar)) {
+        isValid = true;
+    }
+    
+    if (!isValid) {
+        return false;
+    }
+
+    // If we got here, the hex is valid:
+    hexAsChar = asciiChar;
+    return true;
+}
+
 std::string handleStringToken(const char *yytext)
 {
     std::string processedText = std::string(yytext);
@@ -23,46 +60,17 @@ std::string handleStringToken(const char *yytext)
     // Handle ASCII escape sequences (\xDD)
     while ((pos = processedText.find("\\x")) != std::string::npos)
     {
-        // Ensure there are two characters following \x
-        if (pos + 3 >= processedText.length()-1)
-        {
-            const char* sequence = processedText.substr(pos + 1, processedText.length() - 1 - (pos + 1)).c_str();
-            output::errorUndefinedEscape(sequence); // Handle incomplete sequence
-            return "";
-        }
-
-        // Extract the two hexadecimal digits
-        const char *hexValue = processedText.substr(pos + 2, 2).c_str();
-        if (!isxdigit(hexValue[0]) || !isxdigit(hexValue[1]))
-        {
-            output::errorUndefinedEscape(processedText.substr(pos + 1, 3).c_str()); // Handle invalid \xDD
-            return "";
-        }
-
-        // Convert the hexadecimal string to a char
-        char asciiChar = static_cast<char>(std::stoi(std::string(hexValue), nullptr, 16));
-
-        int whitespaceLength = 4;
-        char whitespaceCharacters[whitespaceLength] = {'\n', '\r', '\t', ' '};
-        // Check if the character is printable or whitespace character
-        bool isValid = false;
-        for (int i=0; i<whitespaceLength; i++) {
-            if (asciiChar == whitespaceCharacters[i]) {
-                isValid = true;
-            }
-        }
-        if (isprint(asciiChar)) {
-            isValid = true;
-        }
-
-        if (!isValid)
-        {
-            output::errorUndefinedEscape(processedText.substr(pos + 1, 3).c_str()); // Handle non-printable \xDD
+        int lengthToEnd = processedText.length() - pos - 2;
+        int sequenceLength = lengthToEnd < 2 ? lengthToEnd : 2;
+        std::string hexSequence = processedText.substr(pos + 2, sequenceLength);
+        char hexAsAscii;
+        if (!isValidHex(hexSequence, hexAsAscii)) {
+            output::errorUndefinedEscape(("x" + hexSequence).c_str()); // Handle incomplete sequence
             return "";
         }
 
         // Replace \xDD with the corresponding ASCII character
-        processedText.replace(pos, 4, std::string(1, asciiChar));
+        processedText.replace(pos, 4, std::string(1, hexAsAscii));
     }
 
     // Remove enclosing quotes

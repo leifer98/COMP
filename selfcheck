@@ -7,10 +7,10 @@ testsurl="https://github.com/guyarbel/HW1_tests.git"
 hostname="cscomp"
 tmpdir="selfcheck_tmp"
 
-# if [ "$(hostname)" != "$hostname" ]; then
-# 	echo "This script is only intended to run on $hostname"
-# 	exit
-# fi
+if [ "$(hostname)" != "$hostname" ]; then
+	echo "This script is only intended to run on $hostname"
+	exit
+fi
 
 if [ -z "$1" ]; then
 	echo "Usage: ./"$( basename "$0" )" <your submission zip file>"
@@ -49,18 +49,18 @@ fi
 flex scanner.lex &> /dev/null
 if [[ $? != 0 ]] 
 	then
-		echo "Cannot build submission!"
+		echo "Cannot build submission! flex"
 		exit
 fi
-g++ -std=c++17 lex.yy.c hw1.cpp -o hw1.out &> /dev/null
+g++ -std=c++17 -o hw1.out *.c *.cpp &> /dev/null
 if [[ $? != 0 ]] 
 	then
-		echo "Cannot build submission!"
+		echo "Cannot build submission! g++"
 		exit
 fi
 if [ ! -f hw1.out ]
 	then
-		echo "Cannot build submission!"
+		echo "Cannot build submission! last"
 		exit
 fi
 
