@@ -39,11 +39,23 @@ std::string handleStringToken(const char *yytext)
             return "";
         }
 
-        // Convert the hexadecimal string to an integer
+        // Convert the hexadecimal string to a char
         char asciiChar = static_cast<char>(std::stoi(std::string(hexValue), nullptr, 16));
 
-        // Check if the character is printable
-        if (!isprint(asciiChar))
+        int whitespaceLength = 4;
+        char whitespaceCharacters[whitespaceLength] = {'\n', '\r', '\t', ' '};
+        // Check if the character is printable or whitespace character
+        bool isValid = false;
+        for (int i=0; i<whitespaceLength; i++) {
+            if (asciiChar == whitespaceCharacters[i]) {
+                isValid = true;
+            }
+        }
+        if (isprint(asciiChar)) {
+            isValid = true;
+        }
+
+        if (!isValid)
         {
             output::errorUndefinedEscape(processedText.substr(pos + 1, 3).c_str()); // Handle non-printable \xDD
             return "";

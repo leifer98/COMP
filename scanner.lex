@@ -12,7 +12,7 @@ letter           ([a-zA-Z])
 letterdigit      ([a-zA-Z0-9])
 string           ([ !#-\[\]-~	])
 escape           ([\\ntr\"0])
-hex              (x[0-7][0-9A-Fa-f])
+hex              (x[0-9A-Fa-f][0-9A-Fa-f])
 whitespace       ([\t\n\r ])
 
 %%
