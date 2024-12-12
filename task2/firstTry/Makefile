@@ -1,7 +1,7 @@
 .PHONY: all clean
 
 CC = g++
-CFLAGS = -std=c++17 -Wno-free-nonheap-object
+CFLAGS = -std=c++17 -Wno-free-nonheap-object -DYYDEBUG
 
 all: clean
 	flex scanner.lex

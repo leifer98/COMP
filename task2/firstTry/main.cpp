@@ -5,9 +5,12 @@
 extern int yyparse();
 
 extern std::shared_ptr<ast::Node> program;
-
-int main() {
+extern int yydebug;
+int main()
+{
     // Parse the input. The result is stored in the global variable `program`
+    yydebug = 1;
+
     yyparse();
 
     // Print the AST using the PrintVisitor
