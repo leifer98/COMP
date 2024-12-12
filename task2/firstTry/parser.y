@@ -41,9 +41,14 @@ using namespace std;
 Program: Funcs { program = $1; };
 
 Funcs: /* epsilon */ { $$ = std::make_shared<ast::Funcs>(); }
-     | FuncDecl Funcs { $$ = std::make_shared<ast::Funcs>(); };
+     | FuncDecl Funcs { $$ = std::make_shared<ast::Funcs>(std::dynamic_pointer_cast<ast::FuncDecl>($1)); };
 
-FuncDecl: VOID ID LPAREN Formals RPAREN LBRACE Statements RBRACE { $$ = nullptr; };
+FuncDecl: VOID ID LPAREN Formals RPAREN LBRACE Statements RBRACE { 
+    $$ = std::make_shared<ast::FuncDecl>(
+        std::dynamic_pointer_cast<ast::ID>($2), 
+        std::dynamic_pointer_cast<ast::Type>($1), 
+        std::dynamic_pointer_cast<ast::Formals>($4), 
+        std::dynamic_pointer_cast<ast::Statements>($7)); };
 
 Formals: /* epsilon */ { $$ = std::make_shared<ast::Formals>(); };
 

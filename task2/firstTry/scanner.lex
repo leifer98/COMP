@@ -2,8 +2,6 @@
     #include "output.hpp"
     #include "parser.tab.h"
     #include "nodes.hpp"
-
-    extern YYSTYPE yylval; // Declare yylval to store semantic values
 %}
 
 %option yylineno
