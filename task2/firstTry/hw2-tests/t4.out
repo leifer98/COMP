@@ -4,3 +4,7 @@
         ├──Type: void
         ├──Formals
         └──Statements
+            └──VarDecl
+                ├──ID: z
+                ├──Type: int
+                └──Num: 3

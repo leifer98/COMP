@@ -3,14 +3,20 @@
 # Colors for output
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No color
 
 # Directory containing the test files
 TEST_DIR="hw2-tests"
 
+# Counters for statistics
+total_tests=0
+passed_tests=0
+
 # Function to run a single test
 run_test() {
     local test_name=$1
+    total_tests=$((total_tests + 1)) # Increment total tests
 
     # Run the test
     ./hw2 < "${TEST_DIR}/${test_name}.in" > "${TEST_DIR}/my_${test_name}.out"
@@ -22,6 +28,7 @@ run_test() {
         echo -e "[${RED}FAILED${NC}] - Test $test_name"
     else
         echo -e "[${GREEN}OK${NC}]  - Test $test_name"
+        passed_tests=$((passed_tests + 1)) # Increment passed tests
     fi
 }
 
@@ -51,3 +58,26 @@ else
         exit 1
     fi
 fi
+
+# Statistics and feedback in one line
+if [ $total_tests -gt 0 ]; then
+    # Calculate percentage using integer math
+    percentage=$(( 100 * passed_tests / total_tests ))
+
+    # Default feedback is for success
+    feedback="${GREEN}All tests passed!${NC}"
+
+    # Check thresholds for partial success or debugging
+    if [ $percentage -lt 50 ]; then
+        feedback="${RED}Needs debugging${NC}"
+    elif [ $percentage -lt 100 ]; then
+        feedback="${CYAN}Partial success${NC}"
+    fi
+
+    # Print summary
+    echo -e "Summary: total ${passed_tests}\\${total_tests} passed, success = ${CYAN}${percentage}%${NC} - ${feedback}"
+else
+    echo -e "${RED}No tests were run. Check your inputs.${NC}"
+fi
+
+

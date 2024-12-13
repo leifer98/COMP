@@ -1,5 +1,5 @@
 └──Funcs
-    ├──FuncDecl
+    └──FuncDecl
         ├──ID: main
         ├──Type: void
         ├──Formals

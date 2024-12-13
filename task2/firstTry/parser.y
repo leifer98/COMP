@@ -71,11 +71,23 @@ Statements: /* epsilon */ {
     };  
 
 // 15. 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡 → 𝑇𝑦𝑝𝑒 𝐼𝐷 𝑆𝐶
+// 16. 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡 → 𝑇𝑦𝑝𝑒 𝐼𝐷 𝐴𝑆𝑆𝐼𝐺𝑁 𝐸𝑥𝑝 𝑆𝐶
 Statement: Type ID SC { 
         $$ = std::make_shared<ast::VarDecl>(
         std::dynamic_pointer_cast<ast::ID>($2), // Variable name
         std::dynamic_pointer_cast<ast::Type>($1) // Variable type
+    );}
+    | Type ID ASSIGN Exp SC { 
+        $$ = std::make_shared<ast::VarDecl>(
+        std::dynamic_pointer_cast<ast::ID>($2), // Variable name
+        std::dynamic_pointer_cast<ast::Type>($1), // Variable type
+        std::dynamic_pointer_cast<ast::Exp>($4) // Initial value
     );
+};
+
+// 37. 𝐸𝑥𝑝 → 𝑁𝑈M
+Exp: NUM { 
+        $$ = std::dynamic_pointer_cast<ast::Num>($1); // Number literal expression
 };
 
 // 30. 𝑇𝑦𝑝𝑒 → 𝐼𝑁𝑇
