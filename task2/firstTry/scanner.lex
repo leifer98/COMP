@@ -1,7 +1,6 @@
 %{
     #include "output.hpp"
     #include "parser.tab.h"
-    #include "nodes.hpp"
 %}
 
 %option yylineno
@@ -23,24 +22,24 @@ void                            { yylval = std::make_shared<ast::Type>(ast::Buil
 int                             { yylval = std::make_shared<ast::Type>(ast::BuiltInType::INT); return INT; }
 byte                            { yylval = std::make_shared<ast::Type>(ast::BuiltInType::BYTE); return BYTE; }
 bool                            { yylval = std::make_shared<ast::Type>(ast::BuiltInType::BOOL); return BOOL; }
-and         return AND;
-or          return OR;
-not         return NOT;
+and                             { return AND; }
+or                              { return OR; }
+not                             { return NOT; }
 true                            { yylval = std::make_shared<ast::Bool>(true); return TRUE; }
 false                           { yylval = std::make_shared<ast::Bool>(false); return FALSE; }
-return      return RETURN;
-if          return IF;
-else        return ELSE;
-while       return WHILE;
-break       return BREAK;
-continue    return CONTINUE;
-;                               { yylval = nullptr; return SC; }
-,                               {return COMMA;}
-\(                              {return LPAREN;}
-\)                              {return RPAREN;}
-\{                              {return LBRACE;}
-\}                              {return RBRACE;}
-=                               {return ASSIGN;}
+return                          { return RETURN; }
+if                              { return IF; }
+else                            { return ELSE; }
+while                           { return WHILE; }
+break                           { yylval = std::make_shared<ast::Break>(); return BREAK; }
+continue                        { yylval = std::make_shared<ast::Continue>(); return CONTINUE; }
+;                               { return SC; }
+,                               { return COMMA; }
+\(                              { return LPAREN; }
+\)                              { return RPAREN; }
+\{                              { return LBRACE; }
+\}                              { return RBRACE; }
+=                               { return ASSIGN; }
 [+]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::ADD); return BINOP; }
 [-]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::SUB); return BINOP; }
 [*]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::MUL); return BINOP; }
@@ -55,6 +54,6 @@ continue    return CONTINUE;
 (0|[1-9][0-9]*)                 { yylval = std::make_shared<ast::Num>(yytext); return NUM;}
 (0b[0-1]+|[1-9][0-9]*b)         { yylval = std::make_shared<ast::NumB>(yytext); return NUM_B;}
 "([^\"\n\r\\]|\\[rnt\"\\])*"    { yylval = std::make_shared<ast::Type>(ast::BuiltInType::STRING); return STRING; }
-[\t\n\r ] ;
-.          return ERROR;
+[\t\n\r ]                       { }
+.                               { return ERROR; }
 
