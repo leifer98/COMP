@@ -491,9 +491,9 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  9
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  18
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  25
+#define YYNSTATES  29
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   288
@@ -546,7 +546,7 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    43,    43,    47,    48,    52,    60,    64,    67,    75,
-      80,    89,    96,    99,   102
+      80,    93,    94,    95,    96,    97,   102,   105,   108
 };
 #endif
 
@@ -577,7 +577,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-24)
+#define YYPACT_NINF (-22)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -591,9 +591,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       1,   -10,     5,   -24,     1,   -22,   -24,   -24,   -24,   -21,
-     -23,   -24,    -4,   -24,   -24,   -24,   -24,   -24,    -6,   -11,
-     -24,    -3,   -24,    -1,   -24
+       3,    -9,     8,   -22,     3,   -20,   -22,   -22,   -22,   -19,
+     -21,   -22,    -4,   -22,   -22,   -22,   -22,   -22,     1,   -11,
+     -22,    -3,   -22,   -22,   -22,   -22,   -22,    -1,   -22
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -602,20 +602,20 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        3,     0,     0,     2,     3,     0,     1,     4,     6,     0,
-       0,     7,     0,    12,    13,    14,     5,     8,     0,     0,
-       9,     0,    11,     0,    10
+       0,     7,     0,    16,    17,    18,     5,     8,     0,     0,
+       9,     0,    14,    15,    11,    12,    13,     0,    10
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -24,   -24,     7,   -24,   -24,   -24,   -24,   -24,   -24
+     -22,   -22,    14,   -22,   -22,   -22,   -22,   -22,   -22
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     4,     9,    12,    17,    23,    18
+       0,     2,     3,     4,     9,    12,    17,    27,    18
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -623,15 +623,15 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      13,    14,    15,    20,     1,     6,     5,     8,    11,    10,
-      19,     7,    21,    24,    22,     0,     0,     0,     0,     0,
+      13,    14,    15,    20,    22,    23,     1,     5,     6,     8,
+      11,    10,    21,    28,    24,    25,    26,    19,     7,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    16
 };
 
 static const yytype_int8 yycheck[] =
 {
-       4,     5,     6,    14,     3,     0,    16,    29,    31,    30,
-      16,     4,    23,    14,    17,    -1,    -1,    -1,    -1,    -1,
+       4,     5,     6,    14,     7,     8,     3,    16,     0,    29,
+      31,    30,    23,    14,    17,    18,    19,    16,     4,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    32
 };
 
@@ -641,21 +641,21 @@ static const yytype_int8 yystos[] =
 {
        0,     3,    35,    36,    37,    16,     0,    36,    29,    38,
       30,    31,    39,     4,     5,     6,    32,    40,    42,    16,
-      14,    23,    17,    41,    14
+      14,    23,     7,     8,    17,    18,    19,    41,    14
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    34,    35,    36,    36,    37,    38,    39,    39,    40,
-      40,    41,    42,    42,    42
+      40,    41,    41,    41,    41,    41,    42,    42,    42
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     0,     2,     8,     0,     0,     2,     3,
-       5,     1,     1,     1,     1
+       5,     1,     1,     1,     1,     1,     1,     1,     1
 };
 
 
@@ -1465,39 +1465,61 @@ yyreduce:
     break;
 
   case 11: /* Exp: NUM  */
-#line 89 "parser.y"
-         { 
-        yyval = std::dynamic_pointer_cast<ast::Num>(yyvsp[0]); // Number literal expression
-}
-#line 1473 "parser.tab.c"
+#line 93 "parser.y"
+            { yyval = std::dynamic_pointer_cast<ast::Num>(yyvsp[0]); }
+#line 1471 "parser.tab.c"
     break;
 
-  case 12: /* Type: INT  */
+  case 12: /* Exp: NUM_B  */
+#line 94 "parser.y"
+            { yyval = std::dynamic_pointer_cast<ast::NumB>(yyvsp[0]); }
+#line 1477 "parser.tab.c"
+    break;
+
+  case 13: /* Exp: STRING  */
+#line 95 "parser.y"
+            { yyval = std::dynamic_pointer_cast<ast::String>(yyvsp[0]); }
+#line 1483 "parser.tab.c"
+    break;
+
+  case 14: /* Exp: TRUE  */
 #line 96 "parser.y"
-          { 
-    yyval = std::make_shared<ast::Type>(ast::BuiltInType::INT); // Integer type
-}
-#line 1481 "parser.tab.c"
-    break;
-
-  case 13: /* Type: BYTE  */
-#line 99 "parser.y"
-          { 
-    yyval = std::make_shared<ast::Type>(ast::BuiltInType::BYTE); // Byte type
-}
+            { yyval = std::dynamic_pointer_cast<ast::Bool>(yyvsp[0]); }
 #line 1489 "parser.tab.c"
     break;
 
-  case 14: /* Type: BOOL  */
+  case 15: /* Exp: FALSE  */
+#line 97 "parser.y"
+            { yyval = std::dynamic_pointer_cast<ast::Bool>(yyvsp[0]); }
+#line 1495 "parser.tab.c"
+    break;
+
+  case 16: /* Type: INT  */
 #line 102 "parser.y"
+          { 
+    yyval = std::make_shared<ast::Type>(ast::BuiltInType::INT); // Integer type
+}
+#line 1503 "parser.tab.c"
+    break;
+
+  case 17: /* Type: BYTE  */
+#line 105 "parser.y"
+          { 
+    yyval = std::make_shared<ast::Type>(ast::BuiltInType::BYTE); // Byte type
+}
+#line 1511 "parser.tab.c"
+    break;
+
+  case 18: /* Type: BOOL  */
+#line 108 "parser.y"
           { 
     yyval = std::make_shared<ast::Type>(ast::BuiltInType::BOOL); // Boolean type
 }
-#line 1497 "parser.tab.c"
+#line 1519 "parser.tab.c"
     break;
 
 
-#line 1501 "parser.tab.c"
+#line 1523 "parser.tab.c"
 
       default: break;
     }
@@ -1721,7 +1743,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 114 "parser.y"
+#line 120 "parser.y"
 
 
 // Error Handling

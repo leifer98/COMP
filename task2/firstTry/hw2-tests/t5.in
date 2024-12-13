@@ -1,0 +1,4 @@
+void main() {
+    byte y = 100b;
+    int z = 3;
+}

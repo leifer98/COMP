@@ -865,12 +865,12 @@ return NOT;
 case 8:
 YY_RULE_SETUP
 #line 29 "scanner.lex"
-return TRUE;
+{ yylval = std::make_shared<ast::Bool>(true); return TRUE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 30 "scanner.lex"
-return FALSE;
+{ yylval = std::make_shared<ast::Bool>(false); return FALSE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
@@ -972,7 +972,7 @@ case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
 #line 50 "scanner.lex"
-; /* Ignore whitespace */
+;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP

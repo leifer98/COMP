@@ -85,10 +85,16 @@ Statement: Type ID SC {
     );
 };
 
-// 37. 𝐸𝑥𝑝 → 𝑁𝑈M
-Exp: NUM { 
-        $$ = std::dynamic_pointer_cast<ast::Num>($1); // Number literal expression
-};
+// 37. 𝐸𝑥𝑝 → 𝑁𝑈𝑀
+// 38. 𝐸𝑥𝑝 → 𝑁𝑈𝑀 𝐵
+// 39. 𝐸𝑥𝑝 → 𝑆𝑇𝑅𝐼𝑁𝐺
+// 40. 𝐸𝑥𝑝 → 𝑇𝑅𝑈𝐸
+// 41. 𝐸𝑥𝑝 → 𝐹𝐴𝐿𝑆E
+Exp: NUM    { $$ = std::dynamic_pointer_cast<ast::Num>($1); } 
+   | NUM_B  { $$ = std::dynamic_pointer_cast<ast::NumB>($1); }    
+   | STRING { $$ = std::dynamic_pointer_cast<ast::String>($1); }        
+   | TRUE   { $$ = std::dynamic_pointer_cast<ast::Bool>($1); }          
+   | FALSE  { $$ = std::dynamic_pointer_cast<ast::Bool>($1); };         
 
 // 30. 𝑇𝑦𝑝𝑒 → 𝐼𝑁𝑇
 // 31. 𝑇𝑦𝑝𝑒 → 𝐵𝑌𝑇𝐸

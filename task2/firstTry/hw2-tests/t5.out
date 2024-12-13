@@ -1,0 +1,14 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──VarDecl
+            │   ├──ID: y
+            │   ├──Type: byte
+            │   └──NumB: 100
+            └──VarDecl
+                ├──ID: z
+                ├──Type: int
+                └──Num: 3
