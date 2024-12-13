@@ -1,6 +1,9 @@
 └──Funcs
-    └──FuncDecl
+    ├──FuncDecl
         ├──ID: main
         ├──Type: void
         ├──Formals
         └──Statements
+            └──VarDecl
+                ├──ID: z
+                └──Type: int

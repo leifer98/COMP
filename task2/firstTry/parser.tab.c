@@ -153,7 +153,9 @@ enum yysymbol_kind_t
   YYSYMBOL_Funcs = 36,                     /* Funcs  */
   YYSYMBOL_FuncDecl = 37,                  /* FuncDecl  */
   YYSYMBOL_Formals = 38,                   /* Formals  */
-  YYSYMBOL_Statements = 39                 /* Statements  */
+  YYSYMBOL_Statements = 39,                /* Statements  */
+  YYSYMBOL_Statement = 40,                 /* Statement  */
+  YYSYMBOL_Type = 41                       /* Type  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -481,16 +483,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   8
+#define YYLAST   28
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  34
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  6
+#define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  7
+#define YYNRULES  12
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  14
+#define YYNSTATES  21
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   288
@@ -542,7 +544,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    41,    41,    43,    44,    46,    48,    50
+       0,    43,    43,    47,    48,    52,    60,    64,    67,    74,
+      84,    87,    90
 };
 #endif
 
@@ -563,7 +566,7 @@ static const char *const yytname[] =
   "SC", "COMMA", "ID", "NUM", "NUM_B", "STRING", "RELOP", "BINOP", "ERROR",
   "ASSIGN", "OR", "AND", "ADD_SUB", "MULT_DIV", "NOT", "LPAREN", "RPAREN",
   "LBRACE", "RBRACE", "ELSE", "$accept", "Program", "Funcs", "FuncDecl",
-  "Formals", "Statements", YY_NULLPTR
+  "Formals", "Statements", "Statement", "Type", YY_NULLPTR
 };
 
 static const char *
@@ -573,7 +576,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-28)
+#define YYPACT_NINF (-25)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -587,8 +590,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,   -15,     2,   -28,    -3,   -26,   -28,   -28,   -28,   -25,
-     -27,   -28,   -24,   -28
+       0,   -12,     5,   -25,     0,   -23,   -25,   -25,   -25,   -22,
+     -24,   -25,    -4,   -25,   -25,   -25,   -25,   -25,    -7,    -3,
+     -25
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -597,19 +601,20 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        3,     0,     0,     2,     3,     0,     1,     4,     6,     0,
-       0,     7,     0,     5
+       0,     7,     0,    10,    11,    12,     5,     8,     0,     0,
+       9
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -28,   -28,     3,   -28,   -28,   -28
+     -25,   -25,     6,   -25,   -25,   -25,   -25,   -25
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     2,     3,     4,     9,    12
+       0,     2,     3,     4,     9,    12,    17,    18
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -617,12 +622,16 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     5,     6,     8,    11,    10,     0,     7,    13
+      13,    14,    15,     1,     5,     6,     8,    11,    10,    19,
+       7,    20,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    16
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,    16,     0,    29,    31,    30,    -1,     4,    32
+       4,     5,     6,     3,    16,     0,    29,    31,    30,    16,
+       4,    14,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    32
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -630,19 +639,22 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    35,    36,    37,    16,     0,    36,    29,    38,
-      30,    31,    39,    32
+      30,    31,    39,     4,     5,     6,    32,    40,    41,    16,
+      14
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    34,    35,    36,    36,    37,    38,    39
+       0,    34,    35,    36,    36,    37,    38,    39,    39,    40,
+      41,    41,    41
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     0,     2,     8,     0,     0
+       0,     2,     1,     0,     2,     8,     0,     0,     2,     3,
+       1,     1,     1
 };
 
 
@@ -1376,43 +1388,96 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* Program: Funcs  */
-#line 41 "parser.y"
-               { program = yyvsp[0]; }
-#line 1382 "parser.tab.c"
-    break;
-
-  case 3: /* Funcs: %empty  */
 #line 43 "parser.y"
-                     { yyval = std::make_shared<ast::Funcs>(); }
-#line 1388 "parser.tab.c"
-    break;
-
-  case 4: /* Funcs: FuncDecl Funcs  */
-#line 44 "parser.y"
-                      { yyval = std::make_shared<ast::Funcs>(); }
+               { program = yyvsp[0]; }
 #line 1394 "parser.tab.c"
     break;
 
-  case 5: /* FuncDecl: VOID ID LPAREN Formals RPAREN LBRACE Statements RBRACE  */
-#line 46 "parser.y"
-                                                                 { yyval = nullptr; }
+  case 3: /* Funcs: %empty  */
+#line 47 "parser.y"
+                     { yyval = std::make_shared<ast::Funcs>(); }
 #line 1400 "parser.tab.c"
     break;
 
-  case 6: /* Formals: %empty  */
+  case 4: /* Funcs: FuncDecl Funcs  */
 #line 48 "parser.y"
+                      { 
+        yyval = std::make_shared<ast::Funcs>(std::dynamic_pointer_cast<ast::FuncDecl>(yyvsp[-1])); }
+#line 1407 "parser.tab.c"
+    break;
+
+  case 5: /* FuncDecl: VOID ID LPAREN Formals RPAREN LBRACE Statements RBRACE  */
+#line 52 "parser.y"
+                                                                 { 
+        yyval = std::make_shared<ast::FuncDecl>(
+        std::dynamic_pointer_cast<ast::ID>(yyvsp[-6]), 
+        std::dynamic_pointer_cast<ast::Type>(yyvsp[-7]), 
+        std::dynamic_pointer_cast<ast::Formals>(yyvsp[-4]), 
+        std::dynamic_pointer_cast<ast::Statements>(yyvsp[-1])); }
+#line 1418 "parser.tab.c"
+    break;
+
+  case 6: /* Formals: %empty  */
+#line 60 "parser.y"
                        { yyval = std::make_shared<ast::Formals>(); }
-#line 1406 "parser.tab.c"
+#line 1424 "parser.tab.c"
     break;
 
   case 7: /* Statements: %empty  */
-#line 50 "parser.y"
-                          { yyval = std::make_shared<ast::Statements>(); }
-#line 1412 "parser.tab.c"
+#line 64 "parser.y"
+                          { 
+        yyval = std::make_shared<ast::Statements>(); 
+    }
+#line 1432 "parser.tab.c"
+    break;
+
+  case 8: /* Statements: Statements Statement  */
+#line 67 "parser.y"
+                           { 
+        auto stmts = std::dynamic_pointer_cast<ast::Statements>(yyvsp[-1]);
+        stmts->push_back(std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]));
+        yyval = stmts; 
+    }
+#line 1442 "parser.tab.c"
+    break;
+
+  case 9: /* Statement: Type ID SC  */
+#line 74 "parser.y"
+                      { 
+        yyval = std::make_shared<ast::VarDecl>(
+        std::dynamic_pointer_cast<ast::ID>(yyvsp[-1]), // Variable name
+        std::dynamic_pointer_cast<ast::Type>(yyvsp[-2]) // Variable type
+    );
+}
+#line 1453 "parser.tab.c"
+    break;
+
+  case 10: /* Type: INT  */
+#line 84 "parser.y"
+          { 
+    yyval = std::make_shared<ast::Type>(ast::BuiltInType::INT); // Integer type
+}
+#line 1461 "parser.tab.c"
+    break;
+
+  case 11: /* Type: BYTE  */
+#line 87 "parser.y"
+          { 
+    yyval = std::make_shared<ast::Type>(ast::BuiltInType::BYTE); // Byte type
+}
+#line 1469 "parser.tab.c"
+    break;
+
+  case 12: /* Type: BOOL  */
+#line 90 "parser.y"
+          { 
+    yyval = std::make_shared<ast::Type>(ast::BuiltInType::BOOL); // Boolean type
+}
+#line 1477 "parser.tab.c"
     break;
 
 
-#line 1416 "parser.tab.c"
+#line 1481 "parser.tab.c"
 
       default: break;
     }
@@ -1636,7 +1701,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 52 "parser.y"
+#line 102 "parser.y"
 
 
 // Error Handling
