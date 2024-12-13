@@ -70,9 +70,9 @@ extern int yydebug;
     ID = 271,                      /* ID  */
     NUM = 272,                     /* NUM  */
     NUM_B = 273,                   /* NUM_B  */
-    STRING = 274,                  /* STRING  */
+    BINOP = 274,                   /* BINOP  */
     RELOP = 275,                   /* RELOP  */
-    BINOP = 276,                   /* BINOP  */
+    STRING = 276,                  /* STRING  */
     ERROR = 277,                   /* ERROR  */
     ASSIGN = 278,                  /* ASSIGN  */
     OR = 279,                      /* OR  */
@@ -91,7 +91,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef std::shared_ptr<ast::Node> YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

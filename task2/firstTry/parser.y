@@ -18,11 +18,10 @@ using namespace std;
 %}
 
 // Configure Bison for better stack management
-%define api.value.type {std::shared_ptr<ast::Node>}
 %define parse.error verbose
 
 // Tokens
-%token VOID INT BYTE BOOL TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA ID NUM NUM_B STRING RELOP BINOP ERROR
+%token VOID INT BYTE BOOL TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA ID NUM NUM_B BINOP RELOP STRING ERROR
 
 // Precedence and associativity
 %right ASSIGN
@@ -85,12 +84,25 @@ Statement: Type ID SC {
     );
 };
 
+// 33. (Exp)
+// 34. Exp BINOP Exp
+// 35. ID
 // 37. 𝐸𝑥𝑝 → 𝑁𝑈𝑀
 // 38. 𝐸𝑥𝑝 → 𝑁𝑈𝑀 𝐵
 // 39. 𝐸𝑥𝑝 → 𝑆𝑇𝑅𝐼𝑁𝐺
 // 40. 𝐸𝑥𝑝 → 𝑇𝑅𝑈𝐸
 // 41. 𝐸𝑥𝑝 → 𝐹𝐴𝐿𝑆E
-Exp: NUM    { $$ = std::dynamic_pointer_cast<ast::Num>($1); } 
+Exp: LPAREN Exp RPAREN { $$ = $2; } 
+   | Exp BINOP Exp {
+        auto binop = std::dynamic_pointer_cast<ast::BinOp>($2); // Extract the BinOp object
+        $$ = std::make_shared<ast::BinOp>(
+            std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+            std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+            binop->op // Extract the operation type
+        );
+    }
+   | ID { $$ = std::dynamic_pointer_cast<ast::ID>($1); }; 
+   | NUM    { $$ = std::dynamic_pointer_cast<ast::Num>($1); } 
    | NUM_B  { $$ = std::dynamic_pointer_cast<ast::NumB>($1); }    
    | STRING { $$ = std::dynamic_pointer_cast<ast::String>($1); }        
    | TRUE   { $$ = std::dynamic_pointer_cast<ast::Bool>($1); }          

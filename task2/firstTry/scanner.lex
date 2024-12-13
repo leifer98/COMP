@@ -35,14 +35,22 @@ while       return WHILE;
 break       return BREAK;
 continue    return CONTINUE;
 ;                               { yylval = nullptr; return SC; }
-,           return COMMA;
+,                               {return COMMA;}
 \(                              {return LPAREN;}
 \)                              {return RPAREN;}
-\{           return LBRACE;
-\}           return RBRACE;
-=           return ASSIGN;
-[<>=!]=|>|< return RELOP;
-[-+*/]      return BINOP;
+\{                              {return LBRACE;}
+\}                              {return RBRACE;}
+=                               {return ASSIGN;}
+[+]      { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::ADD); return BINOP; }
+[-]      { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::SUB); return BINOP; }
+[*]      { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::MUL); return BINOP; }
+[/]      { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::DIV); return BINOP; }
+[==]     { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::EQ); return RELOP; }
+[!=]     { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::NE); return RELOP; }
+[<]      { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::LT); return RELOP; }
+[>]      { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::GT); return RELOP; }
+[<=]     { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::LE); return RELOP; }
+[>=]     { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::GE); return RELOP; }
 [a-zA-Z][a-zA-Z0-9]*            { yylval = std::make_shared<ast::ID>(yytext); return ID; }
 (0|[1-9][0-9]*)                 { yylval = std::make_shared<ast::Num>(yytext); return NUM;}
 (0b[0-1]+|[1-9][0-9]*b)         { yylval = std::make_shared<ast::NumB>(yytext); return NUM_B;}
