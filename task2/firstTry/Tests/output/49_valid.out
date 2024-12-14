@@ -98,20 +98,20 @@
         │       └──Type: int
         └──Statements
             ├──If
-            │   ├──RelOp: >
-            │   │   ├──RelOp: ==
-            │   │   │   ├──RelOp: <=
-            │   │   │   │   ├──ID: a
-            │   │   │   │   └──Or
-            │   │   │   │       ├──Num: 5
-            │   │   │   │       └──ID: a
-            │   │   │   └──Or
-            │   │   │       ├──Num: 6
-            │   │   │       └──ID: b
-            │   │   └──Or
-            │   │       ├──Num: 3
-            │   │       └──Not
-            │   │           └──ID: c
+            │   ├──Or
+            │   │   ├──Or
+            │   │   │   ├──Or
+            │   │   │   │   ├──RelOp: <=
+            │   │   │   │   │   ├──ID: a
+            │   │   │   │   │   └──Num: 5
+            │   │   │   │   └──RelOp: ==
+            │   │   │   │       ├──ID: a
+            │   │   │   │       └──Num: 6
+            │   │   │   └──RelOp: >
+            │   │   │       ├──ID: b
+            │   │   │       └──Num: 3
+            │   │   └──Not
+            │   │       └──ID: c
             │   ├──Statements
             │   │   ├──Call
             │   │   │   ├──ID: print
@@ -120,14 +120,14 @@
             │   │   └──Return
             │   │       └──Num: 420
             │   └──If
-            │       ├──RelOp: ==
-            │       │   ├──Call
-            │       │   │   ├──ID: isProfanity
-            │       │   │   └──ExpList
-            │       │   │       └──Num: 69
-            │       │   └──And
-            │       │       ├──Bool: true
-            │       │       └──ID: c
+            │       ├──And
+            │       │   ├──RelOp: ==
+            │       │   │   ├──Call
+            │       │   │   │   ├──ID: isProfanity
+            │       │   │   │   └──ExpList
+            │       │   │   │       └──Num: 69
+            │       │   │   └──Bool: true
+            │       │   └──ID: c
             │       └──Statements
             │           ├──Call
             │           │   ├──ID: print

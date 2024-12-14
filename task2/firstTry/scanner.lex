@@ -34,12 +34,12 @@ continue                        { yylval = std::make_shared<ast::Continue>(); re
 \{                              { return LBRACE; }
 \}                              { return RBRACE; }
 =                               { return ASSIGN; }
-[+]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::ADD); return BINOP; }
-[-]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::SUB); return BINOP; }
-[*]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::MUL); return BINOP; }
-[/]                             { yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::DIV); return BINOP; }
-"=="                            { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::EQ); return RELOP; }
-"!="                            { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::NE); return RELOP; }
+[+]                             { return PLUS; }
+[-]                             { return MINUS; }
+[*]                             { return MULTIPLY; }
+[/]                             { return DIVIDE; }
+"=="                            { return EQ; }
+"!="                            { return NE; }
 [<]                             { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::LT); return RELOP; }
 [>]                             { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::GT); return RELOP; }
 "<="                            { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::LE); return RELOP; }

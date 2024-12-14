@@ -21,16 +21,16 @@ using namespace std;
 %define parse.error verbose
 
 // Tokens
-%token VOID INT BYTE BOOL TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA ID NUM NUM_B BINOP RELOP STRING ERROR
+%token VOID INT BYTE BOOL TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA ID NUM NUM_B PLUS MINUS MULTIPLY DIVIDE RELOP EQ NE STRING ERROR
 
 // Precedence and associativity
-%left RELOP
-%left BINOP
 %right ASSIGN
 %left OR
 %left AND
-%left ADD_SUB //for future use maybe
-%left MULT_DIV //for future use maybe
+%left EQ NE
+%left RELOP
+%left PLUS MINUS
+%left MULTIPLY DIVIDE
 %right NOT
 %left LPAREN RPAREN LBRACE RBRACE
 %right ELSE
@@ -212,7 +212,11 @@ Type: INT { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
     | BOOL { $$ = std::dynamic_pointer_cast<ast::Type>($1); };
 
 // 33. 𝐸𝑥𝑝 → 𝐿𝑃𝐴𝑅𝐸𝑁 𝐸𝑥𝑝 𝑅𝑃𝐴𝑅𝐸𝑁
-// 34. 𝐸𝑥𝑝 → Exp BINOP Exp
+// 34. (𝐸𝑥𝑝 → Exp BINOP Exp) - Replaced with:
+//     𝐸𝑥𝑝 → Exp PLUS Exp
+//     𝐸𝑥𝑝 → Exp MINUS Exp
+//     𝐸𝑥𝑝 → Exp MULTIPLY Exp
+//     𝐸𝑥𝑝 → Exp DIVIDE Exp
 // 35. 𝐸𝑥𝑝 → ID
 // 36. 𝐸𝑥𝑝 → 𝐶𝑎𝑙𝑙
 // 37. 𝐸𝑥𝑝 → 𝑁𝑈𝑀
@@ -223,15 +227,38 @@ Type: INT { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
 // 42. 𝐸𝑥𝑝 → 𝑁𝑂𝑇 𝐸𝑥𝑝
 // 43. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝐴𝑁𝐷 𝐸𝑥𝑝
 // 44. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑂𝑅 𝐸𝑥𝑝
-// 45. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑅𝐸𝐿𝑂𝑃 𝐸𝑥p
+// 45. (𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑅𝐸𝐿𝑂𝑃 𝐸𝑥p) - Replaced with:
+//     𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑅𝐸𝐿𝑂𝑃 𝐸𝑥p
+//     𝐸𝑥𝑝 → 𝐸𝑥𝑝 EQ 𝐸𝑥p
+//     𝐸𝑥𝑝 → 𝐸𝑥𝑝 NE 𝐸𝑥p
 // 46. 𝐸𝑥𝑝 → 𝐿𝑃𝐴𝑅𝐸𝑁 𝑇𝑦𝑝𝑒 𝑅𝑃𝐴𝑅𝐸𝑁 𝐸𝑥𝑝
 Exp:        LPAREN Exp RPAREN { $$ = $2; }
-            | Exp BINOP Exp {
-                auto binop = std::dynamic_pointer_cast<ast::BinOp>($2); // Extract the BinOp object
+            | Exp PLUS Exp {
                 $$ = std::make_shared<ast::BinOp>(
                     std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
                     std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
-                    binop->op // Extract the operation type
+                    ast::BinOpType::ADD
+                );
+            }
+            | Exp MINUS Exp {
+                $$ = std::make_shared<ast::BinOp>(
+                    std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+                    std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+                    ast::BinOpType::SUB
+                );
+            }
+            | Exp MULTIPLY Exp {
+                $$ = std::make_shared<ast::BinOp>(
+                    std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+                    std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+                    ast::BinOpType::MUL
+                );
+            }
+            | Exp DIVIDE Exp {
+                $$ = std::make_shared<ast::BinOp>(
+                    std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+                    std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+                    ast::BinOpType::DIV
                 );
             }
             | ID { $$ = std::dynamic_pointer_cast<ast::ID>($1); }
@@ -266,6 +293,20 @@ Exp:        LPAREN Exp RPAREN { $$ = $2; }
                     relop->op // Extract the operation type
                 );
             }
+            | Exp EQ Exp {
+                $$ = std::make_shared<ast::RelOp>(
+                    std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+                    std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+                    ast::RelOpType::EQ
+                );
+            }
+            | Exp NE Exp {
+                $$ = std::make_shared<ast::RelOp>(
+                    std::dynamic_pointer_cast<ast::Exp>($1), // Left operand
+                    std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
+                    ast::RelOpType::NE
+                );
+            } 
             | LPAREN Type RPAREN Exp {
                 $$ = std::make_shared<ast::Cast>(
                     std::dynamic_pointer_cast<ast::Exp>($4),

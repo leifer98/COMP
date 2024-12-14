@@ -169,27 +169,27 @@
     │               │   ├──ID: result
     │               │   ├──Type: int
     │               │   └──BinOp: -
-    │               │       ├──BinOp: *
-    │               │       │   ├──BinOp: +
-    │               │       │   │   ├──BinOp: -
+    │               │       ├──BinOp: +
+    │               │       │   ├──BinOp: -
+    │               │       │   │   ├──BinOp: +
     │               │       │   │   │   ├──BinOp: +
-    │               │       │   │   │   │   ├──BinOp: /
-    │               │       │   │   │   │   │   ├──BinOp: *
-    │               │       │   │   │   │   │   │   ├──BinOp: +
-    │               │       │   │   │   │   │   │   │   ├──ID: x
-    │               │       │   │   │   │   │   │   │   └──ID: y
-    │               │       │   │   │   │   │   │   └──ID: z
-    │               │       │   │   │   │   │   └──BinOp: -
-    │               │       │   │   │   │   │       ├──ID: x
-    │               │       │   │   │   │   │       └──ID: z
-    │               │       │   │   │   │   └──BinOp: *
-    │               │       │   │   │   │       ├──ID: y
-    │               │       │   │   │   │       └──ID: z
-    │               │       │   │   │   └──BinOp: /
-    │               │       │   │   │       ├──ID: x
-    │               │       │   │   │       └──ID: y
-    │               │       │   │   └──ID: i
-    │               │       │   └──ID: b1
+    │               │       │   │   │   │   ├──ID: x
+    │               │       │   │   │   │   └──BinOp: /
+    │               │       │   │   │   │       ├──BinOp: *
+    │               │       │   │   │   │       │   ├──ID: y
+    │               │       │   │   │   │       │   └──ID: z
+    │               │       │   │   │   │       └──BinOp: -
+    │               │       │   │   │   │           ├──ID: x
+    │               │       │   │   │   │           └──ID: z
+    │               │       │   │   │   └──BinOp: *
+    │               │       │   │   │       ├──ID: y
+    │               │       │   │   │       └──ID: z
+    │               │       │   │   └──BinOp: /
+    │               │       │   │       ├──ID: x
+    │               │       │   │       └──ID: y
+    │               │       │   └──BinOp: *
+    │               │       │       ├──ID: i
+    │               │       │       └──ID: b1
     │               │       └──ID: b2
     │               ├──Assign
     │               │   ├──ID: result
@@ -201,11 +201,11 @@
     │               │       │   │       ├──ID: x
     │               │       │   │       └──BinOp: /
     │               │       │   │           ├──ID: y
-    │               │       │   │           └──BinOp: *
-    │               │       │   │               ├──BinOp: -
-    │               │       │   │               │   ├──ID: z
-    │               │       │   │               │   └──ID: x
-    │               │       │   │               └──Num: 2
+    │               │       │   │           └──BinOp: -
+    │               │       │   │               ├──ID: z
+    │               │       │   │               └──BinOp: *
+    │               │       │   │                   ├──ID: x
+    │               │       │   │                   └──Num: 2
     │               │       │   └──ID: b1
     │               │       └──ID: b2
     │               ├──Call
@@ -244,18 +244,18 @@
     │           │   └──Num: 50
     │           └──Statements
     │               ├──If
-    │               │   ├──RelOp: <
-    │               │   │   ├──RelOp: >
-    │               │   │   │   ├──Or
-    │               │   │   │   │   ├──And
-    │               │   │   │   │   │   ├──ID: flag1
-    │               │   │   │   │   │   └──Not
-    │               │   │   │   │   │       └──ID: flag2
-    │               │   │   │   │   └──ID: x
-    │               │   │   │   └──Or
-    │               │   │   │       ├──ID: y
-    │               │   │   │       └──ID: i
-    │               │   │   └──ID: x
+    │               │   ├──Or
+    │               │   │   ├──Or
+    │               │   │   │   ├──And
+    │               │   │   │   │   ├──ID: flag1
+    │               │   │   │   │   └──Not
+    │               │   │   │   │       └──ID: flag2
+    │               │   │   │   └──RelOp: >
+    │               │   │   │       ├──ID: x
+    │               │   │   │       └──ID: y
+    │               │   │   └──RelOp: <
+    │               │   │       ├──ID: i
+    │               │   │       └──ID: x
     │               │   ├──Statements
     │               │   │   └──Call
     │               │   │       ├──ID: print
@@ -684,13 +684,13 @@
     │               │   └──BinOp: +
     │               │       ├──ID: a
     │               │       └──ID: c
-    │               └──BinOp: /
-    │                   ├──BinOp: -
-    │                   │   ├──BinOp: *
-    │                   │   │   ├──ID: b
-    │                   │   │   └──ID: c
-    │                   │   └──ID: a
-    │                   └──ID: c
+    │               └──BinOp: -
+    │                   ├──BinOp: *
+    │                   │   ├──ID: b
+    │                   │   └──ID: c
+    │                   └──BinOp: /
+    │                       ├──ID: a
+    │                       └──ID: c
     ├──FuncDecl
     │   ├──ID: testComplexCalls
     │   ├──Type: void
@@ -820,30 +820,30 @@
     │           │   └──Num: 100
     │           └──Statements
     │               ├──If
-    │               │   ├──RelOp: <=
-    │               │   │   ├──RelOp: >
-    │               │   │   │   ├──RelOp: <
-    │               │   │   │   │   ├──RelOp: >
-    │               │   │   │   │   │   ├──BinOp: +
-    │               │   │   │   │   │   │   ├──And
-    │               │   │   │   │   │   │   │   ├──ID: flag1
-    │               │   │   │   │   │   │   │   └──ID: x
-    │               │   │   │   │   │   │   └──ID: y
-    │               │   │   │   │   │   └──BinOp: -
-    │               │   │   │   │   │       ├──Or
-    │               │   │   │   │   │       │   ├──ID: z
-    │               │   │   │   │   │       │   └──ID: y
-    │               │   │   │   │   │       └──ID: z
-    │               │   │   │   │   └──Or
-    │               │   │   │   │       ├──And
+    │               │   ├──Or
+    │               │   │   ├──Or
+    │               │   │   │   ├──And
+    │               │   │   │   │   ├──ID: flag1
+    │               │   │   │   │   └──RelOp: >
+    │               │   │   │   │       ├──BinOp: +
     │               │   │   │   │       │   ├──ID: x
-    │               │   │   │   │       │   └──Not
-    │               │   │   │   │       │       └──ID: flag2
-    │               │   │   │   │       └──ID: i
+    │               │   │   │   │       │   └──ID: y
+    │               │   │   │   │       └──ID: z
     │               │   │   │   └──And
-    │               │   │   │       ├──ID: x
-    │               │   │   │       └──ID: y
-    │               │   │   └──ID: z
+    │               │   │   │       ├──RelOp: <
+    │               │   │   │       │   ├──BinOp: -
+    │               │   │   │       │   │   ├──ID: y
+    │               │   │   │       │   │   └──ID: z
+    │               │   │   │       │   └──ID: x
+    │               │   │   │       └──Not
+    │               │   │   │           └──ID: flag2
+    │               │   │   └──And
+    │               │   │       ├──RelOp: >
+    │               │   │       │   ├──ID: i
+    │               │   │       │   └──ID: x
+    │               │   │       └──RelOp: <=
+    │               │   │           ├──ID: y
+    │               │   │           └──ID: z
     │               │   ├──Statements
     │               │   │   └──Call
     │               │   │       ├──ID: print

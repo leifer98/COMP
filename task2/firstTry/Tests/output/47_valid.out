@@ -33,21 +33,21 @@
     │       │   ├──Type: bool
     │       │   └──Bool: false
     │       ├──If
-    │       │   ├──RelOp: >
-    │       │   │   ├──RelOp: <
+    │       │   ├──Or
+    │       │   │   ├──And
     │       │   │   │   ├──RelOp: >
     │       │   │   │   │   ├──ID: x
-    │       │   │   │   │   └──And
-    │       │   │   │   │       ├──ID: y
-    │       │   │   │   │       └──ID: y
-    │       │   │   │   └──BinOp: +
-    │       │   │   │       ├──Or
-    │       │   │   │       │   ├──ID: z
-    │       │   │   │       │   └──ID: x
-    │       │   │   │       └──ID: y
-    │       │   │   └──BinOp: *
-    │       │   │       ├──ID: z
-    │       │   │       └──Num: 2
+    │       │   │   │   │   └──ID: y
+    │       │   │   │   └──RelOp: <
+    │       │   │   │       ├──ID: y
+    │       │   │   │       └──ID: z
+    │       │   │   └──RelOp: >
+    │       │   │       ├──BinOp: +
+    │       │   │       │   ├──ID: x
+    │       │   │       │   └──ID: y
+    │       │   │       └──BinOp: *
+    │       │   │           ├──ID: z
+    │       │   │           └──Num: 2
     │       │   ├──Statements
     │       │   │   └──Assign
     │       │   │       ├──ID: x
@@ -61,17 +61,17 @@
     │       │   │               ├──ID: b1
     │       │   │               └──ID: b2
     │       │   └──If
-    │       │       ├──RelOp: <=
-    │       │       │   ├──RelOp: !=
-    │       │       │   │   ├──RelOp: ==
-    │       │       │   │   │   ├──ID: x
-    │       │       │   │   │   └──Or
-    │       │       │   │   │       ├──ID: y
-    │       │       │   │   │       └──ID: y
-    │       │       │   │   └──And
-    │       │       │   │       ├──ID: z
-    │       │       │   │       └──ID: b1
-    │       │       │   └──ID: b2
+    │       │       ├──Or
+    │       │       │   ├──RelOp: ==
+    │       │       │   │   ├──ID: x
+    │       │       │   │   └──ID: y
+    │       │       │   └──And
+    │       │       │       ├──RelOp: !=
+    │       │       │       │   ├──ID: y
+    │       │       │       │   └──ID: z
+    │       │       │       └──RelOp: <=
+    │       │       │           ├──ID: b1
+    │       │       │           └──ID: b2
     │       │       ├──Statements
     │       │       │   └──Assign
     │       │       │       ├──ID: x
@@ -85,13 +85,13 @@
     │       │       └──Statements
     │       │           └──Assign
     │       │               ├──ID: x
-    │       │               └──BinOp: /
-    │       │                   ├──BinOp: *
-    │       │                   │   ├──BinOp: +
-    │       │                   │   │   ├──ID: x
-    │       │                   │   │   └──ID: y
-    │       │                   │   └──ID: z
-    │       │                   └──ID: b1
+    │       │               └──BinOp: +
+    │       │                   ├──ID: x
+    │       │                   └──BinOp: /
+    │       │                       ├──BinOp: *
+    │       │                       │   ├──ID: y
+    │       │                       │   └──ID: z
+    │       │                       └──ID: b1
     │       ├──If
     │       │   ├──RelOp: <
     │       │   │   ├──ID: x
@@ -109,14 +109,14 @@
     │       │   │       │           └──Num: 2
     │       │   │       └──Statements
     │       │   │           └──If
-    │       │   │               ├──RelOp: >
-    │       │   │               │   ├──ID: z
-    │       │   │               │   └──Or
-    │       │   │               │       ├──And
-    │       │   │               │       │   ├──ID: x
-    │       │   │               │       │   └──ID: flag1
-    │       │   │               │       └──Not
-    │       │   │               │           └──ID: flag2
+    │       │   │               ├──Or
+    │       │   │               │   ├──And
+    │       │   │               │   │   ├──RelOp: >
+    │       │   │               │   │   │   ├──ID: z
+    │       │   │               │   │   │   └──ID: x
+    │       │   │               │   │   └──ID: flag1
+    │       │   │               │   └──Not
+    │       │   │               │       └──ID: flag2
     │       │   │               └──Statements
     │       │   │                   └──Assign
     │       │   │                       ├──ID: x
@@ -201,22 +201,22 @@
     │       │   └──ExpList
     │       │       └──ID: result
     │       ├──If
-    │       │   ├──RelOp: <=
-    │       │   │   ├──RelOp: !=
-    │       │   │   │   ├──RelOp: >
-    │       │   │   │   │   ├──ID: x
-    │       │   │   │   │   └──And
+    │       │   ├──Or
+    │       │   │   ├──Or
+    │       │   │   │   ├──And
+    │       │   │   │   │   ├──RelOp: >
+    │       │   │   │   │   │   ├──ID: x
+    │       │   │   │   │   │   └──ID: y
+    │       │   │   │   │   └──RelOp: !=
     │       │   │   │   │       ├──ID: y
-    │       │   │   │   │       └──ID: y
-    │       │   │   │   └──Or
-    │       │   │   │       ├──ID: z
-    │       │   │   │       └──ID: x
-    │       │   │   └──Or
-    │       │   │       ├──And
-    │       │   │       │   ├──ID: z
-    │       │   │       │   └──Not
-    │       │   │       │       └──ID: flag1
-    │       │   │       └──ID: flag2
+    │       │   │   │   │       └──ID: z
+    │       │   │   │   └──And
+    │       │   │   │       ├──RelOp: <=
+    │       │   │   │       │   ├──ID: x
+    │       │   │   │       │   └──ID: z
+    │       │   │   │       └──Not
+    │       │   │   │           └──ID: flag1
+    │       │   │   └──ID: flag2
     │       │   └──Statements
     │       │       └──Call
     │       │           ├──ID: printResult
@@ -313,11 +313,11 @@
     │           └──Call
     │               ├──ID: secondLevel
     │               └──ExpList
-    │                   ├──BinOp: /
-    │                   │   ├──BinOp: -
-    │                   │   │   ├──ID: y
-    │                   │   │   └──ID: x
-    │                   │   └──Num: 2
+    │                   ├──BinOp: -
+    │                   │   ├──ID: y
+    │                   │   └──BinOp: /
+    │                   │       ├──ID: x
+    │                   │       └──Num: 2
     │                   └──BinOp: *
     │                       ├──BinOp: +
     │                       │   ├──ID: x
@@ -365,13 +365,13 @@
     │                           │   │   └──Num: 2
     │                           │   └──ID: p
     │                           └──BinOp: -
-    │                               ├──BinOp: /
-    │                               │   ├──BinOp: +
-    │                               │   │   ├──BinOp: *
-    │                               │   │   │   ├──ID: p
-    │                               │   │   │   └──Num: 2
-    │                               │   │   └──ID: q
-    │                               │   └──Num: 3
+    │                               ├──BinOp: +
+    │                               │   ├──BinOp: *
+    │                               │   │   ├──ID: p
+    │                               │   │   └──Num: 2
+    │                               │   └──BinOp: /
+    │                               │       ├──ID: q
+    │                               │       └──Num: 3
     │                               └──BinOp: -
     │                                   ├──ID: p
     │                                   └──ID: q
@@ -434,15 +434,15 @@
     │                                   ├──BinOp: -
     │                                   │   ├──ID: n
     │                                   │   └──Num: 1
-    │                                   └──BinOp: /
-    │                                       ├──BinOp: -
-    │                                       │   ├──BinOp: *
-    │                                       │   │   ├──BinOp: +
-    │                                       │   │   │   ├──ID: m
-    │                                       │   │   │   └──Num: 1
-    │                                       │   │   └──Num: 2
-    │                                       │   └──ID: n
-    │                                       └──Num: 3
+    │                                   └──BinOp: -
+    │                                       ├──BinOp: *
+    │                                       │   ├──BinOp: +
+    │                                       │   │   ├──ID: m
+    │                                       │   │   └──Num: 1
+    │                                       │   └──Num: 2
+    │                                       └──BinOp: /
+    │                                           ├──ID: n
+    │                                           └──Num: 3
     ├──FuncDecl
     │   ├──ID: recursiveFactorial
     │   ├──Type: int
@@ -491,15 +491,15 @@
     │       │   ├──Type: int
     │       │   └──BinOp: -
     │       │       ├──BinOp: +
-    │       │       │   ├──BinOp: /
-    │       │       │   │   ├──BinOp: *
-    │       │       │   │   │   ├──BinOp: +
-    │       │       │   │   │   │   ├──ID: x
-    │       │       │   │   │   │   └──ID: y
-    │       │       │   │   │   └──ID: z
-    │       │       │   │   └──BinOp: -
-    │       │       │   │       ├──ID: x
-    │       │       │   │       └──ID: z
+    │       │       │   ├──BinOp: +
+    │       │       │   │   ├──ID: x
+    │       │       │   │   └──BinOp: /
+    │       │       │   │       ├──BinOp: *
+    │       │       │   │       │   ├──ID: y
+    │       │       │   │       │   └──ID: z
+    │       │       │   │       └──BinOp: -
+    │       │       │   │           ├──ID: x
+    │       │       │   │           └──ID: z
     │       │       │   └──BinOp: *
     │       │       │       ├──ID: y
     │       │       │       └──ID: z
@@ -513,11 +513,11 @@
     │                   ├──ID: x
     │                   └──BinOp: /
     │                       ├──ID: y
-    │                       └──BinOp: *
-    │                           ├──BinOp: -
-    │                           │   ├──ID: z
-    │                           │   └──ID: x
-    │                           └──Num: 2
+    │                       └──BinOp: -
+    │                           ├──ID: z
+    │                           └──BinOp: *
+    │                               ├──ID: x
+    │                               └──Num: 2
     ├──FuncDecl
     │   ├──ID: complexLogic
     │   ├──Type: int
@@ -533,13 +533,13 @@
     │   │       └──Type: int
     │   └──Statements
     │       └──If
-    │           ├──RelOp: >
+    │           ├──And
     │           │   ├──RelOp: >
     │           │   │   ├──ID: a
-    │           │   │   └──And
-    │           │   │       ├──ID: b
-    │           │   │       └──ID: b
-    │           │   └──ID: c
+    │           │   │   └──ID: b
+    │           │   └──RelOp: >
+    │           │       ├──ID: b
+    │           │       └──ID: c
     │           ├──Statements
     │           │   └──Return
     │           │       └──BinOp: +
@@ -553,13 +553,13 @@
     │           │               └──ExpList
     │           │                   └──ID: c
     │           └──If
-    │               ├──RelOp: <
+    │               ├──Or
     │               │   ├──RelOp: <
     │               │   │   ├──ID: a
-    │               │   │   └──Or
-    │               │   │       ├──ID: b
-    │               │   │       └──ID: c
-    │               │   └──ID: a
+    │               │   │   └──ID: b
+    │               │   └──RelOp: <
+    │               │       ├──ID: c
+    │               │       └──ID: a
     │               ├──Statements
     │               │   └──Return
     │               │       └──BinOp: +
