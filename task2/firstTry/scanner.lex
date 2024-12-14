@@ -10,12 +10,6 @@ digit            ([0-9])
 letter           ([a-zA-Z])
 letterdigit      ([a-zA-Z0-9])
 whitespace       ([\t\n\r ])
-relop            ([<>=!]=|>|<)
-binop            ([-+*/])
-id               ([a-z][a-z0-9]*)
-num              (0|[1-9][0-9]*)
-num_b            (0b|[1-9][0-9]*b)
-string           ("([^"\n\r\\]|\\[rnt\"\\])*")
 
 %%
 void                            { yylval = std::make_shared<ast::Type>(ast::BuiltInType::VOID); return VOID; }
@@ -52,8 +46,9 @@ continue                        { yylval = std::make_shared<ast::Continue>(); re
 ">="                            { yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::GE); return RELOP; }
 [a-zA-Z][a-zA-Z0-9]*            { yylval = std::make_shared<ast::ID>(yytext); return ID; }
 (0|[1-9][0-9]*)                 { yylval = std::make_shared<ast::Num>(yytext); return NUM;}
-(0b[0-1]+|[1-9][0-9]*b)         { yylval = std::make_shared<ast::NumB>(yytext); return NUM_B;}
-"([^\"\n\r\\]|\\[rnt\"\\])*"    { yylval = std::make_shared<ast::Type>(ast::BuiltInType::STRING); return STRING; }
-[\t\n\r ]                       { }
+(0b|[1-9][0-9]*b)               { yylval = std::make_shared<ast::NumB>(yytext); return NUM_B;}
+\"([^\n\r\"\\]|\\[rnt\"\\])+\"  { yylval = std::make_shared<ast::String>(yytext); return STRING; }
+{whitespace}                    { }
+\/\/[^\r\n]*[\r|\n|\r\n]?       { }
 .                               { return ERROR; }
 
