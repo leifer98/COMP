@@ -67,7 +67,31 @@ RetType:    Type { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
             | VOID { $$ = std::dynamic_pointer_cast<ast::Type>($1); };
 
 // 7. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠 → 𝜖
-Formals:    /* epsilon */ { $$ = std::make_shared<ast::Formals>(); };
+// 8. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠 → 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡
+Formals:    /* epsilon */ { $$ = std::make_shared<ast::Formals>(); }
+            | FormalsList { $$ = std::dynamic_pointer_cast<ast::Formals>($1); };
+
+// 9. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡 → 𝐹𝑜𝑟𝑚𝑎𝑙𝐷𝑒𝑐𝑙
+// 10. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡 → 𝐹𝑜𝑟𝑚𝑎𝑙𝐷𝑒𝑐𝑙 𝐶𝑂𝑀𝑀𝐴 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡
+FormalsList: FormalDecl { 
+                $$ = std::make_shared<ast::Formals>(
+                    std::dynamic_pointer_cast<ast::Formal>($1)
+                );
+             }
+            | FormalDecl COMMA FormalsList {
+                auto formals = std::dynamic_pointer_cast<ast::Formals>($3);
+                formals->push_front(std::dynamic_pointer_cast<ast::Formal>($1));
+                $$ = formals; 
+            };
+
+
+// 11. 𝐹𝑜𝑟𝑚𝑎𝑙𝐷𝑒𝑐𝑙 → 𝑇𝑦𝑝𝑒 𝐼𝐷
+FormalDecl: Type ID { 
+                $$ = std::make_shared<ast::Formal>(
+                    std::dynamic_pointer_cast<ast::ID>($2),
+                    std::dynamic_pointer_cast<ast::Type>($1)
+                ); 
+            };
 
 // 12. 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡𝑠 → 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡
 // 13. 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡𝑠 → 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡𝑠 𝑆𝑡𝑎𝑡𝑒𝑚𝑒𝑛𝑡
@@ -179,9 +203,18 @@ ExpList:    Exp {
                 $$ = expList; 
             };
 
-// 33. 𝐿𝑃𝐴𝑅𝐸𝑁 𝐸𝑥𝑝 𝑅𝑃𝐴𝑅𝐸𝑁
-// 34. Exp BINOP Exp
-// 35. ID
+
+// 30. 𝑇𝑦𝑝𝑒 → 𝐼𝑁𝑇
+// 31. 𝑇𝑦𝑝𝑒 → 𝐵𝑌𝑇𝐸
+// 32. 𝑇𝑦𝑝𝑒 → 𝐵𝑂𝑂𝐿
+Type: INT { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
+    | BYTE { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
+    | BOOL { $$ = std::dynamic_pointer_cast<ast::Type>($1); };
+
+// 33. 𝐸𝑥𝑝 → 𝐿𝑃𝐴𝑅𝐸𝑁 𝐸𝑥𝑝 𝑅𝑃𝐴𝑅𝐸𝑁
+// 34. 𝐸𝑥𝑝 → Exp BINOP Exp
+// 35. 𝐸𝑥𝑝 → ID
+// 36. 𝐸𝑥𝑝 → 𝐶𝑎𝑙𝑙
 // 37. 𝐸𝑥𝑝 → 𝑁𝑈𝑀
 // 38. 𝐸𝑥𝑝 → 𝑁𝑈𝑀 𝐵
 // 39. 𝐸𝑥𝑝 → 𝑆𝑇𝑅𝐼𝑁𝐺
@@ -191,6 +224,7 @@ ExpList:    Exp {
 // 43. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝐴𝑁𝐷 𝐸𝑥𝑝
 // 44. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑂𝑅 𝐸𝑥𝑝
 // 45. 𝐸𝑥𝑝 → 𝐸𝑥𝑝 𝑅𝐸𝐿𝑂𝑃 𝐸𝑥p
+// 46. 𝐸𝑥𝑝 → 𝐿𝑃𝐴𝑅𝐸𝑁 𝑇𝑦𝑝𝑒 𝑅𝑃𝐴𝑅𝐸𝑁 𝐸𝑥𝑝
 Exp:        LPAREN Exp RPAREN { $$ = $2; }
             | Exp BINOP Exp {
                 auto binop = std::dynamic_pointer_cast<ast::BinOp>($2); // Extract the BinOp object
@@ -201,6 +235,7 @@ Exp:        LPAREN Exp RPAREN { $$ = $2; }
                 );
             }
             | ID { $$ = std::dynamic_pointer_cast<ast::ID>($1); }
+            | Call { $$ = std::dynamic_pointer_cast<ast::Call>($1); }
             | NUM { $$ = std::dynamic_pointer_cast<ast::Num>($1); }
             | NUM_B { $$ = std::dynamic_pointer_cast<ast::NumB>($1); }
             | STRING { $$ = std::dynamic_pointer_cast<ast::String>($1); }
@@ -230,20 +265,14 @@ Exp:        LPAREN Exp RPAREN { $$ = $2; }
                     std::dynamic_pointer_cast<ast::Exp>($3), // Right operand
                     relop->op // Extract the operation type
                 );
+            }
+            | LPAREN Type RPAREN Exp {
+                $$ = std::make_shared<ast::Cast>(
+                    std::dynamic_pointer_cast<ast::Exp>($4),
+                    std::dynamic_pointer_cast<ast::Type>($2)
+                );
             };
 
-// 30. 𝑇𝑦𝑝𝑒 → 𝐼𝑁𝑇
-// 31. 𝑇𝑦𝑝𝑒 → 𝐵𝑌𝑇𝐸
-// 32. 𝑇𝑦𝑝𝑒 → 𝐵𝑂𝑂𝐿
-Type: INT { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
-    | BYTE { $$ = std::dynamic_pointer_cast<ast::Type>($1); }
-    | BOOL { $$ = std::dynamic_pointer_cast<ast::Type>($1); };
-
-// Other rules to be implemented later as needed
-// 8. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠 → 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡
-// 9. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡 → 𝐹𝑜𝑟𝑚𝑎𝑙𝐷𝑒𝑐𝑙
-// 10. 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡 → 𝐹𝑜𝑟𝑚𝑎𝑙𝐷𝑒𝑐𝑙 𝐶𝑂𝑀𝑀𝐴 𝐹𝑜𝑟𝑚𝑎𝑙𝑠𝐿𝑖𝑠𝑡
-// ...
 
 %%
 
