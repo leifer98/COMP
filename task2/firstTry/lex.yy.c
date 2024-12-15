@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -535,8 +535,8 @@ char *yytext;
 #line 2 "scanner.lex"
     #include "output.hpp"
     #include "parser.tab.h"
-#line 538 "lex.yy.c"
 #line 539 "lex.yy.c"
+#line 540 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -755,7 +755,7 @@ YY_DECL
 	{
 #line 14 "scanner.lex"
 
-#line 758 "lex.yy.c"
+#line 759 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -935,32 +935,32 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 37 "scanner.lex"
-{ yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::ADD); return BINOP; }
+{ return PLUS; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 38 "scanner.lex"
-{ yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::SUB); return BINOP; }
+{ return MINUS; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 39 "scanner.lex"
-{ yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::MUL); return BINOP; }
+{ return MULTIPLY; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 40 "scanner.lex"
-{ yylval = std::make_shared<ast::BinOp>(nullptr, nullptr, ast::BinOpType::DIV); return BINOP; }
+{ return DIVIDE; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 41 "scanner.lex"
-{ yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::EQ); return RELOP; }
+{ return EQ; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 42 "scanner.lex"
-{ yylval = std::make_shared<ast::RelOp>(nullptr, nullptr, ast::RelOpType::NE); return RELOP; }
+{ return NE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -1024,7 +1024,7 @@ YY_RULE_SETUP
 #line 55 "scanner.lex"
 ECHO;
 	YY_BREAK
-#line 1027 "lex.yy.c"
+#line 1028 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

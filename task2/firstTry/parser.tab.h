@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.7.6.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -70,21 +70,24 @@ extern int yydebug;
     ID = 271,                      /* ID  */
     NUM = 272,                     /* NUM  */
     NUM_B = 273,                   /* NUM_B  */
-    BINOP = 274,                   /* BINOP  */
-    RELOP = 275,                   /* RELOP  */
-    STRING = 276,                  /* STRING  */
-    ERROR = 277,                   /* ERROR  */
-    ASSIGN = 278,                  /* ASSIGN  */
-    OR = 279,                      /* OR  */
-    AND = 280,                     /* AND  */
-    ADD_SUB = 281,                 /* ADD_SUB  */
-    MULT_DIV = 282,                /* MULT_DIV  */
-    NOT = 283,                     /* NOT  */
-    LPAREN = 284,                  /* LPAREN  */
-    RPAREN = 285,                  /* RPAREN  */
-    LBRACE = 286,                  /* LBRACE  */
-    RBRACE = 287,                  /* RBRACE  */
-    ELSE = 288                     /* ELSE  */
+    PLUS = 274,                    /* PLUS  */
+    MINUS = 275,                   /* MINUS  */
+    MULTIPLY = 276,                /* MULTIPLY  */
+    DIVIDE = 277,                  /* DIVIDE  */
+    RELOP = 278,                   /* RELOP  */
+    EQ = 279,                      /* EQ  */
+    NE = 280,                      /* NE  */
+    STRING = 281,                  /* STRING  */
+    ERROR = 282,                   /* ERROR  */
+    ASSIGN = 283,                  /* ASSIGN  */
+    OR = 284,                      /* OR  */
+    AND = 285,                     /* AND  */
+    NOT = 286,                     /* NOT  */
+    LPAREN = 287,                  /* LPAREN  */
+    RPAREN = 288,                  /* RPAREN  */
+    LBRACE = 289,                  /* LBRACE  */
+    RBRACE = 290,                  /* RBRACE  */
+    ELSE = 291                     /* ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -99,6 +102,8 @@ typedef int YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */

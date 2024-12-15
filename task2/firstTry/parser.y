@@ -3,6 +3,8 @@
 #include "nodes.hpp"
 #include "output.hpp"
 #include <memory>
+#include <ostream>
+#include <iostream>
 
 // Bison declarations
 extern int yylineno;
@@ -319,6 +321,13 @@ Exp:        LPAREN Exp RPAREN { $$ = $2; }
 
 // Error Handling
 void yyerror(const char * message) {
-    output::errorSyn(yylineno);
+    std::string errorMsg(message);
+    std::string token = errorMsg.substr(errorMsg.find("unexpected") + 11);
+    token = token.substr(0, token.find_first_of(" ,"));
+    if (token == "ERROR") {
+        output::errorLex(yylineno);
+    } else {
+        output::errorSyn(yylineno);
+    }
     exit(0);
 }
