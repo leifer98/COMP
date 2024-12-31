@@ -1,0 +1,32 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       ├──VarDecl
+    │       │   ├──ID: x
+    │       │   ├──Type: int
+    │       │   └──Num: 1
+    │       └──While
+    │           ├──RelOp: >
+    │           │   ├──ID: x
+    │           │   └──Num: 5
+    │           └──Statements
+    │               ├──Break
+    │               ├──Continue
+    │               └──Break
+    └──FuncDecl
+        ├──ID: try
+        ├──Type: int
+        ├──Formals
+        └──Statements
+            ├──VarDecl
+            │   ├──ID: x
+            │   ├──Type: int
+            │   └──Num: 1
+            └──While
+                ├──RelOp: >
+                │   ├──ID: x
+                │   └──Num: 5
+                └──Break

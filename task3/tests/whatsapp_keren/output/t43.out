@@ -1,0 +1,36 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──VarDecl
+            │   ├──ID: a
+            │   ├──Type: bool
+            │   └──Bool: true
+            ├──VarDecl
+            │   ├──ID: b
+            │   ├──Type: bool
+            │   └──Bool: false
+            ├──If
+            │   ├──And
+            │   │   ├──ID: a
+            │   │   └──ID: b
+            │   └──Statements
+            │       └──Call
+            │           ├──ID: print
+            │           └──ExpList
+            │               └──String: ok
+            ├──Call
+            │   ├──ID: print
+            │   └──ExpList
+            │       └──String: middle
+            └──If
+                ├──And
+                │   ├──ID: a
+                │   └──Num: 1
+                └──Statements
+                    └──Call
+                        ├──ID: print
+                        └──ExpList
+                            └──String: bad

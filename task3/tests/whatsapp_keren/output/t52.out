@@ -1,0 +1,19 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       └──Call
+    │           ├──ID: print
+    │           └──ExpList
+    │               └──String: ok
+    └──FuncDecl
+        ├──ID: foo
+        ├──Type: int
+        ├──Formals
+        └──Statements
+            ├──Return
+            │   └──Num: 42
+            └──Return
+                └──Bool: true

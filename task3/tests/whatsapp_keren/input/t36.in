@@ -1,0 +1,7 @@
+int foo() {
+    return 42; // Valid
+}
+
+int bar() {
+    return; // Error: Expected a return value
+}

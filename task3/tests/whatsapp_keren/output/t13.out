@@ -1,0 +1,25 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: returnByte
+    │   ├──Type: int
+    │   ├──Formals
+    │   └──Statements
+    │       ├──VarDecl
+    │       │   ├──ID: b
+    │       │   ├──Type: byte
+    │       │   └──Cast
+    │       │       ├──Num: 10
+    │       │       └──Type: byte
+    │       └──Return
+    │           └──ID: b
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──VarDecl
+                ├──ID: result
+                ├──Type: int
+                └──Call
+                    ├──ID: returnByte
+                    └──ExpList

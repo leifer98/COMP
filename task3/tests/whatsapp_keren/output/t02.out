@@ -1,0 +1,28 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: add
+    │   ├──Type: int
+    │   ├──Formals
+    │   │   ├──Formal
+    │   │   │   ├──ID: b
+    │   │   │   └──Type: int
+    │   │   └──Formal
+    │   │       ├──ID: a
+    │   │       └──Type: int
+    │   └──Statements
+    │       └──Return
+    │           └──BinOp: +
+    │               ├──ID: a
+    │               └──ID: b
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──VarDecl
+                ├──ID: result
+                ├──Type: int
+                └──Call
+                    ├──ID: add
+                    └──ExpList
+                        └──Num: 5

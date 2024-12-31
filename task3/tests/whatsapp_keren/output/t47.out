@@ -1,0 +1,13 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        │   └──Formal
+        │       ├──ID: x
+        │       └──Type: int
+        └──Statements
+            └──Call
+                ├──ID: print
+                └──ExpList
+                    └──String: ok

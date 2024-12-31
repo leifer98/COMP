@@ -1,0 +1,13 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──While
+                ├──Num: 123
+                └──Statements
+                    └──Call
+                        ├──ID: print
+                        └──ExpList
+                            └──String: ok

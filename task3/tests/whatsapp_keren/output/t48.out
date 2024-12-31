@@ -1,0 +1,11 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──While
+            │   ├──Bool: true
+            │   └──Statements
+            │       └──Break
+            └──Break

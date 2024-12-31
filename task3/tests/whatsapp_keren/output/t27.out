@@ -1,0 +1,10 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──VarDecl
+                ├──ID: x
+                ├──Type: int
+                └──String: str

@@ -1,0 +1,45 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       └──VarDecl
+    │           ├──ID: x
+    │           └──Type: int
+    ├──FuncDecl
+    │   ├──ID: hey
+    │   ├──Type: void
+    │   ├──Formals
+    │   │   └──Formal
+    │   │       ├──ID: isOk
+    │   │       └──Type: bool
+    │   └──Statements
+    │       └──VarDecl
+    │           ├──ID: i
+    │           ├──Type: int
+    │           └──Num: 0
+    ├──FuncDecl
+    │   ├──ID: printOk
+    │   ├──Type: void
+    │   ├──Formals
+    │   │   └──Formal
+    │   │       ├──ID: isOk
+    │   │       └──Type: bool
+    │   └──Statements
+    │       └──VarDecl
+    │           ├──ID: i
+    │           ├──Type: int
+    │           └──Num: 0
+    └──FuncDecl
+        ├──ID: hey
+        ├──Type: void
+        ├──Formals
+        │   └──Formal
+        │       ├──ID: isOk
+        │       └──Type: bool
+        └──Statements
+            └──VarDecl
+                ├──ID: i
+                ├──Type: int
+                └──Num: 0

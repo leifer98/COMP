@@ -1,0 +1,16 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──VarDecl
+            │   ├──ID: x
+            │   ├──Type: int
+            │   └──Num: 0
+            └──VarDecl
+                ├──ID: y
+                ├──Type: bool
+                └──Call
+                    ├──ID: x
+                    └──ExpList

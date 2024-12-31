@@ -1,0 +1,9 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──Assign
+                ├──ID: x
+                └──Num: 10

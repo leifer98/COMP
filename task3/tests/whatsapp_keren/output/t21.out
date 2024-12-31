@@ -1,0 +1,46 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──VarDecl
+            │   ├──ID: x
+            │   ├──Type: int
+            │   └──Num: 3
+            ├──VarDecl
+            │   ├──ID: this
+            │   ├──Type: byte
+            │   └──NumB: 4
+            ├──VarDecl
+            │   ├──ID: b
+            │   ├──Type: int
+            │   └──BinOp: +
+            │       ├──ID: x
+            │       └──ID: this
+            ├──VarDecl
+            │   ├──ID: sec
+            │   ├──Type: byte
+            │   └──NumB: 2
+            ├──VarDecl
+            │   ├──ID: third
+            │   ├──Type: byte
+            │   └──BinOp: +
+            │       ├──ID: this
+            │       └──ID: sec
+            ├──VarDecl
+            │   ├──ID: c
+            │   ├──Type: int
+            │   └──BinOp: +
+            │       ├──ID: this
+            │       └──ID: x
+            └──VarDecl
+                ├──ID: d
+                ├──Type: int
+                └──BinOp: +
+                    ├──BinOp: +
+                    │   ├──BinOp: +
+                    │   │   ├──ID: this
+                    │   │   └──ID: x
+                    │   └──ID: sec
+                    └──ID: third

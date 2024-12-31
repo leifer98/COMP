@@ -1,0 +1,37 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       └──Call
+    │           ├──ID: print
+    │           └──ExpList
+    │               └──String: hi
+    ├──FuncDecl
+    │   ├──ID: try
+    │   ├──Type: int
+    │   ├──Formals
+    │   │   ├──Formal
+    │   │   │   ├──ID: b
+    │   │   │   └──Type: int
+    │   │   └──Formal
+    │   │       ├──ID: a
+    │   │       └──Type: int
+    │   └──Statements
+    │       └──Call
+    │           ├──ID: print
+    │           └──ExpList
+    │               └──String: try1
+    └──FuncDecl
+        ├──ID: try
+        ├──Type: bool
+        ├──Formals
+        │   └──Formal
+        │       ├──ID: c
+        │       └──Type: bool
+        └──Statements
+            └──VarDecl
+                ├──ID: d
+                ├──Type: bool
+                └──ID: c

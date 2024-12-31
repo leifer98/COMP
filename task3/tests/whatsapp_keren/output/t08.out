@@ -1,0 +1,28 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       └──VarDecl
+    │           ├──ID: x
+    │           ├──Type: int
+    │           └──Num: 3
+    ├──FuncDecl
+    │   ├──ID: try
+    │   ├──Type: int
+    │   ├──Formals
+    │   └──Statements
+    │       └──Call
+    │           ├──ID: print
+    │           └──ExpList
+    │               └──String: hi
+    └──FuncDecl
+        ├──ID: try
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──Call
+                ├──ID: print
+                └──ExpList
+                    └──String: bye

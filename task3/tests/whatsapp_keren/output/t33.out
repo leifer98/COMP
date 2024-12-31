@@ -1,0 +1,14 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            ├──Call
+            │   ├──ID: print
+            │   └──ExpList
+            │       └──String: Hello, World!
+            └──Call
+                ├──ID: printi
+                └──ExpList
+                    └──Num: 42

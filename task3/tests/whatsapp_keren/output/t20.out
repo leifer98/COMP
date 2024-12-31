@@ -1,0 +1,29 @@
+└──Funcs
+    ├──FuncDecl
+    │   ├──ID: main
+    │   ├──Type: void
+    │   ├──Formals
+    │   └──Statements
+    │       ├──VarDecl
+    │       │   ├──ID: x
+    │       │   ├──Type: int
+    │       │   └──Num: 3
+    │       └──If
+    │           ├──RelOp: ==
+    │           │   ├──ID: x
+    │           │   └──Num: 3
+    │           └──Statements
+    │               └──Statements
+    │                   └──VarDecl
+    │                       ├──ID: b
+    │                       ├──Type: int
+    │                       └──Num: 3
+    └──FuncDecl
+        ├──ID: this
+        ├──Type: int
+        ├──Formals
+        └──Statements
+            └──VarDecl
+                ├──ID: b
+                ├──Type: int
+                └──Num: 3

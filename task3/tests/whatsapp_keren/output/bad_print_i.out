@@ -1,0 +1,10 @@
+└──Funcs
+    └──FuncDecl
+        ├──ID: main
+        ├──Type: void
+        ├──Formals
+        └──Statements
+            └──Call
+                ├──ID: printi
+                └──ExpList
+                    └──String: 5
