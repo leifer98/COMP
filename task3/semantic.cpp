@@ -332,6 +332,7 @@ void SemanticVisitor::visit(ast::Statements &node) {
     
     // Visit all statements:
     for (std::shared_ptr<ast::Statement> statement: node.statements) {
+        statement->isInWhile = node.isInWhile;
         statement->accept(*this);
     }
 
