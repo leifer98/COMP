@@ -481,6 +481,8 @@ void SemanticVisitor::visit(ast::FuncDecl &node) {
 
 void SemanticVisitor::visit(ast::Funcs &node) {
 
+    bool mainFound = false;
+
     // Declare all functions:
     for (std::shared_ptr<ast::FuncDecl> func: node.funcs) {
         // Get a vector of param types:
@@ -492,6 +494,14 @@ void SemanticVisitor::visit(ast::Funcs &node) {
         func->id->idType = ast::IdType::FUNC_DECLARATION;
         func->id->accept(*this);
         symTable.declareFunc(func->id->value, func->return_type->type, paramTypes);
+
+        if (func->id->value == "main" && func->return_type->type == ast::BuiltInType::VOID && paramTypes.size() == 0) {
+            mainFound = true;
+        }
+    }
+
+    if (!mainFound) {
+        output::errorMainMissing();
     }
 
     // Visit all functions:
