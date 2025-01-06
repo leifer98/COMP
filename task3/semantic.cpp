@@ -173,25 +173,26 @@ void SemanticVisitor::visit(ast::Bool &node) {
 void SemanticVisitor::visit(ast::ID &node) {
 
     std::shared_ptr<Symbol> symbol = symTable.lookup(node.value);
+
     if (symbol) {  // The identifier exists
-        if (node.isFunctionCall) {
+        if (node.idType == ast::IdType::VAR_USAGE) {
+            if (symbol->isFunction) {
+                output::errorDefAsFunc(node.line, node.value);
+            } else {
+                node.type = symbol->type;
+            }
+        } else if (node.idType == ast::IdType::FUNC_CALL) {
             if (symbol->isFunction) {
                 node.type = symbol->type;
             } else {
                 output::errorDefAsVar(node.line, node.value);
             }
-        } else {
-            if (symbol->isFunction) {
-                output::errorDefAsFunc(node.line, node.value);
-            } else if (node.isDeclaration) {
-                output::errorDef(node.line, node.value);
-            } else {
-                node.type = symbol->type;
-            }
+        } else if (node.idType == ast::IdType::VAR_DECLARATION || node.idType == ast::IdType::FUNC_DECLARATION) {
+            output::errorDef(node.line, node.value);
         }
     } else {
-        if (!node.isDeclaration) {
-            if (node.isFunctionCall) {
+        if (node.idType != ast::IdType::VAR_DECLARATION && node.idType != ast::IdType::FUNC_DECLARATION) {
+            if (node.idType == ast::IdType::FUNC_CALL) {
                 output::errorUndefFunc(node.line, node.value);
             } else {
                 output::errorUndef(node.line, node.value);
@@ -294,7 +295,7 @@ void SemanticVisitor::visit(ast::Call &node) {
 
     node.args->accept(*this);
 
-    node.func_id->isFunctionCall = true;
+    node.func_id->idType = ast::IdType::FUNC_CALL;
     node.func_id->accept(*this);
 
     node.type = node.func_id->type;
@@ -411,13 +412,14 @@ void SemanticVisitor::visit(ast::VarDecl &node) {
     }
 
     // Give the id node the data that it's a declaration of a var and than visit it:
-    node.id->isDeclaration = true;
+    node.id->idType = ast::IdType::VAR_DECLARATION;
     node.id->accept(*this);
 
     symTable.declareVar(node.id->value, node.type->type, false);
 }
 
 void SemanticVisitor::visit(ast::Assign &node) {
+    node.id->idType = ast::IdType::VAR_USAGE;
     node.id->accept(*this);
     node.exp->accept(*this);
         
@@ -431,7 +433,7 @@ void SemanticVisitor::visit(ast::Formal &node) {
     node.type->accept(*this);
 
     // Give the id node the data that it's a declaration of a var and than visit it:
-    node.id->isDeclaration = true;
+    node.id->idType = ast::IdType::VAR_DECLARATION;
     node.id->accept(*this);
 
     symTable.declareVar(node.id->value, node.type->type, true);
@@ -447,6 +449,7 @@ void SemanticVisitor::visit(ast::Formals &node) {
 void SemanticVisitor::visit(ast::FuncDecl &node) {
 
     node.return_type->accept(*this);
+
     node.id->type = node.return_type->type;
     
     symTable.startScope();
@@ -486,6 +489,8 @@ void SemanticVisitor::visit(ast::Funcs &node) {
             paramTypes.push_back(formal->type->type);
         }
 
+        func->id->idType = ast::IdType::FUNC_DECLARATION;
+        func->id->accept(*this);
         symTable.declareFunc(func->id->value, func->return_type->type, paramTypes);
     }
 
