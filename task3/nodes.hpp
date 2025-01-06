@@ -59,7 +59,7 @@ namespace ast {
     /* Base class for all statements */
     class Statement : virtual public Node {
     public:
-        bool isInWhile;
+        bool isInWhile = false;
     };
 
     /* Number literal */
@@ -293,7 +293,7 @@ namespace ast {
     public:
         // List of statements
         std::vector<std::shared_ptr<Statement>> statements;
-        bool isFuncBody;
+        bool isFuncBody = false;
 
         // Constructor that receives no statements
         Statements() = default;
