@@ -157,6 +157,10 @@ void SemanticVisitor::visit(ast::Num &node) {
 
 void SemanticVisitor::visit(ast::NumB &node) {
     
+    if (node.value > 255) {
+        output::errorByteTooLarge(node.line, node.value);
+    }
+    
     node.type = ast::BuiltInType::BYTE;
 }
 
@@ -234,7 +238,7 @@ void SemanticVisitor::visit(ast::RelOp &node) {
 }
 
 void SemanticVisitor::visit(ast::Type &node) {
-    
+
 }
 
 void SemanticVisitor::visit(ast::Cast &node) {
