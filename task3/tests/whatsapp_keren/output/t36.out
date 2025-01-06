@@ -1,14 +1,1 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: foo
-    │   ├──Type: int
-    │   ├──Formals
-    │   └──Statements
-    │       └──Return
-    │           └──Num: 42
-    └──FuncDecl
-        ├──ID: bar
-        ├──Type: int
-        ├──Formals
-        └──Statements
-            └──Return
+line 9: type mismatch

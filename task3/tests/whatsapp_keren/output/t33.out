@@ -1,14 +1,7 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──Call
-            │   ├──ID: print
-            │   └──ExpList
-            │       └──String: Hello, World!
-            └──Call
-                ├──ID: printi
-                └──ExpList
-                    └──Num: 42
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+  ---begin scope---
+  ---end scope---
+---end global scope---

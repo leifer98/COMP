@@ -1,21 +1,9 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: x
-            │   ├──Type: int
-            │   └──Num: 10
-            ├──VarDecl
-            │   ├──ID: y
-            │   └──Type: byte
-            ├──Assign
-            │   ├──ID: y
-            │   └──Cast
-            │       ├──ID: x
-            │       └──Type: byte
-            └──Assign
-                ├──ID: x
-                └──ID: y
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+  ---begin scope---
+  x int 0
+  y byte 1
+  ---end scope---
+---end global scope---

@@ -1,16 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: b
-            │   ├──Type: bool
-            │   └──Bool: true
-            └──VarDecl
-                ├──ID: x
-                ├──Type: int
-                └──BinOp: +
-                    ├──ID: b
-                    └──Num: 10
+line 3: type mismatch

@@ -1,12 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: x
-            │   └──Type: int
-            └──VarDecl
-                ├──ID: x
-                └──Type: int
+line 3: symbol x is already defined

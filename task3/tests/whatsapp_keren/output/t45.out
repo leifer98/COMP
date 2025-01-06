@@ -1,26 +1,12 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: foo
-    │   ├──Type: int
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: y
-    │   │   │   └──Type: byte
-    │   │   └──Formal
-    │   │       ├──ID: x
-    │   │       └──Type: int
-    │   └──Statements
-    │       └──Return
-    │           └──BinOp: +
-    │               ├──ID: x
-    │               └──ID: y
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──Call
-                ├──ID: foo
-                └──ExpList
-                    ├──NumB: 256
-                    └──Num: 10
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+foo (int,byte) -> int
+main () -> void
+  ---begin scope---
+  x int -1
+  y byte -2
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+---end global scope---

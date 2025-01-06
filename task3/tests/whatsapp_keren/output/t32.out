@@ -1,9 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──Assign
-                ├──ID: x
-                └──Num: 10
+line 2: variable x is not defined

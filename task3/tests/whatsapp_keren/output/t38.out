@@ -1,8 +1,7 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: int
-        ├──Formals
-        └──Statements
-            └──Return
-                └──Num: 0
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> int
+  ---begin scope---
+  ---end scope---
+---end global scope---

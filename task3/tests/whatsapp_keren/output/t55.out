@@ -1,647 +1,198 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: displayBanner
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──Call
-    │       │   ├──ID: print
-    │       │   └──ExpList
-    │       │       └──String: ************************************************************
-    │       ├──Call
-    │       │   ├──ID: print
-    │       │   └──ExpList
-    │       │       └──String: * Welcome to the Ultimate FanC Semantic Analyzer Stress Test *
-    │       └──Call
-    │           ├──ID: print
-    │           └──ExpList
-    │               └──String: ************************************************************
-    ├──FuncDecl
-    │   ├──ID: nestedArithmeticAndRelational
-    │   ├──Type: int
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: flag
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: c
-    │   │   │   └──Type: byte
-    │   │   ├──Formal
-    │   │   │   ├──ID: b
-    │   │   │   └──Type: int
-    │   │   └──Formal
-    │   │       ├──ID: a
-    │   │       └──Type: int
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: result
-    │       │   ├──Type: int
-    │       │   └──Num: 0
-    │       ├──If
-    │       │   ├──ID: flag
-    │       │   ├──Statements
-    │       │   │   └──Assign
-    │       │   │       ├──ID: result
-    │       │   │       └──BinOp: +
-    │       │   │           ├──BinOp: -
-    │       │   │           │   ├──BinOp: -
-    │       │   │           │   │   ├──BinOp: *
-    │       │   │           │   │   │   ├──BinOp: +
-    │       │   │           │   │   │   │   ├──ID: a
-    │       │   │           │   │   │   │   └──ID: b
-    │       │   │           │   │   │   └──Cast
-    │       │   │           │   │   │       ├──ID: c
-    │       │   │           │   │   │       └──Type: int
-    │       │   │           │   │   └──BinOp: /
-    │       │   │           │   │       ├──ID: b
-    │       │   │           │   │       └──ID: c
-    │       │   │           │   └──BinOp: +
-    │       │   │           │       ├──BinOp: -
-    │       │   │           │       │   ├──ID: a
-    │       │   │           │       │   └──ID: b
-    │       │   │           │       └──Cast
-    │       │   │           │           ├──ID: c
-    │       │   │           │           └──Type: int
-    │       │   │           └──BinOp: -
-    │       │   │               ├──BinOp: +
-    │       │   │               │   ├──BinOp: *
-    │       │   │               │   │   ├──ID: b
-    │       │   │               │   │   └──ID: c
-    │       │   │               │   └──ID: a
-    │       │   │               └──BinOp: +
-    │       │   │                   ├──BinOp: -
-    │       │   │                   │   ├──ID: c
-    │       │   │                   │   └──ID: a
-    │       │   │                   └──ID: b
-    │       │   └──Statements
-    │       │       └──Assign
-    │       │           ├──ID: result
-    │       │           └──BinOp: +
-    │       │               ├──BinOp: *
-    │       │               │   ├──BinOp: -
-    │       │               │   │   ├──ID: a
-    │       │               │   │   └──ID: b
-    │       │               │   └──BinOp: -
-    │       │               │       ├──BinOp: +
-    │       │               │       │   ├──ID: c
-    │       │               │       │   └──ID: b
-    │       │               │       └──ID: a
-    │       │               └──BinOp: -
-    │       │                   ├──BinOp: /
-    │       │                   │   ├──BinOp: *
-    │       │                   │   │   ├──ID: b
-    │       │                   │   │   └──Cast
-    │       │                   │   │       ├──ID: c
-    │       │                   │   │       └──Type: int
-    │       │                   │   └──ID: a
-    │       │                   └──BinOp: +
-    │       │                       ├──ID: c
-    │       │                       └──ID: b
-    │       ├──While
-    │       │   ├──RelOp: >
-    │       │   │   ├──ID: result
-    │       │   │   └──Num: 0
-    │       │   └──Statements
-    │       │       └──Assign
-    │       │           ├──ID: result
-    │       │           └──BinOp: -
-    │       │               ├──ID: result
-    │       │               └──Num: 1
-    │       └──Return
-    │           └──ID: result
-    ├──FuncDecl
-    │   ├──ID: testScopes
-    │   ├──Type: void
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: condition
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: y
-    │   │   │   └──Type: byte
-    │   │   └──Formal
-    │   │       ├──ID: x
-    │   │       └──Type: int
-    │   └──Statements
-    │       ├──Statements
-    │       │   ├──VarDecl
-    │       │   │   ├──ID: shadow
-    │       │   │   ├──Type: int
-    │       │   │   └──BinOp: +
-    │       │   │       ├──ID: x
-    │       │   │       └──ID: y
-    │       │   └──While
-    │       │       ├──RelOp: >
-    │       │       │   ├──ID: shadow
-    │       │       │   └──Num: 0
-    │       │       └──Statements
-    │       │           ├──If
-    │       │           │   ├──ID: condition
-    │       │           │   ├──Statements
-    │       │           │   │   └──Statements
-    │       │           │   │       ├──VarDecl
-    │       │           │   │       │   ├──ID: shadow1
-    │       │           │   │       │   ├──Type: byte
-    │       │           │   │       │   └──BinOp: /
-    │       │           │   │       │       ├──ID: y
-    │       │           │   │       │       └──NumB: 2
-    │       │           │   │       └──Call
-    │       │           │   │           ├──ID: printi
-    │       │           │   │           └──ExpList
-    │       │           │   │               └──BinOp: +
-    │       │           │   │                   ├──Cast
-    │       │           │   │                   │   ├──ID: shadow
-    │       │           │   │                   │   └──Type: int
-    │       │           │   │                   └──ID: x
-    │       │           │   └──Statements
-    │       │           │       └──Call
-    │       │           │           ├──ID: printi
-    │       │           │           └──ExpList
-    │       │           │               └──ID: shadow
-    │       │           └──Assign
-    │       │               ├──ID: shadow
-    │       │               └──BinOp: -
-    │       │                   ├──ID: shadow
-    │       │                   └──Num: 1
-    │       └──Call
-    │           ├──ID: print
-    │           └──ExpList
-    │               └──String: Scope test completed.
-    ├──FuncDecl
-    │   ├──ID: longLogicalExpression
-    │   ├──Type: bool
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: e
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: d
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: c
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: b
-    │   │   │   └──Type: bool
-    │   │   └──Formal
-    │   │       ├──ID: a
-    │   │       └──Type: bool
-    │   └──Statements
-    │       └──Return
-    │           └──And
-    │               ├──Or
-    │               │   ├──And
-    │               │   │   ├──ID: a
-    │               │   │   └──Not
-    │               │   │       └──ID: b
-    │               │   └──And
-    │               │       ├──ID: c
-    │               │       └──ID: d
-    │               └──And
-    │                   ├──Or
-    │                   │   ├──Not
-    │                   │   │   └──ID: e
-    │                   │   └──ID: b
-    │                   └──Or
-    │                       ├──ID: a
-    │                       └──Not
-    │                           └──ID: d
-    ├──FuncDecl
-    │   ├──ID: recursiveFibonacci
-    │   ├──Type: int
-    │   ├──Formals
-    │   │   └──Formal
-    │   │       ├──ID: n
-    │   │       └──Type: int
-    │   └──Statements
-    │       ├──If
-    │       │   ├──RelOp: <=
-    │       │   │   ├──ID: n
-    │       │   │   └──Num: 1
-    │       │   └──Statements
-    │       │       └──Return
-    │       │           └──ID: n
-    │       └──Return
-    │           └──BinOp: +
-    │               ├──Call
-    │               │   ├──ID: recursiveFibonacci
-    │               │   └──ExpList
-    │               │       └──BinOp: -
-    │               │           ├──ID: n
-    │               │           └──Num: 1
-    │               └──Call
-    │                   ├──ID: recursiveFibonacci
-    │                   └──ExpList
-    │                       └──BinOp: -
-    │                           ├──ID: n
-    │                           └──Num: 2
-    ├──FuncDecl
-    │   ├──ID: calculateWithManyParameters
-    │   ├──Type: int
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: f
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: e
-    │   │   │   └──Type: byte
-    │   │   ├──Formal
-    │   │   │   ├──ID: d
-    │   │   │   └──Type: int
-    │   │   ├──Formal
-    │   │   │   ├──ID: c
-    │   │   │   └──Type: bool
-    │   │   ├──Formal
-    │   │   │   ├──ID: b
-    │   │   │   └──Type: byte
-    │   │   └──Formal
-    │   │       ├──ID: a
-    │   │       └──Type: int
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: result
-    │       │   ├──Type: int
-    │       │   └──Num: 0
-    │       ├──If
-    │       │   ├──And
-    │       │   │   ├──ID: c
-    │       │   │   └──ID: f
-    │       │   ├──Statements
-    │       │   │   └──Assign
-    │       │   │       ├──ID: result
-    │       │   │       └──BinOp: /
-    │       │   │           ├──BinOp: *
-    │       │   │           │   ├──BinOp: +
-    │       │   │           │   │   ├──ID: a
-    │       │   │           │   │   └──ID: d
-    │       │   │           │   └──BinOp: +
-    │       │   │           │       ├──ID: b
-    │       │   │           │       └──ID: e
-    │       │   │           └──BinOp: -
-    │       │   │               ├──BinOp: -
-    │       │   │               │   ├──ID: a
-    │       │   │               │   └──ID: e
-    │       │   │               └──ID: b
-    │       │   └──Statements
-    │       │       └──Assign
-    │       │           ├──ID: result
-    │       │           └──BinOp: -
-    │       │               ├──BinOp: +
-    │       │               │   ├──BinOp: -
-    │       │               │   │   ├──ID: d
-    │       │               │   │   └──ID: a
-    │       │               │   └──BinOp: /
-    │       │               │       ├──ID: e
-    │       │               │       └──ID: b
-    │       │               └──BinOp: *
-    │       │                   ├──Cast
-    │       │                   │   ├──ID: b
-    │       │                   │   └──Type: int
-    │       │                   └──ID: a
-    │       └──Return
-    │           └──ID: result
-    ├──FuncDecl
-    │   ├──ID: nestedWhileLoopTest
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: i
-    │       │   ├──Type: int
-    │       │   └──Num: 0
-    │       └──While
-    │           ├──RelOp: <
-    │           │   ├──ID: i
-    │           │   └──Num: 10
-    │           └──Statements
-    │               ├──VarDecl
-    │               │   ├──ID: j
-    │               │   ├──Type: int
-    │               │   └──Num: 0
-    │               ├──While
-    │               │   ├──RelOp: <
-    │               │   │   ├──ID: j
-    │               │   │   └──ID: i
-    │               │   └──Statements
-    │               │       ├──VarDecl
-    │               │       │   ├──ID: k
-    │               │       │   ├──Type: byte
-    │               │       │   └──NumB: 5
-    │               │       ├──Statements
-    │               │       │   └──If
-    │               │       │       ├──RelOp: ==
-    │               │       │       │   ├──BinOp: -
-    │               │       │       │   │   ├──BinOp: +
-    │               │       │       │   │   │   ├──ID: i
-    │               │       │       │   │   │   └──ID: j
-    │               │       │       │   │   └──Cast
-    │               │       │       │   │       ├──ID: k
-    │               │       │       │   │       └──Type: int
-    │               │       │       │   └──Num: 0
-    │               │       │       ├──Statements
-    │               │       │       │   └──Call
-    │               │       │       │       ├──ID: printi
-    │               │       │       │       └──ExpList
-    │               │       │       │           └──BinOp: *
-    │               │       │       │               ├──ID: i
-    │               │       │       │               └──ID: j
-    │               │       │       └──Statements
-    │               │       │           └──Call
-    │               │       │               ├──ID: printi
-    │               │       │               └──ExpList
-    │               │       │                   └──BinOp: +
-    │               │       │                       ├──ID: i
-    │               │       │                       └──ID: j
-    │               │       └──Assign
-    │               │           ├──ID: j
-    │               │           └──BinOp: +
-    │               │               ├──ID: j
-    │               │               └──Num: 1
-    │               └──Assign
-    │                   ├──ID: i
-    │                   └──BinOp: +
-    │                       ├──ID: i
-    │                       └──Num: 1
-    ├──FuncDecl
-    │   ├──ID: testDeeplyNestedIfElse
-    │   ├──Type: bool
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: z
-    │   │   │   └──Type: byte
-    │   │   ├──Formal
-    │   │   │   ├──ID: y
-    │   │   │   └──Type: int
-    │   │   └──Formal
-    │   │       ├──ID: x
-    │   │       └──Type: int
-    │   └──Statements
-    │       ├──If
-    │       │   ├──RelOp: >
-    │       │   │   ├──ID: x
-    │       │   │   └──ID: y
-    │       │   ├──Statements
-    │       │   │   └──If
-    │       │   │       ├──RelOp: <
-    │       │   │       │   ├──ID: z
-    │       │   │       │   └──ID: x
-    │       │   │       ├──Statements
-    │       │   │       │   └──If
-    │       │   │       │       ├──RelOp: ==
-    │       │   │       │       │   ├──BinOp: -
-    │       │   │       │       │   │   ├──BinOp: +
-    │       │   │       │       │   │   │   ├──ID: x
-    │       │   │       │       │   │   │   └──ID: y
-    │       │   │       │       │   │   └──ID: z
-    │       │   │       │       │   └──Num: 0
-    │       │   │       │       ├──Statements
-    │       │   │       │       │   └──Return
-    │       │   │       │       │       └──Bool: true
-    │       │   │       │       └──Statements
-    │       │   │       │           └──If
-    │       │   │       │               ├──RelOp: >
-    │       │   │       │               │   ├──BinOp: -
-    │       │   │       │               │   │   ├──ID: x
-    │       │   │       │               │   │   └──ID: y
-    │       │   │       │               │   └──ID: z
-    │       │   │       │               ├──Statements
-    │       │   │       │               │   └──Return
-    │       │   │       │               │       └──Bool: false
-    │       │   │       │               └──Statements
-    │       │   │       │                   └──Return
-    │       │   │       │                       └──Bool: true
-    │       │   │       └──Statements
-    │       │   │           └──Return
-    │       │   │               └──Bool: false
-    │       │   └──Statements
-    │       │       └──If
-    │       │           ├──RelOp: >
-    │       │           │   ├──ID: y
-    │       │           │   └──ID: z
-    │       │           ├──Statements
-    │       │           │   └──Return
-    │       │           │       └──Bool: true
-    │       │           └──Statements
-    │       │               └──If
-    │       │                   ├──RelOp: ==
-    │       │                   │   ├──BinOp: -
-    │       │                   │   │   ├──ID: x
-    │       │                   │   │   └──ID: z
-    │       │                   │   └──Num: 0
-    │       │                   └──Statements
-    │       │                       └──Return
-    │       │                           └──Bool: false
-    │       └──Return
-    │           └──Bool: true
-    ├──FuncDecl
-    │   ├──ID: largeCalculations
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: a
-    │       │   ├──Type: int
-    │       │   └──Num: 500
-    │       ├──VarDecl
-    │       │   ├──ID: b
-    │       │   ├──Type: byte
-    │       │   └──NumB: 50
-    │       ├──VarDecl
-    │       │   ├──ID: result
-    │       │   ├──Type: int
-    │       │   └──Num: 0
-    │       ├──Assign
-    │       │   ├──ID: result
-    │       │   └──BinOp: +
-    │       │       ├──BinOp: *
-    │       │       │   ├──BinOp: +
-    │       │       │   │   ├──ID: a
-    │       │       │   │   └──ID: b
-    │       │       │   └──BinOp: /
-    │       │       │       ├──Cast
-    │       │       │       │   ├──ID: b
-    │       │       │       │   └──Type: int
-    │       │       │       └──BinOp: -
-    │       │       │           ├──ID: a
-    │       │       │           └──ID: b
-    │       │       └──BinOp: -
-    │       │           ├──BinOp: +
-    │       │           │   ├──BinOp: -
-    │       │           │   │   ├──ID: a
-    │       │           │   │   └──ID: b
-    │       │           │   └──BinOp: *
-    │       │           │       ├──ID: b
-    │       │           │       └──ID: a
-    │       │           └──BinOp: /
-    │       │               ├──ID: a
-    │       │               └──Cast
-    │       │                   ├──ID: b
-    │       │                   └──Type: int
-    │       └──Call
-    │           ├──ID: printi
-    │           └──ExpList
-    │               └──ID: result
-    ├──FuncDecl
-    │   ├──ID: masterTestSuite
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──Call
-    │       │   ├──ID: displayBanner
-    │       │   └──ExpList
-    │       ├──VarDecl
-    │       │   ├──ID: arithResult
-    │       │   ├──Type: int
-    │       │   └──Call
-    │       │       ├──ID: nestedArithmeticAndRelational
-    │       │       └──ExpList
-    │       │           ├──Bool: true
-    │       │           ├──NumB: 25
-    │       │           ├──Num: 50
-    │       │           └──Num: 100
-    │       ├──Call
-    │       │   ├──ID: printi
-    │       │   └──ExpList
-    │       │       └──ID: arithResult
-    │       ├──Call
-    │       │   ├──ID: testScopes
-    │       │   └──ExpList
-    │       │       ├──Bool: true
-    │       │       ├──NumB: 30
-    │       │       └──Num: 200
-    │       ├──VarDecl
-    │       │   ├──ID: logicalResult
-    │       │   ├──Type: bool
-    │       │   └──Call
-    │       │       ├──ID: longLogicalExpression
-    │       │       └──ExpList
-    │       │           ├──Bool: true
-    │       │           ├──Bool: false
-    │       │           ├──Bool: true
-    │       │           ├──Bool: false
-    │       │           └──Bool: true
-    │       ├──If
-    │       │   ├──ID: logicalResult
-    │       │   ├──Statements
-    │       │   │   └──Call
-    │       │   │       ├──ID: print
-    │       │   │       └──ExpList
-    │       │   │           └──String: Logical expression passed.
-    │       │   └──Statements
-    │       │       └──Call
-    │       │           ├──ID: print
-    │       │           └──ExpList
-    │       │               └──String: Logical expression failed.
-    │       ├──VarDecl
-    │       │   ├──ID: fibResult
-    │       │   ├──Type: int
-    │       │   └──Call
-    │       │       ├──ID: recursiveFibonacci
-    │       │       └──ExpList
-    │       │           └──Num: 10
-    │       ├──Call
-    │       │   ├──ID: printi
-    │       │   └──ExpList
-    │       │       └──ID: fibResult
-    │       ├──VarDecl
-    │       │   ├──ID: paramResult
-    │       │   ├──Type: int
-    │       │   └──Call
-    │       │       ├──ID: calculateWithManyParameters
-    │       │       └──ExpList
-    │       │           ├──Bool: false
-    │       │           ├──NumB: 10
-    │       │           ├──Num: 300
-    │       │           ├──Bool: true
-    │       │           ├──NumB: 50
-    │       │           └──Num: 500
-    │       ├──Call
-    │       │   ├──ID: printi
-    │       │   └──ExpList
-    │       │       └──ID: paramResult
-    │       ├──Call
-    │       │   ├──ID: nestedWhileLoopTest
-    │       │   └──ExpList
-    │       ├──VarDecl
-    │       │   ├──ID: nestedIfResult
-    │       │   ├──Type: bool
-    │       │   └──Call
-    │       │       ├──ID: testDeeplyNestedIfElse
-    │       │       └──ExpList
-    │       │           ├──NumB: 25
-    │       │           ├──Num: 50
-    │       │           └──Num: 100
-    │       ├──If
-    │       │   ├──ID: nestedIfResult
-    │       │   ├──Statements
-    │       │   │   └──Call
-    │       │   │       ├──ID: print
-    │       │   │       └──ExpList
-    │       │   │           └──String: Deeply nested if-else passed.
-    │       │   └──Statements
-    │       │       └──Call
-    │       │           ├──ID: print
-    │       │           └──ExpList
-    │       │               └──String: Deeply nested if-else failed.
-    │       └──Call
-    │           ├──ID: largeCalculations
-    │           └──ExpList
-    ├──FuncDecl
-    │   ├──ID: testConversions
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: small
-    │       │   ├──Type: byte
-    │       │   └──NumB: 10
-    │       ├──VarDecl
-    │       │   ├──ID: large
-    │       │   ├──Type: int
-    │       │   └──Num: 1000
-    │       ├──VarDecl
-    │       │   ├──ID: mixed
-    │       │   ├──Type: int
-    │       │   └──BinOp: -
-    │       │       ├──BinOp: +
-    │       │       │   ├──ID: small
-    │       │       │   └──Cast
-    │       │       │       ├──ID: large
-    │       │       │       └──Type: int
-    │       │       └──BinOp: *
-    │       │           ├──Cast
-    │       │           │   ├──ID: small
-    │       │           │   └──Type: int
-    │       │           └──ID: large
-    │       ├──Call
-    │       │   ├──ID: printi
-    │       │   └──ExpList
-    │       │       └──ID: mixed
-    │       ├──Assign
-    │       │   ├──ID: mixed
-    │       │   └──BinOp: +
-    │       │       ├──Cast
-    │       │       │   ├──BinOp: -
-    │       │       │   │   ├──ID: large
-    │       │       │   │   └──Num: 255
-    │       │       │   └──Type: byte
-    │       │       └──ID: small
-    │       └──Call
-    │           ├──ID: printi
-    │           └──ExpList
-    │               └──ID: mixed
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──Call
-            │   ├──ID: masterTestSuite
-            │   └──ExpList
-            ├──Call
-            │   ├──ID: testConversions
-            │   └──ExpList
-            └──Call
-                ├──ID: print
-                └──ExpList
-                    └──String: All tests completed successfully.
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+displayBanner () -> void
+nestedArithmeticAndRelational (int,int,byte,bool) -> int
+testScopes (int,byte,bool) -> void
+longLogicalExpression (bool,bool,bool,bool,bool) -> bool
+recursiveFibonacci (int) -> int
+calculateWithManyParameters (int,byte,bool,int,byte,bool) -> int
+nestedWhileLoopTest () -> void
+testDeeplyNestedIfElse (int,int,byte) -> bool
+largeCalculations () -> void
+masterTestSuite () -> void
+testConversions () -> void
+main () -> void
+  ---begin scope---
+  ---end scope---
+  ---begin scope---
+  a int -1
+  b int -2
+  c byte -3
+  flag bool -4
+  result int 0
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  x int -1
+  y byte -2
+  condition bool -3
+    ---begin scope---
+    shadow int 0
+      ---begin scope---
+        ---begin scope---
+          ---begin scope---
+            ---begin scope---
+              ---begin scope---
+              shadow1 byte 1
+              ---end scope---
+            ---end scope---
+          ---end scope---
+          ---begin scope---
+            ---begin scope---
+            ---end scope---
+          ---end scope---
+        ---end scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  a bool -1
+  b bool -2
+  c bool -3
+  d bool -4
+  e bool -5
+  ---end scope---
+  ---begin scope---
+  n int -1
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  a int -1
+  b byte -2
+  c bool -3
+  d int -4
+  e byte -5
+  f bool -6
+  result int 0
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  i int 0
+    ---begin scope---
+      ---begin scope---
+      j int 1
+        ---begin scope---
+          ---begin scope---
+          k byte 2
+            ---begin scope---
+              ---begin scope---
+                ---begin scope---
+                ---end scope---
+              ---end scope---
+              ---begin scope---
+                ---begin scope---
+                ---end scope---
+              ---end scope---
+            ---end scope---
+          ---end scope---
+        ---end scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  x int -1
+  y int -2
+  z byte -3
+    ---begin scope---
+      ---begin scope---
+        ---begin scope---
+          ---begin scope---
+            ---begin scope---
+              ---begin scope---
+              ---end scope---
+            ---end scope---
+            ---begin scope---
+              ---begin scope---
+                ---begin scope---
+                  ---begin scope---
+                  ---end scope---
+                ---end scope---
+                ---begin scope---
+                  ---begin scope---
+                  ---end scope---
+                ---end scope---
+              ---end scope---
+            ---end scope---
+          ---end scope---
+        ---end scope---
+        ---begin scope---
+          ---begin scope---
+          ---end scope---
+        ---end scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+        ---begin scope---
+          ---begin scope---
+          ---end scope---
+        ---end scope---
+        ---begin scope---
+          ---begin scope---
+            ---begin scope---
+              ---begin scope---
+              ---end scope---
+            ---end scope---
+          ---end scope---
+        ---end scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  a int 0
+  b byte 1
+  result int 2
+  ---end scope---
+  ---begin scope---
+  arithResult int 0
+  logicalResult bool 1
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+  fibResult int 2
+  paramResult int 3
+  nestedIfResult bool 4
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+    ---begin scope---
+      ---begin scope---
+      ---end scope---
+    ---end scope---
+  ---end scope---
+  ---begin scope---
+  small byte 0
+  large int 1
+  mixed int 2
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+---end global scope---

@@ -1,28 +1,14 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: main
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       └──VarDecl
-    │           ├──ID: x
-    │           ├──Type: int
-    │           └──Num: 3
-    ├──FuncDecl
-    │   ├──ID: try
-    │   ├──Type: int
-    │   ├──Formals
-    │   └──Statements
-    │       └──Call
-    │           ├──ID: print
-    │           └──ExpList
-    │               └──String: hi
-    └──FuncDecl
-        ├──ID: try
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──Call
-                ├──ID: print
-                └──ExpList
-                    └──String: bye
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+try () -> int
+try () -> void
+  ---begin scope---
+  x int 0
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+---end global scope---

@@ -1,42 +1,17 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: returnInt
-    │   ├──Type: int
-    │   ├──Formals
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: i
-    │       │   ├──Type: byte
-    │       │   └──NumB: 300
-    │       └──Return
-    │           └──ID: i
-    ├──FuncDecl
-    │   ├──ID: main
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       ├──VarDecl
-    │       │   ├──ID: result
-    │       │   ├──Type: int
-    │       │   └──Call
-    │       │       ├──ID: returnInt
-    │       │       └──ExpList
-    │       ├──VarDecl
-    │       │   ├──ID: res
-    │       │   ├──Type: byte
-    │       │   └──Cast
-    │       │       ├──ID: result
-    │       │       └──Type: byte
-    │       └──VarDecl
-    │           ├──ID: this
-    │           ├──Type: int
-    │           └──Call
-    │               ├──ID: returnByte
-    │               └──ExpList
-    └──FuncDecl
-        ├──ID: returnByte
-        ├──Type: byte
-        ├──Formals
-        └──Statements
-            └──Return
-                └──NumB: 300
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+returnInt () -> int
+main () -> void
+returnByte () -> byte
+  ---begin scope---
+  i byte 0
+  ---end scope---
+  ---begin scope---
+  result int 0
+  res byte 1
+  this int 2
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+---end global scope---

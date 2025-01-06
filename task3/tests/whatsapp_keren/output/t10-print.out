@@ -1,18 +1,8 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: x
-            │   ├──Type: int
-            │   └──Num: 12
-            ├──Call
-            │   ├──ID: printi
-            │   └──ExpList
-            │       └──NumB: 12
-            └──Call
-                ├──ID: print
-                └──ExpList
-                    └──String: foo
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+  ---begin scope---
+  x int 0
+  ---end scope---
+---end global scope---

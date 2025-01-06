@@ -1,17 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: x
-            │   ├──Type: int
-            │   └──Num: 5
-            └──VarDecl
-                ├──ID: y
-                ├──Type: int
-                └──Call
-                    ├──ID: undefinedFunc
-                    └──ExpList
-                        └──ID: x
+line 3: function undefinedFunc is not defined

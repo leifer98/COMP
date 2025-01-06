@@ -1,31 +1,15 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: main
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       └──VarDecl
-    │           ├──ID: x
-    │           ├──Type: int
-    │           └──Num: 3
-    ├──FuncDecl
-    │   ├──ID: try
-    │   ├──Type: bool
-    │   ├──Formals
-    │   │   └──Formal
-    │   │       ├──ID: a
-    │   │       └──Type: int
-    │   └──Statements
-    │       └──Call
-    │           ├──ID: print
-    │           └──ExpList
-    │               └──String: try1
-    └──FuncDecl
-        ├──ID: try
-        ├──Type: bool
-        ├──Formals
-        └──Statements
-            └──Call
-                ├──ID: print
-                └──ExpList
-                    └──String: try2
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+try (int) -> bool
+try () -> bool
+  ---begin scope---
+  x int 0
+  ---end scope---
+  ---begin scope---
+  a int -1
+  ---end scope---
+  ---begin scope---
+  ---end scope---
+---end global scope---

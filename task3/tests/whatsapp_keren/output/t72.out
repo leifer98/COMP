@@ -1,10 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──VarDecl
-                ├──ID: x
-                ├──Type: int
-                └──Bool: true
+line 2: type mismatch

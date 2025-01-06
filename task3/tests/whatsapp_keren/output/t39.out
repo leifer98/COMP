@@ -1,13 +1,1 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──If
-                ├──Num: 1
-                └──Statements
-                    └──Call
-                        ├──ID: print
-                        └──ExpList
-                            └──String: bad
+line 5: type mismatch

@@ -1,32 +1,14 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: x
-            │   ├──Type: int
-            │   └──Num: 1
-            ├──VarDecl
-            │   ├──ID: y
-            │   ├──Type: int
-            │   └──Num: 2
-            ├──VarDecl
-            │   ├──ID: z
-            │   ├──Type: byte
-            │   └──NumB: 3
-            ├──Statements
-            │   ├──VarDecl
-            │   │   ├──ID: f
-            │   │   ├──Type: int
-            │   │   └──BinOp: +
-            │   │       ├──ID: x
-            │   │       └──ID: y
-            │   └──VarDecl
-            │       ├──ID: h
-            │       ├──Type: int
-            │       └──BinOp: +
-            │           ├──ID: x
-            │           └──ID: y
-            └──Return
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+  ---begin scope---
+  x int 0
+  y int 1
+  z byte 2
+    ---begin scope---
+    f int 3
+    h int 4
+    ---end scope---
+  ---end scope---
+---end global scope---

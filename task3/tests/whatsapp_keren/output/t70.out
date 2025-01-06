@@ -1,33 +1,14 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: add
-    │   ├──Type: int
-    │   ├──Formals
-    │   │   ├──Formal
-    │   │   │   ├──ID: y
-    │   │   │   └──Type: int
-    │   │   └──Formal
-    │   │       ├──ID: x
-    │   │       └──Type: int
-    │   └──Statements
-    │       └──Return
-    │           └──BinOp: +
-    │               ├──ID: x
-    │               └──ID: y
-    └──FuncDecl
-        ├──ID: main
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            ├──VarDecl
-            │   ├──ID: b
-            │   ├──Type: bool
-            │   └──Bool: true
-            └──VarDecl
-                ├──ID: result
-                ├──Type: int
-                └──Call
-                    ├──ID: add
-                    └──ExpList
-                        ├──ID: b
-                        └──Num: 10
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+add (int,int) -> int
+main () -> void
+  ---begin scope---
+  x int -1
+  y int -2
+  ---end scope---
+  ---begin scope---
+  b bool 0
+  result int 1
+  ---end scope---
+---end global scope---

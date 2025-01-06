@@ -1,45 +1,23 @@
-└──Funcs
-    ├──FuncDecl
-    │   ├──ID: main
-    │   ├──Type: void
-    │   ├──Formals
-    │   └──Statements
-    │       └──VarDecl
-    │           ├──ID: x
-    │           └──Type: int
-    ├──FuncDecl
-    │   ├──ID: hey
-    │   ├──Type: void
-    │   ├──Formals
-    │   │   └──Formal
-    │   │       ├──ID: isOk
-    │   │       └──Type: bool
-    │   └──Statements
-    │       └──VarDecl
-    │           ├──ID: i
-    │           ├──Type: int
-    │           └──Num: 0
-    ├──FuncDecl
-    │   ├──ID: printOk
-    │   ├──Type: void
-    │   ├──Formals
-    │   │   └──Formal
-    │   │       ├──ID: isOk
-    │   │       └──Type: bool
-    │   └──Statements
-    │       └──VarDecl
-    │           ├──ID: i
-    │           ├──Type: int
-    │           └──Num: 0
-    └──FuncDecl
-        ├──ID: hey
-        ├──Type: void
-        ├──Formals
-        │   └──Formal
-        │       ├──ID: isOk
-        │       └──Type: bool
-        └──Statements
-            └──VarDecl
-                ├──ID: i
-                ├──Type: int
-                └──Num: 0
+---begin global scope---
+print (string) -> void
+printi (int) -> void
+main () -> void
+hey (bool) -> void
+printOk (bool) -> void
+hey (bool) -> void
+  ---begin scope---
+  x int 0
+  ---end scope---
+  ---begin scope---
+  isOk bool -1
+  i int 0
+  ---end scope---
+  ---begin scope---
+  isOk bool -1
+  i int 0
+  ---end scope---
+  ---begin scope---
+  isOk bool -1
+  i int 0
+  ---end scope---
+---end global scope---
