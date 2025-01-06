@@ -157,12 +157,20 @@ void SemanticVisitor::visit(ast::ID &node) {
 
     std::shared_ptr<Symbol> symbol = symTable.lookup(node.value);
     if (symbol) {  // The identifier exists
-        if (symbol->isFunction) {
-            output::errorDefAsFunc(node.line, node.value);
-        } else if (node.isDeclaration) {
-            output::errorDef(node.line, node.value);
+        if (node.isFunctionCall) {
+            if (symbol->isFunction) {
+                node.type = symbol->type;
+            } else {
+                output::errorDefAsVar(node.line, node.value);
+            }
         } else {
-            node.type = symbol->type;
+            if (symbol->isFunction) {
+                output::errorDefAsFunc(node.line, node.value);
+            } else if (node.isDeclaration) {
+                output::errorDef(node.line, node.value);
+            } else {
+                node.type = symbol->type;
+            }
         }
     } else {
         if (!node.isDeclaration) {
@@ -212,7 +220,15 @@ void SemanticVisitor::visit(ast::Type &node) {
 }
 
 void SemanticVisitor::visit(ast::Cast &node) {
+    node.target_type->accept(*this);
 
+    node.exp->accept(*this);
+
+    if (isNumeric(node.target_type->type) && isNumeric(node.exp->type)) {
+        node.type = node.target_type->type;
+    } else {
+        output::errorMismatch(node.line);
+    }
 }
 
 void SemanticVisitor::visit(ast::Not &node) {
@@ -258,10 +274,13 @@ void SemanticVisitor::visit(ast::ExpList &node) {
 }
 
 void SemanticVisitor::visit(ast::Call &node) {
-    
-    // node.func_id->accept(*this);
 
-    // node.args->accept(*this);
+    node.args->accept(*this);
+
+    node.func_id->isFunctionCall = true;
+    node.func_id->accept(*this);
+
+    node.type = node.func_id->type;
 }
 
 void SemanticVisitor::visit(ast::Statements &node) {
@@ -297,10 +316,9 @@ void SemanticVisitor::visit(ast::Continue &node) {
 }
 
 void SemanticVisitor::visit(ast::Return &node) {
-
-    // if (node.exp) {
-    //     node.exp->accept(*this);
-    // }
+    if (node.exp) {
+        node.exp->accept(*this);
+    }
 }
 
 void SemanticVisitor::visit(ast::If &node) {
@@ -357,10 +375,12 @@ void SemanticVisitor::visit(ast::VarDecl &node) {
 }
 
 void SemanticVisitor::visit(ast::Assign &node) {
-
-    // node.id->accept(*this);
-
-    // node.exp->accept(*this);
+    node.id->accept(*this);
+    node.exp->accept(*this);
+        
+    if (!isValidAssignment(node.id->type, node.exp->type)) {
+        output::errorMismatch(node.line);
+    }
 }
 
 void SemanticVisitor::visit(ast::Formal &node) {
@@ -395,7 +415,22 @@ void SemanticVisitor::visit(ast::FuncDecl &node) {
     
     symTable.endScope();
 
-    // TODO check that return type match
+    // Check that return type match:
+    for(std::shared_ptr<ast::Statement> &statement : node.body->statements) {
+        // Check if one of the statements is a return statement:
+        std::shared_ptr<ast::Return> ret = std::dynamic_pointer_cast<ast::Return>(statement);
+        if (ret) {
+            if (ret->exp) {
+                if (!isValidAssignment(node.return_type->type, ret->exp->type)) {
+                    output::errorMismatch(ret->line);
+                }
+            } else {
+                if (node.return_type->type != ast::BuiltInType::VOID) {
+                    output::errorMismatch(ret->line);
+                }
+            }
+        }
+    }
 }
 
 void SemanticVisitor::visit(ast::Funcs &node) {
