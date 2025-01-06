@@ -18,6 +18,8 @@ public:
 
 protected:
     Symbol(const std::string &name, ast::BuiltInType type, int offset, bool function);
+
+    virtual ~Symbol() = default;
 };
 
 /* VarSymbol class

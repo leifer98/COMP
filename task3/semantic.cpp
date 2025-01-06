@@ -11,6 +11,23 @@ bool isValidAssignment(ast::BuiltInType destType, ast::BuiltInType expType) {
     return (destType == expType || (destType == ast::BuiltInType::INT && expType == ast::BuiltInType::BYTE));
 }
 
+std::string toString(ast::BuiltInType type) {
+    switch (type) {
+        case ast::BuiltInType::INT:
+            return "INT";
+        case ast::BuiltInType::BOOL:
+            return "BOOL";
+        case ast::BuiltInType::BYTE:
+            return "BYTE";
+        case ast::BuiltInType::VOID:
+            return "VOID";
+        case ast::BuiltInType::STRING:
+            return "STRING";
+        default:
+            return "UNKNOWN";
+    }
+}
+
 
 /* Symbol Class */
 
@@ -281,6 +298,29 @@ void SemanticVisitor::visit(ast::Call &node) {
     node.func_id->accept(*this);
 
     node.type = node.func_id->type;
+
+    std::shared_ptr<Symbol> symbol = symTable.lookup(node.func_id->value);
+    if (symbol) {
+        std::shared_ptr<FuncSymbol> funcSymbol = std::dynamic_pointer_cast<FuncSymbol>(symbol);
+        if (funcSymbol) {
+            // Get expected types as string:
+            std::vector<std::string> expectedTypes;
+            for (ast::BuiltInType &type : funcSymbol->paramTypes) {
+                expectedTypes.push_back(toString(type));
+            }
+
+            // Check for correct match between expected param types and the call's param types: 
+            if (funcSymbol->paramTypes.size() != node.args->exps.size()) {
+                output::errorPrototypeMismatch(node.line, node.func_id->value, expectedTypes);
+            } else {
+                for (int i=0; i<funcSymbol->paramTypes.size(); i++) {
+                    if (!isValidAssignment(funcSymbol->paramTypes[i], node.args->exps[i]->type)) {
+                        output::errorPrototypeMismatch(node.line, node.func_id->value, expectedTypes);
+                    }
+                }
+            }
+        }
+    }
 }
 
 void SemanticVisitor::visit(ast::Statements &node) {
@@ -337,7 +377,7 @@ void SemanticVisitor::visit(ast::If &node) {
     
     // Type checking:
     if (node.condition->type != ast::BuiltInType::BOOL) {
-        output::errorMismatch(node.line);
+        output::errorMismatch(node.condition->line);
     }
 }
 
@@ -352,7 +392,7 @@ void SemanticVisitor::visit(ast::While &node) {
 
     // Type checking:
     if (node.condition->type != ast::BuiltInType::BOOL) {
-        output::errorMismatch(node.line);
+        output::errorMismatch(node.condition->line);
     }
 }
 
