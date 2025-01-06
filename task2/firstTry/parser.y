@@ -3,8 +3,6 @@
 #include "nodes.hpp"
 #include "output.hpp"
 #include <memory>
-#include <ostream>
-#include <iostream>
 
 // Bison declarations
 extern int yylineno;
@@ -21,6 +19,7 @@ using namespace std;
 
 // Configure Bison for better stack management
 %define parse.error verbose
+%define api.push-pull both
 
 // Tokens
 %token VOID INT BYTE BOOL TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA ID NUM NUM_B PLUS MINUS MULTIPLY DIVIDE RELOP EQ NE STRING ERROR

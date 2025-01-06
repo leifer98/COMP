@@ -10,8 +10,6 @@ extern int yydebug;
 
 int main()
 {
-    yydebug = 0; // yydebug = 1;  
-
     // Parse the input. The result is stored in the global variable `program`
     yyparse();
 

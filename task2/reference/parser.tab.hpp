@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_PARSER_TAB_H_INCLUDED
-# define YY_YY_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_PARSER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -57,37 +57,35 @@ extern int yydebug;
     VOID = 258,                    /* VOID  */
     INT = 259,                     /* INT  */
     BYTE = 260,                    /* BYTE  */
-    BOOL = 261,                    /* BOOL  */
-    TRUE = 262,                    /* TRUE  */
-    FALSE = 263,                   /* FALSE  */
-    IF = 264,                      /* IF  */
-    RETURN = 265,                  /* RETURN  */
-    WHILE = 266,                   /* WHILE  */
-    BREAK = 267,                   /* BREAK  */
-    CONTINUE = 268,                /* CONTINUE  */
-    SC = 269,                      /* SC  */
-    COMMA = 270,                   /* COMMA  */
-    ID = 271,                      /* ID  */
-    NUM = 272,                     /* NUM  */
-    NUM_B = 273,                   /* NUM_B  */
-    PLUS = 274,                    /* PLUS  */
-    MINUS = 275,                   /* MINUS  */
-    MULTIPLY = 276,                /* MULTIPLY  */
-    DIVIDE = 277,                  /* DIVIDE  */
-    RELOP = 278,                   /* RELOP  */
-    EQ = 279,                      /* EQ  */
-    NE = 280,                      /* NE  */
-    STRING = 281,                  /* STRING  */
-    ERROR = 282,                   /* ERROR  */
-    ASSIGN = 283,                  /* ASSIGN  */
-    OR = 284,                      /* OR  */
-    AND = 285,                     /* AND  */
-    NOT = 286,                     /* NOT  */
-    LPAREN = 287,                  /* LPAREN  */
-    RPAREN = 288,                  /* RPAREN  */
-    LBRACE = 289,                  /* LBRACE  */
-    RBRACE = 290,                  /* RBRACE  */
-    ELSE = 291                     /* ELSE  */
+    B = 261,                       /* B  */
+    BOOL = 262,                    /* BOOL  */
+    CONST = 263,                   /* CONST  */
+    TRUE = 264,                    /* TRUE  */
+    FALSE = 265,                   /* FALSE  */
+    IF = 266,                      /* IF  */
+    RETURN = 267,                  /* RETURN  */
+    WHILE = 268,                   /* WHILE  */
+    BREAK = 269,                   /* BREAK  */
+    CONTINUE = 270,                /* CONTINUE  */
+    SC = 271,                      /* SC  */
+    COMMA = 272,                   /* COMMA  */
+    COMMENT = 273,                 /* COMMENT  */
+    ID = 274,                      /* ID  */
+    NUM = 275,                     /* NUM  */
+    STRING = 276,                  /* STRING  */
+    AUTO = 277,                    /* AUTO  */
+    ASSIGN = 278,                  /* ASSIGN  */
+    OR = 279,                      /* OR  */
+    AND = 280,                     /* AND  */
+    RELOP = 281,                   /* RELOP  */
+    ADD_SUB = 282,                 /* ADD_SUB  */
+    MULT_DIV = 283,                /* MULT_DIV  */
+    NOT = 284,                     /* NOT  */
+    LPAREN = 285,                  /* LPAREN  */
+    RPAREN = 286,                  /* RPAREN  */
+    LBRACE = 287,                  /* LBRACE  */
+    RBRACE = 288,                  /* RBRACE  */
+    ELSE = 289                     /* ELSE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -103,19 +101,7 @@ typedef int YYSTYPE;
 extern YYSTYPE yylval;
 
 
-#ifndef YYPUSH_MORE_DEFINED
-# define YYPUSH_MORE_DEFINED
-enum { YYPUSH_MORE = 4 };
-#endif
-
-typedef struct yypstate yypstate;
-
-
 int yyparse (void);
-int yypush_parse (yypstate *ps);
-int yypull_parse (yypstate *ps);
-yypstate *yypstate_new (void);
-void yypstate_delete (yypstate *ps);
 
 
-#endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_PARSER_TAB_HPP_INCLUDED  */

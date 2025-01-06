@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "*.asm": "code-text-binary",
+        "iostream": "cpp",
+        "memory": "cpp"
+    },
+    "cmake.ignoreCMakeListsMissing": true
+}

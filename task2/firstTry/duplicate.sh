@@ -30,3 +30,7 @@ cp "$INPUT_DIR/$BASE_TEST.in" "$NEW_IN"
 cp "$INPUT_DIR/$BASE_TEST.out" "$NEW_OUT"
 
 echo "Created $NEW_IN and $NEW_OUT"
+
+
+./selfcheck-hw2
+bash: ./selfcheck-hw2: Permission denied
