@@ -332,6 +332,7 @@ void SemanticVisitor::visit(ast::Statements &node) {
     
     // Visit all statements:
     for (std::shared_ptr<ast::Statement> statement: node.statements) {
+        statement->isInWhile = node.isInWhile;
         statement->accept(*this);
     }
 
@@ -366,11 +367,13 @@ void SemanticVisitor::visit(ast::If &node) {
     node.condition->accept(*this);
 
     symTable.startScope();
+    node.then->isInWhile = node.isInWhile;
     node.then->accept(*this);
     symTable.endScope();
 
     if (node.otherwise) {
         symTable.startScope();
+        node.otherwise->isInWhile = node.isInWhile;
         node.otherwise->accept(*this);
         symTable.endScope();
     }
