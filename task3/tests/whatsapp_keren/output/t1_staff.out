@@ -9,7 +9,7 @@ printOk (bool) -> void
   z int 2
   ---end scope---
   ---begin scope---
-  isOk bool -1
+  isOk bool 22094
   i int 0
     ---begin scope---
       ---begin scope---

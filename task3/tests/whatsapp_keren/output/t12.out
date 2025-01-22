@@ -1,17 +1,1 @@
----begin global scope---
-print (string) -> void
-printi (int) -> void
-main () -> void
-try (int,int) -> int
-try (bool) -> bool
-  ---begin scope---
-  ---end scope---
-  ---begin scope---
-  a int -1
-  b int -2
-  ---end scope---
-  ---begin scope---
-  c bool -1
-  d bool 0
-  ---end scope---
----end global scope---
+line 9: symbol try is already defined

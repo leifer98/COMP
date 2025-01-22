@@ -1,17 +1,1 @@
----begin global scope---
-print (string) -> void
-printi (int) -> void
-returnInt () -> int
-main () -> void
-returnByte () -> byte
-  ---begin scope---
-  i byte 0
-  ---end scope---
-  ---begin scope---
-  result int 0
-  res byte 1
-  this int 2
-  ---end scope---
-  ---begin scope---
-  ---end scope---
----end global scope---
+line 2: byte value 300 out of range

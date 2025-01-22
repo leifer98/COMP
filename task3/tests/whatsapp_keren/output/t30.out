@@ -6,8 +6,8 @@ x (int,bool) -> int
   ---begin scope---
   ---end scope---
   ---begin scope---
-  a int -1
-  b bool -2
+  a int 22001
+  b bool 22000
   c int 0
   ---end scope---
 ---end global scope---
