@@ -60,6 +60,7 @@ namespace ast {
     class Exp : virtual public Node {
     public:
         BuiltInType type;
+        std::string var;
         
         Exp() = default;
     };

@@ -17,27 +17,85 @@ void CodeGenVisitor::print() {
 
 // Placeholder implementations for visit methods
 void CodeGenVisitor::visit(ast::Num &node) {
-    codeBuffer.emit("Visiting Num Node");
+    // codeBuffer.emit("Visiting Num Node");
+
+    // Generate code to assign a fresh register and use it to store the value:
+    node.var = codeBuffer.freshVar();
+    codeBuffer << node.var << " = add i32 0, " << std::to_string(node.value) << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::NumB &node) {
-    codeBuffer.emit("Visiting NumB Node");
+    // codeBuffer.emit("Visiting NumB Node");
+
+    // Generate code to assign a fresh register and use it to store the value:
+    node.var = codeBuffer.freshVar();
+    codeBuffer << "add i32 " << node.var << ", " << std::to_string(node.value) << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::String &node) {
     codeBuffer.emit("Visiting String Node: Value = " + node.value);
+    
+    node.var = codeBuffer.freshVar();
+    std::string str = codeBuffer.emitString(node.value);
+    codeBuffer << node.var << " = getelementptr inbounds [" << node.value.length() << " x i8], ["
+               << node.value.length() << " x i8]* " << str << ", i32 0, i32 0" << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Bool &node) {
     codeBuffer.emit("Visiting Bool Node: Value = " + std::string(node.value ? "true" : "false"));
+
+    // Generate code to assign a fresh register and use it to store the value:
+    node.var = codeBuffer.freshVar();
+    codeBuffer << "add i32 " << node.var << ", " << std::to_string(node.value) << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::ID &node) {
     codeBuffer.emit("Visiting ID Node: Identifier = " + node.value);
+
+    switch (node.idType)
+    {
+    case ast::IdType::VAR_USAGE:
+        /* code */
+        break;
+    case ast::IdType::VAR_DECLARATION:
+        /* code */
+        break;
+    case ast::IdType::FUNC_CALL:
+        /* code */
+        break;
+    case ast::IdType::FUNC_DECLARATION:
+        /* code */
+        break;
+    default:
+        break;
+    }
 }
 
 void CodeGenVisitor::visit(ast::BinOp &node) {
-    codeBuffer.emit("Visiting BinOp Node");
+    // codeBuffer.emit("Visiting BinOp Node");
+
+    node.var = codeBuffer.freshVar();
+
+    node.left->accept(*this);
+    node.right->accept(*this);
+
+    switch (node.op)
+    {
+    case ast::BinOpType::ADD:
+        codeBuffer << node.var << " = add i32 " << node.left->var << ", " << node.right->var << std::endl;
+        break;
+    case ast::BinOpType::SUB:
+        codeBuffer << node.var << " = sub i32 " << node.left->var << ", " << node.right->var << std::endl;
+        break;
+    case ast::BinOpType::MUL:
+        codeBuffer << node.var << " = mul i32 " << node.left->var << ", " << node.right->var << std::endl;
+        break;
+    case ast::BinOpType::DIV:
+        codeBuffer << node.var << " = sdiv i32 " << node.left->var << ", " << node.right->var << std::endl;
+        break;
+    default:
+        break;
+    }
 }
 
 void CodeGenVisitor::visit(ast::RelOp &node) {
@@ -113,10 +171,17 @@ void CodeGenVisitor::visit(ast::While &node) {
 }
 
 void CodeGenVisitor::visit(ast::VarDecl &node) {
-    codeBuffer.emit("Visiting VarDecl Node: Declaring variable '" + node.id->value + "'");
+    // codeBuffer.emit("Visiting VarDecl Node: Declaring variable '" + node.id->value + "'");
+    
+    // Visit the initial expression:
     if (node.init_exp) {
         node.init_exp->accept(*this);
     }
+    
+    // Generate commands to allocate 32 bit on the stack and then store the value in the allocated spot:
+    std::string varName = "%" + node.id->value;
+    codeBuffer << varName << " = alloca i32 " << std::endl;
+    codeBuffer << "store i32 " << node.init_exp->var << ", i32* " << varName << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Assign &node) {
@@ -143,6 +208,10 @@ void CodeGenVisitor::visit(ast::FuncDecl &node) {
 
 void CodeGenVisitor::visit(ast::Funcs &node) {
     codeBuffer.emit("Visiting Funcs Node: " + std::to_string(node.funcs.size()) + " functions.");
+
+    codeBuffer << "declare i32 @printf(i8*, ...)" << std::endl;
+    codeBuffer << "declare void @exit(i32)" << std::endl;
+
     for (auto &func : node.funcs) {
         func->accept(*this);
     }
