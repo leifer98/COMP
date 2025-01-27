@@ -1,6 +1,6 @@
 	.text
 	.file	"output.ll"
-	.globl	readi                           # -- Begin function readi
+	.globl	readi                   # -- Begin function readi
 	.p2align	4, 0x90
 	.type	readi,@function
 readi:                                  # @readi
@@ -8,10 +8,10 @@ readi:                                  # @readi
 # %bb.0:
 	pushq	%rax
 	.cfi_def_cfa_offset 16
-	movq	.int_specifier_scan@GOTPCREL(%rip), %rdi
 	leaq	4(%rsp), %rsi
+	movl	$.int_specifier_scan, %edi
 	xorl	%eax, %eax
-	callq	scanf@PLT
+	callq	scanf
 	movl	4(%rsp), %eax
 	popq	%rcx
 	.cfi_def_cfa_offset 8
@@ -20,7 +20,7 @@ readi:                                  # @readi
 	.size	readi, .Lfunc_end0-readi
 	.cfi_endproc
                                         # -- End function
-	.globl	printi                          # -- Begin function printi
+	.globl	printi                  # -- Begin function printi
 	.p2align	4, 0x90
 	.type	printi,@function
 printi:                                 # @printi
@@ -29,9 +29,9 @@ printi:                                 # @printi
 	pushq	%rax
 	.cfi_def_cfa_offset 16
 	movl	%edi, %esi
-	movq	.int_specifier@GOTPCREL(%rip), %rdi
+	movl	$.int_specifier, %edi
 	xorl	%eax, %eax
-	callq	printf@PLT
+	callq	printf
 	popq	%rax
 	.cfi_def_cfa_offset 8
 	retq
@@ -39,7 +39,7 @@ printi:                                 # @printi
 	.size	printi, .Lfunc_end1-printi
 	.cfi_endproc
                                         # -- End function
-	.globl	print                           # -- Begin function print
+	.globl	print                   # -- Begin function print
 	.p2align	4, 0x90
 	.type	print,@function
 print:                                  # @print
@@ -48,9 +48,9 @@ print:                                  # @print
 	pushq	%rax
 	.cfi_def_cfa_offset 16
 	movq	%rdi, %rsi
-	movq	.str_specifier@GOTPCREL(%rip), %rdi
+	movl	$.str_specifier, %edi
 	xorl	%eax, %eax
-	callq	printf@PLT
+	callq	printf
 	popq	%rax
 	.cfi_def_cfa_offset 8
 	retq
@@ -58,36 +58,56 @@ print:                                  # @print
 	.size	print, .Lfunc_end2-print
 	.cfi_endproc
                                         # -- End function
-	.globl	main                            # -- Begin function main
+	.globl	main                    # -- Begin function main
 	.p2align	4, 0x90
 	.type	main,@function
 main:                                   # @main
 	.cfi_startproc
 # %bb.0:
-	movl	$5, -8(%rsp)
-	movl	$5, -12(%rsp)
+	pushq	%rax
+	.cfi_def_cfa_offset 16
+	movl	$1, 4(%rsp)
+	movl	$.str0, %edi
+	callq	print
+	movl	$.str1, %edi
+	callq	print
+	popq	%rax
+	.cfi_def_cfa_offset 8
 	retq
 .Lfunc_end3:
 	.size	main, .Lfunc_end3-main
 	.cfi_endproc
                                         # -- End function
-	.type	.int_specifier_scan,@object     # @.int_specifier_scan
+	.type	.str0,@object           # @.str0
 	.section	.rodata,"a",@progbits
+	.globl	.str0
+.str0:
+	.asciz	"Hello"
+	.size	.str0, 6
+
+	.type	.str1,@object           # @.str1
+	.globl	.str1
+.str1:
+	.asciz	"True"
+	.size	.str1, 5
+
+	.type	.int_specifier_scan,@object # @.int_specifier_scan
 	.globl	.int_specifier_scan
 .int_specifier_scan:
 	.asciz	"%d"
 	.size	.int_specifier_scan, 3
 
-	.type	.int_specifier,@object          # @.int_specifier
+	.type	.int_specifier,@object  # @.int_specifier
 	.globl	.int_specifier
 .int_specifier:
 	.asciz	"%d\n"
 	.size	.int_specifier, 4
 
-	.type	.str_specifier,@object          # @.str_specifier
+	.type	.str_specifier,@object  # @.str_specifier
 	.globl	.str_specifier
 .str_specifier:
 	.asciz	"%s\n"
 	.size	.str_specifier, 4
+
 
 	.section	".note.GNU-stack","",@progbits

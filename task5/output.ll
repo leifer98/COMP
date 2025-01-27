@@ -1,4 +1,4 @@
-
+@.str0 = constant [5 x i8] c"true\00"@.str1 = constant [5 x i8] c"true\00"@.str2 = constant [12 x i8] c"val is true\00"@.str3 = constant [13 x i8] c"val is false\00"
 declare i32 @scanf(i8*, ...)
 declare i32 @printf(i8*, ...)
 declare void @exit(i32)
@@ -23,18 +23,32 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define void @main() {
-%t0 = add i32 0, 5
-%y = alloca i32 
-store i32 %t0, i32* %y
-%t1 = add i32 0, 5
-%z = alloca i32 
-store i32 %t1, i32* %z
-%t3 = add i32 0, 2
-%t5 = load i32, i32* %y
-%t6 = load i32, i32* %z
-%t4 = sub i32 %t5, %t6
-%t2 = sdiv i32 %t3, %t4
-%b = alloca i32 
-store i32 %t2, i32* %b
+%t0 = zext i1 1 to i32
+call void @printByValue(i32 %t0)
+%t1 = zext i1 0 to i32
+call void @printByValue(i32 %t1)
+%t2 = zext i1 1 to i32
+%t3 = getelementptr inbounds [5 x i8], [5 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t3)
+%t4 = zext i1 0 to i32
+%t5 = zext i1 0 to i32
+%t6 = zext i1 1 to i32
+%t7 = icmp ne i32 %t5, 0
+%t8 = icmp ne i32 %t6, 0
+%t9 = and i1 %t7, %t8
+%t10 = zext i1 %t9 to i32
+%t11 = icmp ne i32 %t4, 0
+%t12 = icmp ne i32 %t10, 0
+%t13 = or i1 %t11, %t12
+%t14 = zext i1 %t13 to i32
+%t15 = getelementptr inbounds [5 x i8], [5 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t15)
+ret void
+}
+define void @printByValue(i32) {
+%t16 = getelementptr inbounds [12 x i8], [12 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t16)
+%t17 = getelementptr inbounds [13 x i8], [13 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t17)
 ret void
 }

@@ -42,9 +42,9 @@ std::string convertTypeToLLVM(ast::BuiltInType type) {
         case ast::BuiltInType::INT:
             return "i32";
         case ast::BuiltInType::BOOL:
-            return "i1";
+            return "i32";
         case ast::BuiltInType::BYTE:
-            return "i8";
+            return "i32";
         case ast::BuiltInType::VOID:
             return "void";
         case ast::BuiltInType::STRING:
@@ -88,10 +88,13 @@ void CodeGenVisitor::visit(ast::String &node) {
     // codeBuffer.emit("Visiting String Node: Value = " + node.value);
     
     node.var = codeBuffer.freshVar();
-    std::string str = codeBuffer.emitString(node.value);
+    std::string strVar = codeBuffer.emitString(node.value);
     int strRealLength = node.value.length() + 1;  // Add 1 for the \0 at the end
-    codeBuffer << node.var << " = getelementptr inbounds [" << strRealLength << " x i8], ["
-               << strRealLength << " x i8]* " << str << ", i32 0, i32 0" << std::endl;
+    codeBuffer << node.var << " = getelementptr inbounds ["
+                            << strRealLength << " x i8], ["
+                            << strRealLength << " x i8]* "
+                            << strVar << ", i32 0, i32 0"
+                            << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Bool &node) {
@@ -106,9 +109,13 @@ void CodeGenVisitor::visit(ast::ID &node) {
     // codeBuffer.emit("Visiting ID Node: Identifier = " + node.value);
 
     if (node.idType == ast::IdType::VAR_USAGE) {
-        std::string symbolRegName = "%" + node.value;
-        node.var = codeBuffer.freshVar();
-        codeBuffer << node.var << " = load i32, i32* " << symbolRegName << std::endl;
+        if (node.isParam) {
+            node.var = "%" + std::to_string(-node.offset - 1);
+        } else {
+            std::string symbolPointerRegName = "%" + node.value;
+            node.var = codeBuffer.freshVar();
+            codeBuffer << node.var << " = load i32, i32* " << symbolPointerRegName << std::endl;
+        }
     }
     // else if (node.idType == ast::IdType::FUNC_CALL) {
     // }
@@ -217,30 +224,10 @@ void CodeGenVisitor::visit(ast::Call &node) {
     // Build the args list while handling string arguments properly
     std::string argsList = "";
     for (auto &exp : node.args->exps) {
-        if (exp->type == ast::BuiltInType::STRING) {
-            // Handle string argument by obtaining pointer and size correctly
-            auto strNode = std::dynamic_pointer_cast<ast::String>(exp);
-            if (strNode) {
-                std::string strVar = codeBuffer.emitString(strNode->value);
-                std::string strSize = std::to_string(strNode->value.length() + 1); // Include null terminator
-
-                // Generate GEP (GetElementPtr) to get pointer to the string
-                std::string ptrVar = codeBuffer.freshVar();
-                codeBuffer << ptrVar << " = getelementptr inbounds [" 
-                           << strSize << " x i8], [" 
-                           << strSize << " x i8]* " 
-                           << strVar << ", i32 0, i32 0" 
-                           << std::endl;
-
-                argsList += "i8* " + ptrVar + ", ";
-            }
-        } else {
-            // Handle other types as i32
-            argsList += "i32 " + exp->var + ", ";
-        }
+        argsList += convertTypeToLLVM(exp->type) + " " + exp->var + ", ";
     }
 
-    // Remove the trailing comma and space
+    // Remove the argsList's trailing comma and space
     if (!argsList.empty()) {
         argsList = argsList.substr(0, argsList.length() - 2);
     }
@@ -347,7 +334,9 @@ void CodeGenVisitor::visit(ast::FuncDecl &node) {
         // paramList += convertTypeToLLVM(formal->type->type) + ", ";
         paramList += "i32, ";
     }
-    if (paramList.length() - 2 > 0) {
+    
+    // Remove the paramList's trailing comma and space
+    if (!paramList.empty()) {
         paramList = paramList.substr(0, paramList.length() - 2);
     }
 

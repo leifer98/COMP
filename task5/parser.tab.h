@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -101,7 +101,6 @@ typedef int YYSTYPE;
 
 
 extern YYSTYPE yylval;
-
 
 #ifndef YYPUSH_MORE_DEFINED
 # define YYPUSH_MORE_DEFINED
