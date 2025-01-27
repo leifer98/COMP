@@ -8,7 +8,7 @@ fi
 
 # Get the base test name (e.g., t0)
 BASE_TEST="$1"
-INPUT_DIR="./hw5-tests"
+INPUT_DIR="./tests/hw5-tests"
 
 # Ensure the input test files exist
 if [ ! -f "$INPUT_DIR/$BASE_TEST.in" ] || [ ! -f "$INPUT_DIR/$BASE_TEST.out" ]; then

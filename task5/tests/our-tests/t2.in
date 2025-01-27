@@ -1,0 +1,9 @@
+void main() {
+    int x = func(1, 2, 3);
+
+    printi(x);
+}
+
+int func(int a, int b, int c) {
+    return a + b + c;
+}

@@ -26,7 +26,7 @@ run_test_detailed() {
     local test_case="$1"
     echo "Running test: $test_case"
     
-    ./hw5 < "hw5-tests/$test_case.in" > output.ll 2>&1
+    ./hw5 < "tests/hw5-tests/$test_case.in" > output.ll 2>&1
     if [ $? -ne 0 ]; then
         echo "Error: Compilation failed while processing input $test_case"
         cat output.ll
@@ -47,7 +47,7 @@ run_test_detailed() {
     fi
 
     ./output > result.txt 2>&1
-    diff_result=$(diff result.txt "hw5-tests/$test_case.out")
+    diff_result=$(diff result.txt "tests/hw5-tests/$test_case.out")
 
     if [ $? -ne 0 ]; then
         echo "Test $test_case failed: output mismatch"
@@ -62,7 +62,7 @@ run_test_summarized() {
     local test_case="$1"
     echo "Running test: $test_case"
 
-    ./hw5 < "hw5-tests/$test_case.in" > output.ll 2>&1
+    ./hw5 < "tests/hw5-tests/$test_case.in" > output.ll 2>&1
     if [ $? -ne 0 ]; then
         echo "Error: Compilation failed for test $test_case"
         return
@@ -81,7 +81,7 @@ run_test_summarized() {
     fi
 
     ./output > result.out 2>&1
-    diff result.out "hw5-tests/$test_case.out" > /dev/null
+    diff result.out "tests/hw5-tests/$test_case.out" > /dev/null
 
     if [ $? -ne 0 ]; then
         echo "Test $test_case failed: output mismatch"
@@ -92,7 +92,7 @@ run_test_summarized() {
 
 # Function to run all tests
 run_all_tests() {
-    for test_file in hw5-tests/*.in; do
+    for test_file in tests/hw5-tests/*.in; do
         test_name=$(basename "$test_file" .in)
         run_test_summarized "$test_name"
         echo "----------------------"
