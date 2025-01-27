@@ -22,12 +22,12 @@ define void @print(i8*) {
 call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
-define i32 @getfive() {
-Visiting Return Node
-%t0 = zext i8 5 to i32
+define i8 @getfive() {
+%t0 = add i8 0, 5
+ret i8 %t0
 }
 define void @main() {
-%t1 = call i32 @getfive()
+%t1 = call i8 @getfive()
 %x = alloca i32 
 store i32 %t1, i32* %x
 %t2 = load i32, i32* %x

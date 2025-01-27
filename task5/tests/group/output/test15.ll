@@ -23,29 +23,34 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define i32 @notprinti(i32) {
-Visiting Return Node
 %t0 = add i32 0, 2
+ret i32 %t0
 }
 define void @main() {
-%t1 = zext i8 255 to i32
+%t1 = add i8 0, 255
+%t2 = zext i8 %t1 to i32
 %b = alloca i32 
 store i32 %t1, i32* %b
-%t3 = load i32, i32* %b
-%t4 = zext i8 1 to i32
-%t2 = add i32 %t3, %t4
+%t4 = load i32, i32* %b
+%t5 = trunc i32 %t4 to i8
+%t6 = add i8 0, 1
+%t3 = add i32 %t5, %t6
 %x = alloca i32 
-store i32 %t2, i32* %x
-%t5 = load i32, i32* %x
-call void @printi(i32 %t5)
-%t7 = load i32, i32* %b
-%t8 = zext i8 1 to i32
-%t6 = add i32 %t7, %t8
+store i32 %t3, i32* %x
+%t7 = load i32, i32* %x
+call void @printi(i32 %t7)
+%t9 = load i32, i32* %b
+%t10 = trunc i32 %t9 to i8
+%t11 = add i8 0, 1
+%t8 = add i32 %t10, %t11
+%t12 = zext i8 %t8 to i32
 %g = alloca i32 
-store i32 %t6, i32* %g
-%t9 = load i32, i32* %g
-call void @printi(i32 %t9)
-%t10 = zext i8 4 to i32
-%t11 = call i32 @notprinti(i32 %t10)
-call void @printi(i32 %t11)
+store i32 %t8, i32* %g
+%t13 = load i32, i32* %g
+%t14 = trunc i32 %t13 to i8
+call void @printi(i8 %t14)
+%t15 = add i8 0, 4
+%t16 = call i32 @notprinti(i8 %t15)
+call void @printi(i32 %t16)
 ret void
 }

@@ -1,3 +1,1 @@
-lli: <stdin>:28:1: error: expected instruction opcode
-Visiting Return Node
-^
+lli: error: 'main' function not found in module.

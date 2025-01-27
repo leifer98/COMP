@@ -23,8 +23,12 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define void @main() {
-%t0 = zext i1 1 to i32
+%t0 = add i1 0, 1
+br i1 %t0, label %label_0, label %label_1
+label_0:
 %t1 = getelementptr inbounds [5 x i8], [5 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t1)
+br label %label_1
+label_1:
 ret void
 }

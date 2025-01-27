@@ -22,37 +22,37 @@ define void @print(i8*) {
 call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
-define i32 @plusser(i32, i32, i32, i32) {
+define i32 @plusser(i32, i32, i32, i8) {
 %t8 = add i32 0, 9
-%t9 = load i32, i32* %a
-%t7 = add i32 %t8, %t9
-%t10 = load i32, i32* %b
-%t6 = add i32 %t7, %t10
-%t11 = load i32, i32* %c
-%t5 = add i32 %t6, %t11
-%t12 = load i32, i32* %d
-%t4 = add i32 %t5, %t12
-%t13 = load i32, i32* %a
-%t3 = add i32 %t4, %t13
-%t14 = load i32, i32* %b
-%t2 = add i32 %t3, %t14
-%t15 = load i32, i32* %c
-%t1 = add i32 %t2, %t15
-%t16 = load i32, i32* %d
-%t0 = add i32 %t1, %t16
+%t7 = add i32 %t8, %0
+%t6 = add i32 %t7, %1
+%t5 = add i32 %t6, %2
+%t4 = add i32 %t5, %3
+%t3 = add i32 %t4, %0
+%t2 = add i32 %t3, %1
+%t1 = add i32 %t2, %2
+%t0 = add i32 %t1, %3
 %y = alloca i32 
 store i32 %t0, i32* %y
-Visiting Return Node
-%t17 = load i32, i32* %y
+%t9 = load i32, i32* %y
+ret i32 %t9
 }
 define void @main() {
 Visiting RelOp Node
-%t18 = getelementptr inbounds [5 x i8], [5 x i8]* @.str0, i32 0, i32 0
-call void @print(i8* %t18)
+br i1 , label %label_0, label %label_1
+label_0:
+%t10 = getelementptr inbounds [5 x i8], [5 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t10)
+br label %label_1
+label_1:
 Visiting RelOp Node
-%t19 = getelementptr inbounds [10 x i8], [10 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t19)
-%t20 = getelementptr inbounds [15 x i8], [15 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t20)
+br i1 , label %label_2, label %label_3
+label_2:
+%t11 = getelementptr inbounds [10 x i8], [10 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t11)
+br label %label_3
+label_3:
+%t12 = getelementptr inbounds [15 x i8], [15 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t12)
 ret void
 }

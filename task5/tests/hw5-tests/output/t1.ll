@@ -23,33 +23,40 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define void @main() {
-%t0 = zext i1 1 to i32
-call void @printByValue(i32 %t0)
-%t1 = zext i1 0 to i32
-call void @printByValue(i32 %t1)
-%t2 = zext i1 1 to i32
+%t0 = add i1 0, 1
+call void @printByValue(i1 %t0)
+%t1 = add i1 0, 0
+call void @printByValue(i1 %t1)
+%t2 = add i1 0, 1
+br i1 %t2, label %label_0, label %label_1
+label_0:
 %t3 = getelementptr inbounds [5 x i8], [5 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t3)
-%t4 = zext i1 0 to i32
-%t5 = zext i1 0 to i32
-%t6 = zext i1 1 to i32
-%t7 = icmp ne i32 %t5, 0
-%t8 = icmp ne i32 %t6, 0
-%t9 = and i1 %t7, %t8
-%t10 = zext i1 %t9 to i32
-%t11 = icmp ne i32 %t4, 0
-%t12 = icmp ne i32 %t10, 0
-%t13 = or i1 %t11, %t12
-%t14 = zext i1 %t13 to i32
-%t15 = getelementptr inbounds [5 x i8], [5 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t15)
+br label %label_1
+label_1:
+%t4 = add i1 0, 0
+%t5 = add i1 0, 0
+%t6 = add i1 0, 1
+%t7 = and i1 %t5, %t6
+%t8 = or i1 %t4, %t7
+br i1 %t8, label %label_2, label %label_3
+label_2:
+%t9 = getelementptr inbounds [5 x i8], [5 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t9)
+br label %label_3
+label_3:
 ret void
 }
-define void @printByValue(i32) {
-%t16 = load i32, i32* %val
-%t17 = getelementptr inbounds [12 x i8], [12 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t17)
-%t18 = getelementptr inbounds [13 x i8], [13 x i8]* @.str3, i32 0, i32 0
-call void @print(i8* %t18)
+define void @printByValue(i1) {
+br i1 %0, label %label_4, label %label_6
+label_4:
+%t10 = getelementptr inbounds [12 x i8], [12 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t10)
+br label %label_5
+label_6:
+%t11 = getelementptr inbounds [13 x i8], [13 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t11)
+br label %label_5
+label_5:
 ret void
 }

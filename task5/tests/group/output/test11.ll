@@ -22,28 +22,34 @@ define void @print(i8*) {
 call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
-define i32 @intify(i32) {
+define i8 @intify(i32) {
 %t0 = getelementptr inbounds [18 x i8], [18 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t0)
-Visiting Return Node
 Visiting Cast Node
+ret i8 
 }
 define void @main() {
 %t1 = add i32 0, 12
-%t2 = call i32 @intify(i32 %t1)
+%t2 = call i8 @intify(i32 %t1)
+%t3 = zext i8 %t2 to i32
 %x = alloca i32 
 store i32 %t2, i32* %x
-%t3 = zext i8 8 to i32
+%t4 = add i8 0, 8
 %a = alloca i32 
-store i32 %t3, i32* %a
-%t4 = load i32, i32* %a
-%t5 = call i32 @intify(i32 %t4)
+store i32 %t4, i32* %a
+%t5 = load i32, i32* %a
+%t6 = call i8 @intify(i32 %t5)
+%t7 = zext i8 %t6 to i32
 %y = alloca i32 
-store i32 %t5, i32* %y
-%t6 = getelementptr inbounds [11 x i8], [11 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t6)
+store i32 %t6, i32* %y
+%t8 = getelementptr inbounds [11 x i8], [11 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t8)
 Visiting RelOp Node
-%t7 = getelementptr inbounds [41 x i8], [41 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t7)
+br i1 , label %label_0, label %label_1
+label_0:
+%t9 = getelementptr inbounds [41 x i8], [41 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t9)
+br label %label_1
+label_1:
 ret void
 }

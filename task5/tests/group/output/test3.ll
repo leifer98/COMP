@@ -22,15 +22,16 @@ define void @print(i8*) {
 call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
-define i32 @foo() {
-Visiting Return Node
-%t0 = zext i8 4 to i32
+define i8 @foo() {
+%t0 = add i8 0, 4
+ret i8 %t0
 }
 define void @main() {
 %t1 = add i32 0, 0
 %pippo = alloca i32 
 store i32 %t1, i32* %pippo
-%t2 = call i32 @foo()
+%t2 = call i8 @foo()
+%t3 = zext i8 %t2 to i32
 %foonum = alloca i32 
 store i32 %t2, i32* %foonum
 Visiting While Node

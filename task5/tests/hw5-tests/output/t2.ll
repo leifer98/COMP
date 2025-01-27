@@ -22,32 +22,32 @@ define void @print(i8*) {
 call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
-define i32 @fib(i32) {
+define i32 @fib(i8) {
 Visiting RelOp Node
 Visiting RelOp Node
-%t0 = icmp ne i32 , 0
-%t1 = icmp ne i32 , 0
-%t2 = or i1 %t0, %t1
-%t3 = zext i1 %t2 to i32
-Visiting Return Node
-%t4 = add i32 0, 1
-Visiting Return Node
-%t7 = load i32, i32* %n
-%t8 = zext i8 1 to i32
-%t6 = sub i32 %t7, %t8
-%t9 = call i32 @fib(i32 %t6)
-%t11 = load i32, i32* %n
-%t12 = zext i8 2 to i32
-%t10 = sub i32 %t11, %t12
-%t13 = call i32 @fib(i32 %t10)
-%t5 = add i32 %t9, %t13
+%t0 = or i1 , 
+br i1 %t0, label %label_0, label %label_1
+label_0:
+%t1 = add i32 0, 1
+ret i32 %t1
+br label %label_1
+label_1:
+%t4 = add i8 0, 1
+%t3 = sub i32 %0, %t4
+%t5 = call i32 @fib(i8 %t3)
+%t7 = add i8 0, 2
+%t6 = sub i32 %0, %t7
+%t8 = call i32 @fib(i8 %t6)
+%t2 = add i32 %t5, %t8
+ret i32 %t2
 }
 define void @main() {
-%t14 = zext i8 0 to i32
+%t9 = add i8 0, 0
+%t10 = zext i8 %t9 to i32
 %i = alloca i32 
-store i32 %t14, i32* %i
+store i32 %t9, i32* %i
 Visiting While Node
-%t15 = getelementptr inbounds [2 x i8], [2 x i8]* @.str0, i32 0, i32 0
-call void @print(i8* %t15)
+%t11 = getelementptr inbounds [2 x i8], [2 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t11)
 ret void
 }

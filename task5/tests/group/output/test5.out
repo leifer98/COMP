@@ -1,3 +1,1 @@
-lli: <stdin>:34:1: error: expected instruction opcode
-Visiting Assign Node: Assigning to variable 'y'
-^
+lli: error: 'main' function not found in module.
