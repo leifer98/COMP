@@ -40,7 +40,7 @@ br i1 %t6, label %label_3, label %label_4
 label_3:
 %t7 = load i32, i32* %i
 call void @printi(i32 %t7)
-Visiting Break Node
+br label %label_2
 br label %label_4
 label_4:
 %t9 = load i32, i32* %i

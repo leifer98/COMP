@@ -69,6 +69,8 @@ namespace ast {
     class Statement : virtual public Node {
     public:
         bool isInWhile = false;
+        std::string whileConditionLabel = "";
+        std::string whileNextLabel = "";
     };
 
     /* Number literal */

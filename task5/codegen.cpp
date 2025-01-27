@@ -271,7 +271,7 @@ void CodeGenVisitor::visit(ast::Or &node) {
 }
 
 void CodeGenVisitor::visit(ast::Type &node) {
-    codeBuffer.emit("Visiting Type Node");
+    // codeBuffer.emit("Visiting Type Node");
 }
 
 void CodeGenVisitor::visit(ast::Cast &node) {
@@ -334,16 +334,23 @@ void CodeGenVisitor::visit(ast::Statements &node) {
     // codeBuffer.emit("Visiting Statements Node: " + std::to_string(node.statements.size()) + " statements.");
 
     for (auto &stmt : node.statements) {
+        stmt->whileConditionLabel = node.whileConditionLabel;
+        stmt->whileNextLabel = node.whileNextLabel;
+
         stmt->accept(*this);
     }
 }
 
 void CodeGenVisitor::visit(ast::Break &node) {
-    codeBuffer.emit("Visiting Break Node");
+    // codeBuffer.emit("Visiting Break Node");
+
+    codeBuffer << "br label " << node.whileNextLabel << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Continue &node) {
-    codeBuffer.emit("Visiting Continue Node");
+    // codeBuffer.emit("Visiting Continue Node");
+
+    codeBuffer << "br label " << node.whileConditionLabel << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Return &node) {
@@ -365,6 +372,14 @@ void CodeGenVisitor::visit(ast::Return &node) {
 void CodeGenVisitor::visit(ast::If &node) {
     // codeBuffer.emit("Visiting If Node: Evaluating condition...");
     
+    // Pass to inner statements the while labels:
+    node.then->whileConditionLabel = node.whileConditionLabel;
+    node.then->whileNextLabel = node.whileNextLabel;
+    if (node.otherwise) {
+        node.otherwise->whileConditionLabel = node.whileConditionLabel;
+        node.otherwise->whileNextLabel = node.whileNextLabel; 
+    }
+
     // Generate labels (without emiting them yet)
     std::string ifLabel = codeBuffer.freshLabel();
     std::string nextLabel = codeBuffer.freshLabel();
@@ -405,6 +420,10 @@ void CodeGenVisitor::visit(ast::While &node) {
     std::string conditionLabel = codeBuffer.freshLabel();
     std::string whileLabel = codeBuffer.freshLabel();
     std::string nextLabel = codeBuffer.freshLabel();
+
+    // Update labels data for statements inside the while
+    node.body->whileConditionLabel = conditionLabel;
+    node.body->whileNextLabel = nextLabel;
 
     // Jump to condition
     codeBuffer << "br label " << conditionLabel << std::endl;
