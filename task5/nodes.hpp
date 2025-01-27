@@ -136,6 +136,8 @@ namespace ast {
         IdType idType = IdType::VAR_USAGE;
         // Offset of the identifier in the symbol table
         int offset;
+        // whether or not this is a formal var
+        bool isParam;
 
         // Constructor that receives a C-style string that represents the identifier
         explicit ID(const char *str);

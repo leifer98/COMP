@@ -27,7 +27,9 @@ protected:
  */
 class VarSymbol : public Symbol {
 public:
-    VarSymbol(const std::string &name, ast::BuiltInType type, int offset);
+    bool isParam;
+
+    VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam);
 };
 
 /* FuncSymbol class

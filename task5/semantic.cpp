@@ -36,9 +36,8 @@ Symbol::Symbol(const std::string &name, ast::BuiltInType type, int offset, bool 
 
 
 /* VarSymbol Class */
-
-VarSymbol::VarSymbol(const std::string &name, ast::BuiltInType type, int offset)
-    : Symbol(name, type, offset, false) {}
+VarSymbol::VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam)
+    : Symbol(name, type, offset, false), isParam(isParam) {}
 
 
 /* FuncSymbol Class */
@@ -61,12 +60,12 @@ int ScopeSymbolTable::declareVar(const std::string &name, ast::BuiltInType type,
     if (isParam) {
         paramOffset--;
 
-        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, paramOffset));
+        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, paramOffset, isParam));
         scopeSymbols.push_back(symbolPointer);
 
         return paramOffset;
     } else {
-        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, offset));
+        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, offset, isParam));
         scopeSymbols.push_back(symbolPointer);
         offset++;
 
@@ -183,8 +182,10 @@ void SemanticVisitor::visit(ast::ID &node) {
             if (symbol->isFunction) {
                 output::errorDefAsFunc(node.line, node.value);
             } else {
-                node.type = symbol->type;
-                node.offset = symbol->offset;
+                std::shared_ptr<VarSymbol> varSymbol = std::dynamic_pointer_cast<VarSymbol>(symbol);
+                node.type = varSymbol->type;
+                node.offset = varSymbol->offset;
+                node.isParam = varSymbol->isParam;
             }
         } else if (node.idType == ast::IdType::FUNC_CALL) {
             if (symbol->isFunction) {
@@ -443,6 +444,7 @@ void SemanticVisitor::visit(ast::Formal &node) {
 
     // Give the id node the data that it's a declaration of a var and than visit it:
     node.id->idType = ast::IdType::VAR_DECLARATION;
+    node.id->isParam = true;
     node.id->accept(*this);
 
     symTable.declareVar(node.id->value, node.type->type, true);
