@@ -32,56 +32,61 @@ define i1 @falsesr(i32) {
 ret i1 %t2
 }
 define i1 @oppo(i1) {
-Visiting Not Node
-ret i1 
+%t3 = xor i1 1, %0
+ret i1 %t3
 }
 define void @main() {
-%t3 = add i32 0, 5
-%t4 = add i8 0, 4
-%t5 = call i1 @truther(i32 %t3, i8 %t4)
-Visiting Not Node
-%t6 = and i1 %t5, 
-br i1 %t6, label %label_0, label %label_2
+%t4 = add i32 0, 5
+%t5 = add i8 0, 4
+%t6 = call i1 @truther(i32 %t4, i8 %t5)
+%t7 = add i32 0, 6
+%t8 = call i1 @falsesr(i32 %t7)
+%t9 = xor i1 1, %t8
+%t10 = and i1 %t6, %t9
+br i1 %t10, label %label_0, label %label_2
 label_0:
-%t7 = getelementptr inbounds [18 x i8], [18 x i8]* @.str0, i32 0, i32 0
-call void @print(i8* %t7)
+%t11 = getelementptr inbounds [18 x i8], [18 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t11)
 br label %label_1
 label_2:
-%t8 = getelementptr inbounds [9 x i8], [9 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t8)
+%t12 = getelementptr inbounds [9 x i8], [9 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t12)
 br label %label_1
 label_1:
-%t9 = add i32 0, 1
+%t13 = add i32 0, 1
 %x = alloca i32 
-store i32 %t9, i32* %x
-Visiting Not Node
-%t10 = add i32 0, 3
-%t11 = add i32 0, 0
-%t12 = icmp sgt i32 %t10, %t11
-%t13 = and i1 , %t12
-br i1 %t13, label %label_3, label %label_4
+store i32 %t13, i32* %x
+%t14 = add i32 0, 5
+%t15 = add i32 0, 7
+%t16 = icmp eq i32 %t14, %t15
+%t17 = xor i1 1, %t16
+%t18 = add i32 0, 3
+%t19 = add i32 0, 0
+%t20 = icmp sgt i32 %t18, %t19
+%t21 = and i1 %t17, %t20
+br i1 %t21, label %label_3, label %label_4
 label_3:
-%t14 = getelementptr inbounds [24 x i8], [24 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t14)
-%t15 = add i32 0, 6
-store i32 %t15, i32* %x
+%t22 = getelementptr inbounds [24 x i8], [24 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t22)
+%t23 = add i32 0, 6
+store i32 %t23, i32* %x
 br label %label_4
 label_4:
-%t16 = add i1 0, 0
-%t17 = call i1 @oppo(i1 %t16)
-br i1 %t17, label %label_5, label %label_6
+%t24 = add i1 0, 0
+%t25 = call i1 @oppo(i1 %t24)
+br i1 %t25, label %label_5, label %label_6
 label_5:
-%t18 = getelementptr inbounds [12 x i8], [12 x i8]* @.str3, i32 0, i32 0
-call void @print(i8* %t18)
+%t26 = getelementptr inbounds [12 x i8], [12 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t26)
 br label %label_6
 label_6:
-%t19 = load i32, i32* %x
-%t20 = add i32 0, 6
-%t21 = icmp eq i32 %t19, %t20
-br i1 %t21, label %label_7, label %label_8
+%t27 = load i32, i32* %x
+%t28 = add i32 0, 6
+%t29 = icmp eq i32 %t27, %t28
+br i1 %t29, label %label_7, label %label_8
 label_7:
-%t22 = getelementptr inbounds [28 x i8], [28 x i8]* @.str4, i32 0, i32 0
-call void @print(i8* %t22)
+%t30 = getelementptr inbounds [28 x i8], [28 x i8]* @.str4, i32 0, i32 0
+call void @print(i8* %t30)
 br label %label_8
 label_8:
 ret void
