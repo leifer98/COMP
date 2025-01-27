@@ -1,4 +1,0 @@
-1c1
-< ERROR: Undefined escape sequence x7"
----
-> ERROR: Undefined escape sequence x7

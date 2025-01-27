@@ -1,5 +1,0 @@
-
-void test() {
-    int x = 10;
-    x = x + 5;
-}

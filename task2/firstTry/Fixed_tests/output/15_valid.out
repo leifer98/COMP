@@ -1,9 +1,0 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: declareVar
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──VarDecl
-                ├──ID: x
-                └──Type: int

@@ -1,7 +1,0 @@
-void main() {
-  auto x = "hello";
-  auto y = 5;
-  string z = "hello";
-  int z = y;
-  
-}

@@ -1,4 +1,0 @@
-
-void breakTest() {
-    while (1) { break; }
-}

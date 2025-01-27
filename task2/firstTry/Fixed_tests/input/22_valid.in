@@ -1,4 +1,0 @@
-
-void conditionalElse() {
-    if (1 > 0) print(); else print();
-}

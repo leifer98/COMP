@@ -1,4 +1,0 @@
-1c1
-< ERROR: Undefined escape sequence \z
----
-> ERROR: Undefined escape sequence z

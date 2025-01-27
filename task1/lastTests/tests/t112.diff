@@ -1,14 +1,0 @@
-1c1,11
-< 1 STRING hellowelcome
----
-> welcomeG hello
-> 
-> NOTE!!! - Just manually do:
-> ./hw1 < ./tests_even_more/t112.in
-> And check you get:
-> 
-> welcomeG hello
-> 
-> on your terminal
-> (in files the carrier doesn't work the same or something)
-> Piazza @35

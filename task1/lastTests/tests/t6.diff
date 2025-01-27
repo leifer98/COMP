@@ -1,9 +1,0 @@
-13,18c13
-< 5 RPAREN )
-< 5 SC ;
-< 6 RETURN return
-< 6 NUM 0
-< 6 SC ;
-< 7 RBRACE }
----
-> ERROR: Undefined escape sequence xff

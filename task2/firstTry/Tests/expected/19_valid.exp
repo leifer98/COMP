@@ -1,7 +1,0 @@
-└──Funcs
-    └──FuncDecl
-        ├──ID: noReturn
-        ├──Type: void
-        ├──Formals
-        └──Statements
-            └──Return

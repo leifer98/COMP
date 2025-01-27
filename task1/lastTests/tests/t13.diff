@@ -1,4 +1,0 @@
-1c1
-< ERROR: Undefined escape sequence \q
----
-> ERROR: Undefined escape sequence q
