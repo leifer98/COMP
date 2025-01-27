@@ -330,13 +330,16 @@ void CodeGenVisitor::visit(ast::Return &node) {
     // codeBuffer.emit("Visiting Return Node");
     
     // Visit the expression
+    std::string retType = "void";
+    std::string retValue = "";
     if (node.exp) {
         node.exp->accept(*this);
+        retType = convertTypeToLLVM(node.exp->type);
+        retValue = " " + node.exp->var;
     }
 
     // Generate code for ret command
-    std::string retTypeStr = convertTypeToLLVM(node.exp->type);
-    codeBuffer << "ret " << retTypeStr << " " << node.exp->var << std::endl;
+    codeBuffer << "ret " << retType << retValue << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::If &node) {
