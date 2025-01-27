@@ -19,7 +19,7 @@ namespace ast {
 
     Bool::Bool(bool value) : Exp(), value(value) {}
 
-    ID::ID(const char *str) : Exp(), value(str) {}
+    ID::ID(const char *str) : Exp(), value(str), offset(-1) {}
 
     BinOp::BinOp(std::shared_ptr<Exp> left, std::shared_ptr<Exp> right, BinOpType op)
             : Exp(), left(std::move(left)), right(std::move(right)), op(op) {}
@@ -51,10 +51,10 @@ namespace ast {
     }
 
     Call::Call(std::shared_ptr<ID> func_id, std::shared_ptr<ExpList> args)
-            : Exp(), func_id(std::move(func_id)), args(std::move(args)) {}
+            : Exp(), func_id(std::move(func_id)), args(std::move(args)), returnType(ast::BuiltInType::VOID) {}
 
     Call::Call(std::shared_ptr<ID> func_id)
-            : Exp(), func_id(std::move(func_id)), args(std::make_shared<ExpList>()) {}
+            : Exp(), func_id(std::move(func_id)), args(std::make_shared<ExpList>()), returnType(ast::BuiltInType::VOID) {}
 
     Statements::Statements(std::shared_ptr<Statement> statement) : Statement(), statements({std::move(statement)}) {}
 

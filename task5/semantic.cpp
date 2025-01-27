@@ -184,10 +184,12 @@ void SemanticVisitor::visit(ast::ID &node) {
                 output::errorDefAsFunc(node.line, node.value);
             } else {
                 node.type = symbol->type;
+                node.offset = symbol->offset;
             }
         } else if (node.idType == ast::IdType::FUNC_CALL) {
             if (symbol->isFunction) {
                 node.type = symbol->type;
+                node.offset = symbol->offset;
             } else {
                 output::errorDefAsVar(node.line, node.value);
             }
@@ -308,6 +310,9 @@ void SemanticVisitor::visit(ast::Call &node) {
     if (symbol) {
         std::shared_ptr<FuncSymbol> funcSymbol = std::dynamic_pointer_cast<FuncSymbol>(symbol);
         if (funcSymbol) {
+            // Add return type to node:
+            node.returnType = funcSymbol->type;
+
             // Get expected types as string:
             std::vector<std::string> expectedTypes;
             for (ast::BuiltInType &type : funcSymbol->paramTypes) {

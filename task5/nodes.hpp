@@ -132,7 +132,10 @@ namespace ast {
     public:
         // Name of the identifier
         std::string value;
+        // Type of the identifier
         IdType idType = IdType::VAR_USAGE;
+        // Offset of the identifier in the symbol table
+        int offset;
 
         // Constructor that receives a C-style string that represents the identifier
         explicit ID(const char *str);
@@ -284,6 +287,8 @@ namespace ast {
         std::shared_ptr<ID> func_id;
         // List of arguments as expressions
         std::shared_ptr<ExpList> args;
+        // Return type of the function
+        BuiltInType returnType;
 
         // Constructor that receives the function identifier and the list of arguments
         Call(std::shared_ptr<ID> func_id, std::shared_ptr<ExpList> args);
