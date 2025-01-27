@@ -1,8 +1,0 @@
-void main() {
-    bool flag = true;
-    print("Hello");
-
-    if (flag) {
-        print("True");
-    }
-}
