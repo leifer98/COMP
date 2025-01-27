@@ -1,3 +1,4 @@
-lli: <stdin>:37:10: error: use of undefined value '%label_0'
-br label %label_0
-         ^
+Hello world
+Hello world
+Hello world
+Hello world

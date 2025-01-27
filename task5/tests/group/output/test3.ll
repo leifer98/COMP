@@ -35,7 +35,7 @@ store i32 %t1, i32* %pippo
 %foonum = alloca i32 
 store i32 %t3, i32* %foonum
 br label %label_0
-label_1:
+label_0:
 %t4 = load i32, i32* %pippo
 %t5 = load i32, i32* %foonum
 %t6 = trunc i32 %t5 to i8

@@ -51,7 +51,7 @@ store i32 %t8, i32* %g
 %t10 = sub i32 %t11, %t12
 store i32 %t10, i32* %a
 br label %label_2
-label_3:
+label_2:
 %t13 = add i32 0, 12
 %t14 = icmp slt i32 %1, %t13
 br i1 %t14, label %label_3, label %label_4

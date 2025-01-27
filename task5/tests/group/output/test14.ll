@@ -27,7 +27,7 @@ define void @main() {
 %i = alloca i32 
 store i32 %t0, i32* %i
 br label %label_0
-label_1:
+label_0:
 %t1 = load i32, i32* %i
 %t2 = add i32 0, 10
 %t3 = icmp slt i32 %t1, %t2

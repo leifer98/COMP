@@ -378,7 +378,6 @@ void CodeGenVisitor::visit(ast::If &node) {
 void CodeGenVisitor::visit(ast::While &node) {
     // codeBuffer.emit("Visiting While Node");
 
-    
     // Generate labels (without emiting them yet)
     std::string conditionLabel = codeBuffer.freshLabel();
     std::string whileLabel = codeBuffer.freshLabel();

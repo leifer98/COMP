@@ -30,7 +30,7 @@ store i32 %t0, i32* %i
 %j = alloca i32 
 store i32 %t1, i32* %j
 br label %label_0
-label_1:
+label_0:
 %t2 = load i32, i32* %i
 %t3 = load i32, i32* %j
 %t4 = icmp slt i32 %t2, %t3
