@@ -95,7 +95,7 @@ void CodeGenVisitor::visit(ast::String &node) {
 }
 
 void CodeGenVisitor::visit(ast::Bool &node) {
-    codeBuffer.emit("Visiting Bool Node: Value = " + std::string(node.value ? "true" : "false"));
+    // codeBuffer.emit("Visiting Bool Node: Value = " + std::string(node.value ? "true" : "false"));
 
     // Generate code to assign a fresh register and use it to store the value:
     node.var = codeBuffer.freshVar();
@@ -150,11 +150,47 @@ void CodeGenVisitor::visit(ast::Not &node) {
 }
 
 void CodeGenVisitor::visit(ast::And &node) {
-    codeBuffer.emit("Visiting And Node");
+    // codeBuffer.emit("Visiting And Node");
+
+    // Visit left and right expressions to generate their code
+    node.left->accept(*this);
+    node.right->accept(*this);
+
+    // Convert both operands to i1 for logical operations
+    std::string leftBool = codeBuffer.freshVar();
+    std::string rightBool = codeBuffer.freshVar();
+    codeBuffer << leftBool << " = icmp ne i32 " << node.left->var << ", 0" << std::endl;
+    codeBuffer << rightBool << " = icmp ne i32 " << node.right->var << ", 0" << std::endl;
+
+    // Perform logical AND operation
+    std::string resultBool = codeBuffer.freshVar();
+    codeBuffer << resultBool << " = and i1 " << leftBool << ", " << rightBool << std::endl;
+
+    // Convert the result back to i32
+    node.var = codeBuffer.freshVar();
+    codeBuffer << node.var << " = zext i1 " << resultBool << " to i32" << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Or &node) {
-    codeBuffer.emit("Visiting Or Node");
+    // codeBuffer.emit("Visiting Or Node");
+
+    // Visit left and right expressions to generate their code
+    node.left->accept(*this);
+    node.right->accept(*this);
+
+    // Convert both operands to i1 for logical operations
+    std::string leftBool = codeBuffer.freshVar();
+    std::string rightBool = codeBuffer.freshVar();
+    codeBuffer << leftBool << " = icmp ne i32 " << node.left->var << ", 0" << std::endl;
+    codeBuffer << rightBool << " = icmp ne i32 " << node.right->var << ", 0" << std::endl;
+
+    // Perform logical OR operation
+    std::string resultBool = codeBuffer.freshVar();
+    codeBuffer << resultBool << " = or i1 " << leftBool << ", " << rightBool << std::endl;
+
+    // Convert the result back to i32
+    node.var = codeBuffer.freshVar();
+    codeBuffer << node.var << " = zext i1 " << resultBool << " to i32" << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Type &node) {
@@ -173,23 +209,43 @@ void CodeGenVisitor::visit(ast::ExpList &node) {
 }
 
 void CodeGenVisitor::visit(ast::Call &node) {
-    // codeBuffer.emit("Visiting Call Node: Function Call to '" + node.func_id->value + "'");
-    // node.func_id->accept(*this);
     node.args->accept(*this);
 
-    // Get the return type as an llvm type:
+    // Get the return type as an LLVM type
     std::string retTypeStr = convertTypeToLLVM(node.returnType);
 
-    // Build the args list:
+    // Build the args list while handling string arguments properly
     std::string argsList = "";
     for (auto &exp : node.args->exps) {
-        argsList += convertTypeToLLVM(exp->type) + " " + exp->var + ", ";
+        if (exp->type == ast::BuiltInType::STRING) {
+            // Handle string argument by obtaining pointer and size correctly
+            auto strNode = std::dynamic_pointer_cast<ast::String>(exp);
+            if (strNode) {
+                std::string strVar = codeBuffer.emitString(strNode->value);
+                std::string strSize = std::to_string(strNode->value.length() + 1); // Include null terminator
+
+                // Generate GEP (GetElementPtr) to get pointer to the string
+                std::string ptrVar = codeBuffer.freshVar();
+                codeBuffer << ptrVar << " = getelementptr inbounds [" 
+                           << strSize << " x i8], [" 
+                           << strSize << " x i8]* " 
+                           << strVar << ", i32 0, i32 0" 
+                           << std::endl;
+
+                argsList += "i8* " + ptrVar + ", ";
+            }
+        } else {
+            // Handle other types as i32
+            argsList += "i32 " + exp->var + ", ";
+        }
     }
-    if (argsList.length() - 2 > 0) {
+
+    // Remove the trailing comma and space
+    if (!argsList.empty()) {
         argsList = argsList.substr(0, argsList.length() - 2);
     }
 
-    // Build the start of the command:
+    // Build the start of the command
     std::string commandStart = "";
     node.var = "";
     if (node.returnType != ast::BuiltInType::VOID) {
@@ -197,8 +253,11 @@ void CodeGenVisitor::visit(ast::Call &node) {
         commandStart = node.var + " = ";
     }
 
-    // Emit the final command:
-    codeBuffer << commandStart << "call " << retTypeStr << " @" << node.func_id->value << "(" << argsList << ")" << std::endl;
+    // Emit the final command
+    codeBuffer << commandStart << "call " << retTypeStr 
+               << " @" << node.func_id->value 
+               << "(" << argsList << ")" 
+               << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Statements &node) {
@@ -225,7 +284,7 @@ void CodeGenVisitor::visit(ast::Return &node) {
 }
 
 void CodeGenVisitor::visit(ast::If &node) {
-    codeBuffer.emit("Visiting If Node: Evaluating condition...");
+    // codeBuffer.emit("Visiting If Node: Evaluating condition...");
     node.condition->accept(*this);
     node.then->accept(*this);
     if (node.otherwise) {
@@ -262,7 +321,7 @@ void CodeGenVisitor::visit(ast::Assign &node) {
 }
 
 void CodeGenVisitor::visit(ast::Formal &node) {
-    codeBuffer.emit("Visiting Formal Node: " + node.id->value + ", Type: " + std::to_string(node.type->type));
+    // codeBuffer.emit("Visiting Formal Node: " + node.id->value + ", Type: " + std::to_string(node.type->type));
 }
 
 void CodeGenVisitor::visit(ast::Formals &node) {
@@ -285,7 +344,8 @@ void CodeGenVisitor::visit(ast::FuncDecl &node) {
     // Build the param list:
     std::string paramList = "";
     for (auto &formal : node.formals->formals) {
-        paramList += convertTypeToLLVM(formal->type->type) + ", ";
+        // paramList += convertTypeToLLVM(formal->type->type) + ", ";
+        paramList += "i32, ";
     }
     if (paramList.length() - 2 > 0) {
         paramList = paramList.substr(0, paramList.length() - 2);
