@@ -294,6 +294,9 @@ namespace ast {
         // Return type of the function
         BuiltInType returnType;
 
+        // Expected types of the arguments
+        std::vector<ast::BuiltInType> expectedTypes;
+
         // Constructor that receives the function identifier and the list of arguments
         Call(std::shared_ptr<ID> func_id, std::shared_ptr<ExpList> args);
 

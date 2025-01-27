@@ -317,6 +317,7 @@ void SemanticVisitor::visit(ast::Call &node) {
             // Get expected types as string:
             std::vector<std::string> expectedTypes;
             for (ast::BuiltInType &type : funcSymbol->paramTypes) {
+                node.expectedTypes.push_back(type);
                 expectedTypes.push_back(toString(type));
             }
 

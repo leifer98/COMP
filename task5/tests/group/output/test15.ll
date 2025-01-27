@@ -49,9 +49,11 @@ call void @printi(i32 %t8)
 store i32 %t13, i32* %g
 %t14 = load i32, i32* %g
 %t15 = trunc i32 %t14 to i8
-call void @printi(i8 %t15)
-%t16 = add i8 0, 4
-%t17 = call i32 @notprinti(i8 %t16)
-call void @printi(i32 %t17)
+%t16 = zext i8 %t15 to i32
+call void @printi(i32 %t16)
+%t17 = add i8 0, 4
+%t18 = zext i8 %t17 to i32
+%t19 = call i32 @notprinti(i32 %t18)
+call void @printi(i32 %t19)
 ret void
 }

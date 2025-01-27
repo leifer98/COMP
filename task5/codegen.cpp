@@ -304,10 +304,23 @@ void CodeGenVisitor::visit(ast::Call &node) {
     // Get the return type as an LLVM type
     std::string retTypeStr = convertTypeToLLVM(node.returnType);
 
-    // Build the args list while handling string arguments properly
+    // Build the args list
     std::string argsList = "";
-    for (auto &exp : node.args->exps) {
-        argsList += convertTypeToLLVM(exp->type) + " " + exp->var + ", ";
+    for (size_t i = 0; i < node.args->exps.size(); i++)
+    {
+        auto &exp = node.args->exps[i];
+
+        // Implicit convertion of byte to int when necessary
+        std::string expType = convertTypeToLLVM(exp->type);
+        std::string expVar = exp->var;
+        if (exp->type == ast::BuiltInType::BYTE && node.expectedTypes[i] == ast::BuiltInType::INT) {
+            expType = "i32";
+            expVar = codeBuffer.freshVar();
+            codeBuffer << expVar << " = zext i8 " << exp->var << " to i32" << std::endl;
+        }
+
+        // Add the argument to argsList
+        argsList += expType + " " + expVar + ", ";
     }
 
     // Remove the argsList's trailing comma and space
