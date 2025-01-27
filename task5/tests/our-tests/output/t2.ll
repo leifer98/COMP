@@ -34,7 +34,7 @@ call void @printi(i32 %t4)
 ret void
 }
 define i32 @func(i32, i32, i32) {
-Visiting Return Node
 %t6 = add i32 %0, %1
 %t5 = add i32 %t6, %2
+ret i32 %t5
 }

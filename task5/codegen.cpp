@@ -264,10 +264,16 @@ void CodeGenVisitor::visit(ast::Continue &node) {
 }
 
 void CodeGenVisitor::visit(ast::Return &node) {
-    codeBuffer.emit("Visiting Return Node");
+    // codeBuffer.emit("Visiting Return Node");
+    
+    // Visit the expression
     if (node.exp) {
         node.exp->accept(*this);
     }
+
+    // Generate code for ret command
+    std::string retTypeStr = convertTypeToLLVM(node.exp->type);
+    codeBuffer << "ret " << retTypeStr << " " << node.exp->var << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::If &node) {
@@ -365,8 +371,6 @@ void CodeGenVisitor::visit(ast::Funcs &node) {
     // codeBuffer.emit("Visiting Funcs Node: " + std::to_string(node.funcs.size()) + " functions.");
 
     declareGivenFunctions();
-    // codeBuffer << "declare i32 @printf(i8*, ...)" << std::endl;
-    // codeBuffer << "declare void @exit(i32)" << std::endl;
 
     for (auto &func : node.funcs) {
         func->accept(*this);
