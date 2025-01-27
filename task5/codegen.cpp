@@ -54,6 +54,41 @@ std::string convertTypeToLLVM(ast::BuiltInType type) {
     }
 }
 
+std::string convertRelOpTypeToLLVM(ast::RelOpType type) {
+    switch (type) {
+        case ast::RelOpType::EQ:
+            return "eq";
+        case ast::RelOpType::NE:
+            return "ne";
+        case ast::RelOpType::GT:
+            return "sgt";
+        case ast::RelOpType::GE:
+            return "sge";
+        case ast::RelOpType::LT:
+            return "slt";
+        case ast::RelOpType::LE:
+            return "sle";
+        default:
+            return "UNKNOWN";
+    }
+}
+
+std::string convertBinOpTypeToLLVM(ast::BinOpType type) {
+    switch (type)
+    {
+        case ast::BinOpType::ADD:
+            return "add";
+        case ast::BinOpType::SUB:
+            return "sub";
+        case ast::BinOpType::MUL:
+            return "mul";
+        case ast::BinOpType::DIV:
+            return "sdiv";
+        default:
+            return "UNKNOWN";
+    }
+}
+
 /* CodeGenVisitor implementation */
 
 void CodeGenVisitor::generateCode(std::shared_ptr<ast::Funcs> program) {
@@ -142,27 +177,59 @@ void CodeGenVisitor::visit(ast::BinOp &node) {
     node.left->accept(*this);
     node.right->accept(*this);
 
-    switch (node.op)
-    {
-    case ast::BinOpType::ADD:
-        codeBuffer << node.var << " = add i32 " << node.left->var << ", " << node.right->var << std::endl;
-        break;
-    case ast::BinOpType::SUB:
-        codeBuffer << node.var << " = sub i32 " << node.left->var << ", " << node.right->var << std::endl;
-        break;
-    case ast::BinOpType::MUL:
-        codeBuffer << node.var << " = mul i32 " << node.left->var << ", " << node.right->var << std::endl;
-        break;
-    case ast::BinOpType::DIV:
-        codeBuffer << node.var << " = sdiv i32 " << node.left->var << ", " << node.right->var << std::endl;
-        break;
-    default:
-        break;
+    std::string leftVar = node.left->var;
+    std::string rightVar = node.right->var;
+    // Convert to int if necessary
+    if (node.type == ast::BuiltInType::INT) {
+        // Temporarly convert bytes to ints for the comparison
+        if (node.left->type != ast::BuiltInType::INT) {
+            leftVar = codeBuffer.freshVar();
+            codeBuffer << leftVar << " = zext " << convertTypeToLLVM(node.left->type) << " " << node.left->var << " to i32" << std::endl;
+        }
+        if (node.right->type != ast::BuiltInType::INT) {
+            rightVar = codeBuffer.freshVar();
+            codeBuffer << rightVar << " = zext " << convertTypeToLLVM(node.right->type) << " " << node.right->var << " to i32" << std::endl;
+        }
     }
+
+    // Convert type and operation to llvm format for the command
+    std::string type = convertTypeToLLVM(node.type);
+    std::string operation = convertBinOpTypeToLLVM(node.op);
+
+    // Generate the operation command
+    codeBuffer << node.var << " = " << operation << " " << type << " " << leftVar << ", " << rightVar << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::RelOp &node) {
-    codeBuffer.emit("Visiting RelOp Node");
+    // codeBuffer.emit("Visiting RelOp Node");
+
+    // Visit left and right expressions to generate their code
+    node.left->accept(*this);
+    node.right->accept(*this);
+
+    // Generate code to perform the operation
+    node.var = codeBuffer.freshVar();
+
+    // Get the correct condition for the icmp command
+    std::string condition = convertRelOpTypeToLLVM(node.op);
+
+    // Temporarly convert bytes to ints for the comparison
+    std::string leftVar = node.left->var;
+    if (node.left->type != ast::BuiltInType::INT) {
+        leftVar = codeBuffer.freshVar();
+        codeBuffer << leftVar << " = zext " << convertTypeToLLVM(node.left->type) << " " << node.left->var << " to i32" << std::endl;
+    }
+    std::string rightVar = node.right->var;
+    if (node.right->type != ast::BuiltInType::INT) {
+        rightVar = codeBuffer.freshVar();
+        codeBuffer << rightVar << " = zext " << convertTypeToLLVM(node.right->type) << " " << node.right->var << " to i32" << std::endl;
+    }
+
+    // Generate comparison command
+    codeBuffer << node.var << " = icmp " << condition << " i32 "
+                           << leftVar << ", "
+                           << rightVar
+                           << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Not &node) {
@@ -285,7 +352,7 @@ void CodeGenVisitor::visit(ast::If &node) {
         elseLabel = nextLabel;
     }
 
-    // Visit the condition
+    // Visit the condition and branch based on it
     node.condition->accept(*this);
     codeBuffer << "br i1 " << node.condition->var
                << ", label " << ifLabel
@@ -304,12 +371,43 @@ void CodeGenVisitor::visit(ast::If &node) {
         codeBuffer << "br label " << nextLabel << std::endl;
     }
 
-    // Label for next instruction after the if
+    // Emit the label for next instruction after the if
     codeBuffer.emitLabel(nextLabel);
 }
 
 void CodeGenVisitor::visit(ast::While &node) {
-    codeBuffer.emit("Visiting While Node");
+    // codeBuffer.emit("Visiting While Node");
+
+    
+    // Generate labels (without emiting them yet)
+    std::string conditionLabel = codeBuffer.freshLabel();
+    std::string whileLabel = codeBuffer.freshLabel();
+    std::string nextLabel = codeBuffer.freshLabel();
+
+    // Jump to condition
+    codeBuffer << "br label " << conditionLabel << std::endl;
+
+    // Emit the condition label
+    codeBuffer.emitLabel(conditionLabel);
+
+    // Visit the condition and branch based on it
+    node.condition->accept(*this);
+    codeBuffer << "br i1 " << node.condition->var
+               << ", label " << whileLabel
+               << ", label " << nextLabel
+               << std::endl;
+
+    // Emit the while label
+    codeBuffer.emitLabel(whileLabel);
+
+    // Visit the body
+    node.body->accept(*this);
+
+    // Jump back to condition label
+    codeBuffer << "br label " << conditionLabel << std::endl;
+
+    // Emit the label for next instruction after the if
+    codeBuffer.emitLabel(nextLabel);
 }
 
 void CodeGenVisitor::visit(ast::VarDecl &node) {
@@ -325,7 +423,7 @@ void CodeGenVisitor::visit(ast::VarDecl &node) {
         // Extend to 32 bit if necessary
         std::string var32bit = node.init_exp->var;
         if (type == "i8" || type == "i1") { 
-            std::string var32bit = codeBuffer.freshVar();
+            var32bit = codeBuffer.freshVar();
             codeBuffer << var32bit << " = zext " << type << " " << node.init_exp->var << " to i32" << std::endl;
         }
         // Set the value to store
@@ -339,8 +437,22 @@ void CodeGenVisitor::visit(ast::VarDecl &node) {
 }
 
 void CodeGenVisitor::visit(ast::Assign &node) {
-    codeBuffer.emit("Visiting Assign Node: Assigning to variable '" + node.id->value + "'");
+    // codeBuffer.emit("Visiting Assign Node: Assigning to variable '" + node.id->value + "'");
+    
     node.exp->accept(*this);
+
+    std::string type = convertTypeToLLVM(node.exp->type);
+
+    // Extend to 32 bit if necessary
+    std::string var32bit = node.exp->var;
+    if (type == "i8" || type == "i1") { 
+        var32bit = codeBuffer.freshVar();
+        codeBuffer << var32bit << " = zext " << type << " " << node.exp->var << " to i32" << std::endl;
+    }
+    
+    // Generate commands to store the value in the correct place on the stack
+    std::string varName = "%" + node.id->value;
+    codeBuffer << "store i32 " << var32bit << ", i32* " << varName << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Formal &node) {

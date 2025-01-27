@@ -26,7 +26,7 @@ define void @main() {
 %t0 = add i1 0, 1
 %t1 = zext i1 %t0 to i32
 %flag = alloca i32 
-store i32 %t0, i32* %flag
+store i32 %t1, i32* %flag
 %t2 = getelementptr inbounds [6 x i8], [6 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t2)
 %t3 = load i32, i32* %flag

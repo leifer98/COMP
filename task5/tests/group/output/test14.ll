@@ -26,6 +26,28 @@ define void @main() {
 %t0 = add i32 0, 0
 %i = alloca i32 
 store i32 %t0, i32* %i
-Visiting While Node
+br label %label_0
+label_1:
+%t1 = load i32, i32* %i
+%t2 = add i32 0, 10
+%t3 = icmp slt i32 %t1, %t2
+br i1 %t3, label %label_1, label %label_2
+label_1:
+%t4 = load i32, i32* %i
+%t5 = add i32 0, 2
+%t6 = icmp slt i32 %t4, %t5
+br i1 %t6, label %label_3, label %label_4
+label_3:
+%t7 = load i32, i32* %i
+call void @printi(i32 %t7)
+Visiting Break Node
+br label %label_4
+label_4:
+%t9 = load i32, i32* %i
+%t10 = add i32 0, 1
+%t8 = add i32 %t9, %t10
+store i32 %t8, i32* %i
+br label %label_0
+label_2:
 ret void
 }

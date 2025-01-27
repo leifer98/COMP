@@ -1,3 +1,2 @@
-lli: <stdin>:29:11: error: '%t0' defined with type 'i1' but expected 'i32'
-store i32 %t0, i32* %flag
-          ^
+Hello
+True

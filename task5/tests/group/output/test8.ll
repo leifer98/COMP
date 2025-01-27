@@ -26,48 +26,60 @@ define void @fuckme(i32, i32) {
 %t0 = mul i32 %0, %1
 %t = alloca i32 
 store i32 %t0, i32* %t
-Visiting Assign Node: Assigning to variable 't'
 %t2 = load i32, i32* %t
 %t3 = add i32 0, 1
 %t1 = sub i32 %t2, %t3
-Visiting RelOp Node
-br i1 , label %label_0, label %label_1
+store i32 %t1, i32* %t
+%t4 = load i32, i32* %t
+%t5 = add i32 0, 5
+%t6 = icmp eq i32 %t4, %t5
+br i1 %t6, label %label_0, label %label_1
 label_0:
-Visiting Assign Node: Assigning to variable 't'
-%t4 = add i32 0, 0
+%t7 = add i32 0, 0
+store i32 %t7, i32* %t
 br label %label_1
 label_1:
 ret void
 }
 define void @fuckyou(i32, i32) {
-%t6 = add i32 0, 9
-%t5 = sub i32 %1, %t6
+%t9 = add i32 0, 9
+%t8 = sub i32 %1, %t9
 %g = alloca i32 
-store i32 %t5, i32* %g
-Visiting Assign Node: Assigning to variable 'a'
-%t8 = load i32, i32* %g
-%t9 = add i32 0, 1
-%t7 = sub i32 %t8, %t9
-Visiting While Node
+store i32 %t8, i32* %g
+%t11 = load i32, i32* %g
+%t12 = add i32 0, 1
+%t10 = sub i32 %t11, %t12
+store i32 %t10, i32* %a
+br label %label_2
+label_3:
+%t13 = add i32 0, 12
+%t14 = icmp slt i32 %1, %t13
+br i1 %t14, label %label_3, label %label_4
+label_3:
+%t16 = add i32 0, 5
+%t15 = add i32 %1, %t16
+store i32 %t15, i32* %b
+br label %label_2
+label_4:
 ret void
 }
 define i32 @fuckoff(i32, i32) {
-%t10 = add i32 0, 5
-ret i32 %t10
+%t17 = add i32 0, 5
+ret i32 %t17
 }
 define void @main() {
-%t11 = add i32 0, 1
-%t12 = add i32 0, 2
-call void @fuckme(i32 %t11, i32 %t12)
-%t13 = add i32 0, 3
-%t14 = add i32 0, 4
-%t15 = call i32 @fuckoff(i32 %t13, i32 %t14)
-%t16 = add i32 0, 6
-%t17 = add i32 0, 7
-%t18 = call i32 @fuckoff(i32 %t16, i32 %t17)
+%t18 = add i32 0, 1
+%t19 = add i32 0, 2
+call void @fuckme(i32 %t18, i32 %t19)
+%t20 = add i32 0, 3
+%t21 = add i32 0, 4
+%t22 = call i32 @fuckoff(i32 %t20, i32 %t21)
+%t23 = add i32 0, 6
+%t24 = add i32 0, 7
+%t25 = call i32 @fuckoff(i32 %t23, i32 %t24)
 %x = alloca i32 
-store i32 %t18, i32* %x
-%t19 = add i32 0, 0
-call void @printi(i32 %t19)
+store i32 %t25, i32* %x
+%t26 = add i32 0, 0
+call void @printi(i32 %t26)
 ret void
 }

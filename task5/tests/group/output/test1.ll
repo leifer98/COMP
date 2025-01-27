@@ -26,17 +26,17 @@ define void @main() {
 %t0 = add i32 0, 3
 %i = alloca i32 
 store i32 %t0, i32* %i
-Visiting Assign Node: Assigning to variable 'i'
 %t2 = load i32, i32* %i
 %t3 = add i32 0, 8
 %t1 = add i32 %t2, %t3
+store i32 %t1, i32* %i
 %t4 = add i32 0, 2
 %x = alloca i32 
 store i32 %t4, i32* %x
-Visiting Assign Node: Assigning to variable 'i'
 %t6 = load i32, i32* %x
 %t7 = load i32, i32* %i
 %t5 = mul i32 %t6, %t7
+store i32 %t5, i32* %i
 %t8 = load i32, i32* %i
 call void @printi(i32 %t8)
 ret void

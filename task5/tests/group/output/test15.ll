@@ -30,11 +30,11 @@ define void @main() {
 %t1 = add i8 0, 255
 %t2 = zext i8 %t1 to i32
 %b = alloca i32 
-store i32 %t1, i32* %b
+store i32 %t2, i32* %b
 %t4 = load i32, i32* %b
 %t5 = trunc i32 %t4 to i8
 %t6 = add i8 0, 1
-%t3 = add i32 %t5, %t6
+%t3 = add i8 %t5, %t6
 %x = alloca i32 
 store i32 %t3, i32* %x
 %t7 = load i32, i32* %x
@@ -42,10 +42,10 @@ call void @printi(i32 %t7)
 %t9 = load i32, i32* %b
 %t10 = trunc i32 %t9 to i8
 %t11 = add i8 0, 1
-%t8 = add i32 %t10, %t11
+%t8 = add i8 %t10, %t11
 %t12 = zext i8 %t8 to i32
 %g = alloca i32 
-store i32 %t8, i32* %g
+store i32 %t12, i32* %g
 %t13 = load i32, i32* %g
 %t14 = trunc i32 %t13 to i8
 call void @printi(i8 %t14)
