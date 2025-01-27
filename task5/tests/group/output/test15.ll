@@ -35,22 +35,23 @@ store i32 %t2, i32* %b
 %t5 = trunc i32 %t4 to i8
 %t6 = add i8 0, 1
 %t3 = add i8 %t5, %t6
+%t7 = zext i8 %t3 to i32
 %x = alloca i32 
-store i32 %t3, i32* %x
-%t7 = load i32, i32* %x
-call void @printi(i32 %t7)
-%t9 = load i32, i32* %b
-%t10 = trunc i32 %t9 to i8
-%t11 = add i8 0, 1
-%t8 = add i8 %t10, %t11
-%t12 = zext i8 %t8 to i32
+store i32 %t7, i32* %x
+%t8 = load i32, i32* %x
+call void @printi(i32 %t8)
+%t10 = load i32, i32* %b
+%t11 = trunc i32 %t10 to i8
+%t12 = add i8 0, 1
+%t9 = add i8 %t11, %t12
+%t13 = zext i8 %t9 to i32
 %g = alloca i32 
-store i32 %t12, i32* %g
-%t13 = load i32, i32* %g
-%t14 = trunc i32 %t13 to i8
-call void @printi(i8 %t14)
-%t15 = add i8 0, 4
-%t16 = call i32 @notprinti(i8 %t15)
-call void @printi(i32 %t16)
+store i32 %t13, i32* %g
+%t14 = load i32, i32* %g
+%t15 = trunc i32 %t14 to i8
+call void @printi(i8 %t15)
+%t16 = add i8 0, 4
+%t17 = call i32 @notprinti(i8 %t16)
+call void @printi(i32 %t17)
 ret void
 }

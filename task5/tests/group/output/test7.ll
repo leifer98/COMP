@@ -28,9 +28,10 @@ ret i8 %t0
 }
 define void @main() {
 %t1 = call i8 @getfive()
+%t2 = zext i8 %t1 to i32
 %x = alloca i32 
-store i32 %t1, i32* %x
-%t2 = load i32, i32* %x
-call void @printi(i32 %t2)
+store i32 %t2, i32* %x
+%t3 = load i32, i32* %x
+call void @printi(i32 %t3)
 ret void
 }

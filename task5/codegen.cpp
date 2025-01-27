@@ -415,7 +415,6 @@ void CodeGenVisitor::visit(ast::While &node) {
 void CodeGenVisitor::visit(ast::VarDecl &node) {
     // codeBuffer.emit("Visiting VarDecl Node: Declaring variable '" + node.id->value + "'");
     
-    std::string type = convertTypeToLLVM(node.type->type);
     std::string value = "0";  // Set the default value to 0
 
     // Handle the initial expression if it exists:
@@ -423,6 +422,7 @@ void CodeGenVisitor::visit(ast::VarDecl &node) {
         node.init_exp->accept(*this);
 
         // Extend to 32 bit if necessary
+        std::string type = convertTypeToLLVM(node.init_exp->type);
         std::string var32bit = node.init_exp->var;
         if (type == "i8" || type == "i1") { 
             var32bit = codeBuffer.freshVar();
@@ -443,9 +443,8 @@ void CodeGenVisitor::visit(ast::Assign &node) {
     
     node.exp->accept(*this);
 
-    std::string type = convertTypeToLLVM(node.exp->type);
-
     // Extend to 32 bit if necessary
+    std::string type = convertTypeToLLVM(node.exp->type);
     std::string var32bit = node.exp->var;
     if (type == "i8" || type == "i1") { 
         var32bit = codeBuffer.freshVar();

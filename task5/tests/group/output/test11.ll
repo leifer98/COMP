@@ -35,28 +35,29 @@ define void @main() {
 %x = alloca i32 
 store i32 %t3, i32* %x
 %t4 = add i8 0, 8
+%t5 = zext i8 %t4 to i32
 %a = alloca i32 
-store i32 %t4, i32* %a
-%t5 = load i32, i32* %a
-%t6 = call i8 @intify(i32 %t5)
-%t7 = zext i8 %t6 to i32
+store i32 %t5, i32* %a
+%t6 = load i32, i32* %a
+%t7 = call i8 @intify(i32 %t6)
+%t8 = zext i8 %t7 to i32
 %y = alloca i32 
-store i32 %t7, i32* %y
-%t8 = getelementptr inbounds [11 x i8], [11 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t8)
+store i32 %t8, i32* %y
+%t9 = getelementptr inbounds [11 x i8], [11 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t9)
 Visiting Cast Node
-%t10 = load i32, i32* %x
-%t11 = trunc i32 %t10 to i8
-%t12 = load i32, i32* %y
-%t13 = trunc i32 %t12 to i8
-%t9 = mul i8 %t11, %t13
-%t15 = zext i8  to i32
-%t16 = zext i8 %t9 to i32
-%t14 = icmp slt i32 %t15, %t16
-br i1 %t14, label %label_0, label %label_1
+%t11 = load i32, i32* %x
+%t12 = trunc i32 %t11 to i8
+%t13 = load i32, i32* %y
+%t14 = trunc i32 %t13 to i8
+%t10 = mul i8 %t12, %t14
+%t16 = zext i8  to i32
+%t17 = zext i8 %t10 to i32
+%t15 = icmp slt i32 %t16, %t17
+br i1 %t15, label %label_0, label %label_1
 label_0:
-%t17 = getelementptr inbounds [41 x i8], [41 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t17)
+%t18 = getelementptr inbounds [41 x i8], [41 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t18)
 br label %label_1
 label_1:
 ret void

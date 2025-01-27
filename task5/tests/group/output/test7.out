@@ -1,3 +1,1 @@
-lli: <stdin>:32:11: error: '%t1' defined with type 'i8' but expected 'i32'
-store i32 %t1, i32* %x
-          ^
+5
