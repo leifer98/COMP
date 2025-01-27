@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Directories
-input_dir="tests/group/testsHW5/tests"
-expected_dir="tests/group/testsHW5/tests"
+input_dir="tests/group"
+expected_dir="tests/group"
 output_dir="tests/group/output"
 program="./hw5"
 
