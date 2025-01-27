@@ -20,7 +20,7 @@ int main()
     SemanticVisitor sv;
     program->accept(sv);
 
-    std::cout << sv.symTable.getScopePrinter(); // print the output
+    // std::cout << sv.symTable.getScopePrinter(); // print the output
 
     // Run code generation
     CodeGenVisitor codeGenVisitor;
