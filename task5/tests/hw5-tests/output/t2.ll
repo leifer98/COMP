@@ -23,14 +23,22 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define i32 @fib(i8) {
-%t0 = add i32 0, 0
-%t2 = zext i8 %0 to i32
-%t1 = icmp eq i32 %t2, %t0
-%t3 = add i32 0, 1
-%t5 = zext i8 %0 to i32
-%t4 = icmp eq i32 %t5, %t3
-%t6 = or i1 %t1, %t4
-br i1 %t6, label %label_0, label %label_1
+%t1 = add i32 0, 0
+%t3 = zext i8 %0 to i32
+%t2 = icmp eq i32 %t3, %t1
+br i1 %t2, label %label_3, label %label_2
+label_2:
+%t4 = add i32 0, 1
+%t6 = zext i8 %0 to i32
+%t5 = icmp eq i32 %t6, %t4
+br i1 %t5, label %label_3, label %label_4
+label_3:
+br label %label_5
+label_4:
+br label %label_5
+label_5:
+%t0 = phi i1 [ 1, %label_3 ], [ 0, %label_4]
+br i1 %t0, label %label_0, label %label_1
 label_0:
 %t7 = add i32 0, 1
 ret i32 %t7
@@ -50,15 +58,15 @@ define void @main() {
 %t16 = zext i8 %t15 to i32
 %i = alloca i32 
 store i32 %t16, i32* %i
-br label %label_2
-label_2:
+br label %label_6
+label_6:
 %t17 = load i32, i32* %i
 %t18 = trunc i32 %t17 to i8
 %t19 = add i32 0, 10
 %t21 = zext i8 %t18 to i32
 %t20 = icmp slt i32 %t21, %t19
-br i1 %t20, label %label_3, label %label_4
-label_3:
+br i1 %t20, label %label_7, label %label_8
+label_7:
 %t22 = load i32, i32* %i
 %t23 = trunc i32 %t22 to i8
 %t24 = call i32 @fib(i8 %t23)
@@ -70,20 +78,20 @@ call void @printi(i32 %t24)
 %t25 = add i32 %t29, %t28
 %t30 = add i32 0, 10
 %t31 = icmp slt i32 %t25, %t30
-br i1 %t31, label %label_5, label %label_6
-label_5:
+br i1 %t31, label %label_9, label %label_10
+label_9:
 %t32 = getelementptr inbounds [2 x i8], [2 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t32)
-br label %label_6
-label_6:
+br label %label_10
+label_10:
 %t34 = load i32, i32* %i
 %t35 = trunc i32 %t34 to i8
 %t36 = add i8 0, 1
 %t33 = add i8 %t35, %t36
 %t37 = zext i8 %t33 to i32
 store i32 %t37, i32* %i
-br label %label_2
-label_4:
+br label %label_6
+label_8:
 %t38 = getelementptr inbounds [2 x i8], [2 x i8]* @.str1, i32 0, i32 0
 call void @print(i8* %t38)
 ret void

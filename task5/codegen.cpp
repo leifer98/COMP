@@ -246,28 +246,83 @@ void CodeGenVisitor::visit(ast::Not &node) {
 void CodeGenVisitor::visit(ast::And &node) {
     // codeBuffer.emit("Visiting And Node");
 
-    // Visit left and right expressions to generate their code
-    node.left->accept(*this);
-    node.right->accept(*this);
+    // Get fresh labels
+    std::string leftTrue = codeBuffer.freshLabel();
+    std::string trueLabel = codeBuffer.freshLabel();
+    std::string falseLabel = codeBuffer.freshLabel();
+    std::string nextLabel = codeBuffer.freshLabel();
 
-    // Perform logical AND operation
+    // Get fresh var for the or operation
     node.var = codeBuffer.freshVar();
-    codeBuffer << node.var << " = and i1 " << node.left->var << ", " << node.right->var << std::endl;
+
+    // Jump to correct label based on left expression value
+    node.left->accept(*this);
+    codeBuffer << "br i1 " << node.left->var
+               << ", label " << leftTrue
+               << ", label " << falseLabel
+               << std::endl;
+
+    // If left expression is true, also check the right expression
+    codeBuffer.emitLabel(leftTrue);
+    node.right->accept(*this);
+    codeBuffer << "br i1 " << node.right->var
+               << ", label " << trueLabel
+               << ", label " << falseLabel
+               << std::endl;
+
+    // The AND result is true
+    codeBuffer.emitLabel(trueLabel);
+    codeBuffer << "br label " << nextLabel << std::endl;
+
+    // The AND result is false
+    codeBuffer.emitLabel(falseLabel);
+    codeBuffer << "br label " << nextLabel << std::endl;
+
+    // Choose which value to put in node.var based on labels passed
+    codeBuffer.emitLabel(nextLabel);
+    codeBuffer << node.var << " = phi i1 [ 1, " << trueLabel << " ], [ 0, " << falseLabel << "]"
+                           << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Or &node) {
     // codeBuffer.emit("Visiting Or Node");
 
-    // Visit left and right expressions to generate their code
-    node.left->accept(*this);
-    node.right->accept(*this);
+    // Get fresh labels
+    std::string leftFalse = codeBuffer.freshLabel();
+    std::string trueLabel = codeBuffer.freshLabel();
+    std::string falseLabel = codeBuffer.freshLabel();
+    std::string nextLabel = codeBuffer.freshLabel();
 
-    // Perform logical OR operation
+    // Get fresh var for the or operation
     node.var = codeBuffer.freshVar();
-    codeBuffer << node.var << " = or i1 " << node.left->var << ", " << node.right->var << std::endl;
 
+    // Jump to correct label based on left expression value
+    node.left->accept(*this);
+    codeBuffer << "br i1 " << node.left->var
+               << ", label " << trueLabel
+               << ", label " << leftFalse
+               << std::endl;
 
-    // TODO ADD LAZY EVALUATION
+    // If left expression is false, also check the right expression
+    codeBuffer.emitLabel(leftFalse);
+    node.right->accept(*this);
+    codeBuffer << "br i1 " << node.right->var
+               << ", label " << trueLabel
+               << ", label " << falseLabel
+               << std::endl;
+
+    // The OR result is true
+    codeBuffer.emitLabel(trueLabel);
+    codeBuffer << "br label " << nextLabel << std::endl;
+    
+    // The OR result is false
+    codeBuffer.emitLabel(falseLabel);
+    codeBuffer << "br label " << nextLabel << std::endl;
+
+    // Choose which value to put in node.var based on labels passed
+    codeBuffer.emitLabel(nextLabel);
+    codeBuffer << node.var << " = phi i1 [ 1, " << trueLabel << " ], [ 0, " << falseLabel << "]"
+                           << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Type &node) {
