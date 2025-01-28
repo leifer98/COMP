@@ -27,14 +27,14 @@ define void @main() {
 %t1 = add i32 0, 2
 %t2 = add i32 0, 3
 %t3 = call i32 @func(i32 %t0, i32 %t1, i32 %t2)
-%x = alloca i32 
-store i32 %t3, i32* %x
-%t4 = load i32, i32* %x
-call void @printi(i32 %t4)
+%t4 = alloca i32 
+store i32 %t3, i32* %t4
+%t5 = load i32, i32* %t4
+call void @printi(i32 %t5)
 ret void
 }
 define i32 @func(i32, i32, i32) {
-%t6 = add i32 %0, %1
-%t5 = add i32 %t6, %2
-ret i32 %t5
+%t7 = add i32 %0, %1
+%t6 = add i32 %t7, %2
+ret i32 %t6
 }

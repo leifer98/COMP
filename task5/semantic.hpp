@@ -28,8 +28,9 @@ protected:
 class VarSymbol : public Symbol {
 public:
     bool isParam;
+    ast::VarDecl* declarationNode;
 
-    VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam);
+    VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam,  ast::VarDecl* declarationNode);
 };
 
 /* FuncSymbol class
@@ -57,7 +58,7 @@ public:
 
     ScopeSymbolTable(ScopeSymbolTable *parentTable);
 
-    int declareVar(const std::string &name, ast::BuiltInType type, bool isParam);
+    int declareVar(const std::string &name, ast::BuiltInType type, bool isParam, ast::VarDecl* declarationNode);
 
     void declareFunc(const std::string &name, ast::BuiltInType type, const std::vector<ast::BuiltInType> &paramTypes);
 
@@ -79,7 +80,7 @@ public:
 
     SymbolTable();
 
-    void declareVar(const std::string &name, ast::BuiltInType type, bool isParam);
+    void declareVar(const std::string &name, ast::BuiltInType type, bool isParam, ast::VarDecl* declarationNode);
 
     void declareFunc(const std::string &name, ast::BuiltInType type, const std::vector<ast::BuiltInType> &paramTypes);
 

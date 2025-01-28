@@ -147,7 +147,7 @@ void CodeGenVisitor::visit(ast::ID &node) {
         if (node.isParam) {
             node.var = "%" + std::to_string(-node.offset - 1);
         } else {
-            std::string symbolPointerRegName = "%" + node.value;
+            std::string symbolPointerRegName = node.declarationNode->var;
             
             // Load the value from stack
             std::string var32bit = codeBuffer.freshVar();
@@ -181,7 +181,7 @@ void CodeGenVisitor::visit(ast::BinOp &node) {
     std::string rightVar = node.right->var;
     // Convert to int if necessary
     if (node.type == ast::BuiltInType::INT) {
-        // Temporarly convert bytes to ints for the comparison
+        // Temporarly convert bytes to ints for the operation
         if (node.left->type != ast::BuiltInType::INT) {
             leftVar = codeBuffer.freshVar();
             codeBuffer << leftVar << " = zext " << convertTypeToLLVM(node.left->type) << " " << node.left->var << " to i32" << std::endl;
@@ -540,9 +540,9 @@ void CodeGenVisitor::visit(ast::VarDecl &node) {
     }
     
     // Generate commands to allocate 32 bit on the stack and then store the value in the allocated spot:
-    std::string varName = "%" + node.id->value;
-    codeBuffer << varName << " = alloca i32 " << std::endl;
-    codeBuffer << "store i32 " << value << ", i32* " << varName << std::endl;
+    node.var = codeBuffer.freshVar();
+    codeBuffer << node.var << " = alloca i32 " << std::endl;
+    codeBuffer << "store i32 " << value << ", i32* " << node.var << std::endl;
 }
 
 void CodeGenVisitor::visit(ast::Assign &node) {
@@ -553,30 +553,19 @@ void CodeGenVisitor::visit(ast::Assign &node) {
     std::string idType = convertTypeToLLVM(node.id->type);
     std::string expType = convertTypeToLLVM(node.exp->type);
 
-    // // Generate commands to store the value in the correct place on the stack or in param
-    // if (node.id->isParam) {
-    //     // Extend to 32 bit if necessary
-    //     std::string expVar = node.exp->var;
-    //     if (idType == "i32" && expType == "i8") {
-    //         expVar = codeBuffer.freshVar();
-    //         codeBuffer << expVar << " = zext " << expType << " " << node.exp->var << " to " << idType << std::endl;
-    //     }
+    if (!node.id->isParam) {
+        // Extend to 32 bit if necessary
+        std::string var32bit = node.exp->var;
+        if (expType == "i8" || expType == "i1") { 
+            var32bit = codeBuffer.freshVar();
+            codeBuffer << var32bit << " = zext " << expType << " " << node.exp->var << " to i32" << std::endl;
+        }
 
-    //     std::string varName = "%" + std::to_string(-node.id->offset - 1);
-    //     codeBuffer << varName << " = add " << idType << " 0, " << expVar << std::endl;
-    // } else {
-
-    // Extend to 32 bit if necessary
-    std::string var32bit = node.exp->var;
-    if (expType == "i8" || expType == "i1") { 
-        var32bit = codeBuffer.freshVar();
-        codeBuffer << var32bit << " = zext " << expType << " " << node.exp->var << " to i32" << std::endl;
+        std::string varName = node.id->declarationNode->var;
+        codeBuffer << "store i32 " << var32bit << ", i32* " << varName << std::endl;
+    } else {
+        // TODO if needed (in the pdf it says we can assume no assignment into params)
     }
-
-    std::string varName = "%" + node.id->value;
-    codeBuffer << "store i32 " << var32bit << ", i32* " << varName << std::endl;
-
-    // }
 }
 
 void CodeGenVisitor::visit(ast::Formal &node) {

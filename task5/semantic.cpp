@@ -36,8 +36,8 @@ Symbol::Symbol(const std::string &name, ast::BuiltInType type, int offset, bool 
 
 
 /* VarSymbol Class */
-VarSymbol::VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam)
-    : Symbol(name, type, offset, false), isParam(isParam) {}
+VarSymbol::VarSymbol(const std::string &name, ast::BuiltInType type, int offset, bool isParam, ast::VarDecl* declarationNode)
+    : Symbol(name, type, offset, false), isParam(isParam), declarationNode(declarationNode) {}
 
 
 /* FuncSymbol Class */
@@ -56,16 +56,16 @@ ScopeSymbolTable::ScopeSymbolTable(ScopeSymbolTable *parentTable) : parent(paren
     }
 }
 
-int ScopeSymbolTable::declareVar(const std::string &name, ast::BuiltInType type, bool isParam) {
+int ScopeSymbolTable::declareVar(const std::string &name, ast::BuiltInType type, bool isParam, ast::VarDecl* declarationNode) {
     if (isParam) {
         paramOffset--;
 
-        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, paramOffset, isParam));
+        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, paramOffset, isParam, declarationNode));
         scopeSymbols.push_back(symbolPointer);
 
         return paramOffset;
     } else {
-        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, offset, isParam));
+        std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, offset, isParam, declarationNode));
         scopeSymbols.push_back(symbolPointer);
         offset++;
 
@@ -103,8 +103,8 @@ SymbolTable::SymbolTable() : scopePrinter() {
     declareFunc("printi", ast::BuiltInType::VOID, {ast::BuiltInType::INT});
 }
 
-void SymbolTable::declareVar(const std::string &name, ast::BuiltInType type, bool isParam) {
-    int varOffset = scopesSymbolTables.top().declareVar(name, type, isParam);
+void SymbolTable::declareVar(const std::string &name, ast::BuiltInType type, bool isParam, ast::VarDecl* declarationNode) {
+    int varOffset = scopesSymbolTables.top().declareVar(name, type, isParam, declarationNode);
 
     scopePrinter.emitVar(name, type, varOffset);
 }
@@ -186,6 +186,7 @@ void SemanticVisitor::visit(ast::ID &node) {
                 node.type = varSymbol->type;
                 node.offset = varSymbol->offset;
                 node.isParam = varSymbol->isParam;
+                node.declarationNode = varSymbol->declarationNode;
             }
         } else if (node.idType == ast::IdType::FUNC_CALL) {
             if (symbol->isFunction) {
@@ -426,7 +427,7 @@ void SemanticVisitor::visit(ast::VarDecl &node) {
     node.id->idType = ast::IdType::VAR_DECLARATION;
     node.id->accept(*this);
 
-    symTable.declareVar(node.id->value, node.type->type, false);
+    symTable.declareVar(node.id->value, node.type->type, false, &node);
 }
 
 void SemanticVisitor::visit(ast::Assign &node) {
@@ -448,7 +449,7 @@ void SemanticVisitor::visit(ast::Formal &node) {
     node.id->isParam = true;
     node.id->accept(*this);
 
-    symTable.declareVar(node.id->value, node.type->type, true);
+    symTable.declareVar(node.id->value, node.type->type, true, nullptr);
 }
 
 void SemanticVisitor::visit(ast::Formals &node) {

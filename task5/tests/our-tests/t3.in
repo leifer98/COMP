@@ -1,0 +1,6 @@
+void main() {
+    int t1 = 5;
+    int t2 = 3 + t1 + 7;
+
+    print("Hello");
+}

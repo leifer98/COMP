@@ -1,3 +1,0 @@
-lli: <stdin>:52:22: error: use of undefined value '%a'
-store i32 %t10, i32* %a
-                     ^

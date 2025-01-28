@@ -140,6 +140,9 @@ namespace ast {
         int offset;
         // whether or not this is a formal var
         bool isParam;
+        // Pointer to declaration node
+        VarDecl* declarationNode = nullptr;
+
 
         // Constructor that receives a C-style string that represents the identifier
         explicit ID(const char *str);
@@ -404,6 +407,8 @@ namespace ast {
         std::shared_ptr<Type> type;
         // Initial value of the variable. If the variable is not initialized, this field is nullptr
         std::shared_ptr<Exp> init_exp;
+        // LLVM var for the variable
+        std::string var = "";
 
         // Constructor that receives the identifier, the type, and the initial value expression
         VarDecl(std::shared_ptr<ID> id, std::shared_ptr<Type> type, std::shared_ptr<Exp> init_exp = nullptr);
