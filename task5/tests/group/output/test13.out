@@ -1,4 +1,4 @@
-bow chica bow wow
-thats what my baby said
-mow mow mow
-and my heart starts bumping
+lli: <stdin>:31:20: error: use of undefined value '%-21857'
+%t2 = icmp sle i32 %-21857, %t1
+                   ^
+

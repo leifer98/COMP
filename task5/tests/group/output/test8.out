@@ -1,3 +1,4 @@
-lli: <stdin>:52:22: error: use of undefined value '%a'
-store i32 %t10, i32* %a
-                     ^
+lli: <stdin>:26:24: error: use of undefined value '%-21879'
+%t0 = mul i32 %-21880, %-21879
+                       ^
+

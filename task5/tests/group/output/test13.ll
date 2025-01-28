@@ -28,11 +28,11 @@ ret i1 %t0
 }
 define i1 @falsesr(i32) {
 %t1 = add i32 0, 5
-%t2 = icmp sle i32 %0, %t1
+%t2 = icmp sle i32 %-21857, %t1
 ret i1 %t2
 }
 define i1 @oppo(i1) {
-%t3 = xor i1 1, %0
+%t3 = xor i1 1, %-21857
 ret i1 %t3
 }
 define void @main() {

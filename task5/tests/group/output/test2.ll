@@ -23,8 +23,8 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define i32 @foo(i32, i8) {
-%t1 = zext i8 %1 to i32
-%t0 = add i32 %0, %t1
+%t1 = zext i8 %-22047 to i32
+%t0 = add i32 %-22048, %t1
 %x = alloca i32 
 store i32 %t0, i32* %x
 %t2 = load i32, i32* %x

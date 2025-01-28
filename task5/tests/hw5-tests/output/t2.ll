@@ -24,10 +24,10 @@ ret void
 }
 define i32 @fib(i8) {
 %t0 = add i32 0, 0
-%t2 = zext i8 %0 to i32
+%t2 = zext i8 %-21932 to i32
 %t1 = icmp eq i32 %t2, %t0
 %t3 = add i32 0, 1
-%t5 = zext i8 %0 to i32
+%t5 = zext i8 %-21932 to i32
 %t4 = icmp eq i32 %t5, %t3
 %t6 = or i1 %t1, %t4
 br i1 %t6, label %label_0, label %label_1
@@ -37,10 +37,10 @@ ret i32 %t7
 br label %label_1
 label_1:
 %t10 = add i8 0, 1
-%t9 = sub i8 %0, %t10
+%t9 = sub i8 %-21932, %t10
 %t11 = call i32 @fib(i8 %t9)
 %t13 = add i8 0, 2
-%t12 = sub i8 %0, %t13
+%t12 = sub i8 %-21932, %t13
 %t14 = call i32 @fib(i8 %t12)
 %t8 = add i32 %t11, %t14
 ret i32 %t8

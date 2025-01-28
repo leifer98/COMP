@@ -48,7 +48,7 @@ label_3:
 ret void
 }
 define void @printByValue(i1) {
-br i1 %0, label %label_4, label %label_6
+br i1 %-22008, label %label_4, label %label_6
 label_4:
 %t10 = getelementptr inbounds [12 x i8], [12 x i8]* @.str2, i32 0, i32 0
 call void @print(i8* %t10)

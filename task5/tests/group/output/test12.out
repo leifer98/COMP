@@ -1,3 +1,4 @@
-good
-very good
-fail, im sorry
+lli: <stdin>:30:15: error: use of undefined value '%-21912'
+%t9 = zext i8 %-21912 to i32
+              ^
+
