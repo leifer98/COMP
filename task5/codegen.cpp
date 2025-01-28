@@ -89,6 +89,40 @@ std::string convertBinOpTypeToLLVM(ast::BinOpType type) {
     }
 }
 
+int getNumericValueAndHandleDivisionByZero(CodeGenVisitor &genVisitor, int leftValue, int rightValue, ast::BinOpType type) {
+    switch (type)
+    {
+        case ast::BinOpType::ADD:
+            return leftValue + rightValue;
+        case ast::BinOpType::SUB:
+            return leftValue - rightValue;
+        case ast::BinOpType::MUL:
+            return leftValue * rightValue;
+        case ast::BinOpType::DIV:
+            if (rightValue == 0) {
+                // Emit the error message string
+                std::string errorMessage("Error division by zero");
+                std::string strVar = codeBuffer.emitString(errorMessage);
+                
+                // Get the string in a var and print it
+                int strRealLength = errorMessage.length() + 1;  // Add 1 for the \0 at the end
+                std::string tempStringVar = codeBuffer.freshVar();
+                codeBuffer << tempStringVar << " = getelementptr inbounds ["
+                                            << strRealLength << " x i8], ["
+                                            << strRealLength << " x i8]* "
+                                            << strVar << ", i32 0, i32 0"
+                                            << std::endl;
+
+                codeBuffer << "call void @print(i8* " << tempStringVar << ")" << std::endl;
+                codeBuffer << "call void @exit(i32 0)" << std::endl;
+            } else {
+                return leftValue / rightValue;
+            }
+        default:
+            return 0;
+    }
+}
+
 /* CodeGenVisitor implementation */
 
 void CodeGenVisitor::generateCode(std::shared_ptr<ast::Funcs> program) {
@@ -147,6 +181,11 @@ void CodeGenVisitor::visit(ast::ID &node) {
         if (node.isParam) {
             node.var = "%" + std::to_string(-node.offset - 1);
         } else {
+            if (node.declarationNode->id->isNumericValueDefined) {
+                node.numericValue = node.declarationNode->id->numericValue;
+                node.isNumericValueDefined = true;
+            }
+
             std::string symbolPointerRegName = node.declarationNode->var;
             
             // Load the value from stack
@@ -176,6 +215,12 @@ void CodeGenVisitor::visit(ast::BinOp &node) {
 
     node.left->accept(*this);
     node.right->accept(*this);
+
+    // Handle values to detect devision by zero
+    if (node.left->isNumericValueDefined && node.right->isNumericValueDefined) {
+        node.numericValue = getNumericValueAndHandleDivisionByZero(*this, node.left->numericValue, node.right->numericValue, node.op);
+        node.isNumericValueDefined = true;
+    }
 
     std::string leftVar = node.left->var;
     std::string rightVar = node.right->var;
@@ -527,6 +572,11 @@ void CodeGenVisitor::visit(ast::VarDecl &node) {
     // Handle the initial expression if it exists:
     if (node.init_exp) {
         node.init_exp->accept(*this);
+        // Handle values to detect devision by zero
+        if (node.init_exp->isNumericValueDefined) {
+            node.id->numericValue = node.init_exp->numericValue;
+            node.id->isNumericValueDefined = true;
+        }
 
         // Extend to 32 bit if necessary
         std::string type = convertTypeToLLVM(node.init_exp->type);
@@ -554,6 +604,14 @@ void CodeGenVisitor::visit(ast::Assign &node) {
     std::string expType = convertTypeToLLVM(node.exp->type);
 
     if (!node.id->isParam) {
+        // Handle values to detect devision by zero
+        if (node.exp->isNumericValueDefined) {
+            node.id->numericValue = node.exp->numericValue;
+            node.id->isNumericValueDefined = true;
+            node.id->declarationNode->id->numericValue = node.exp->numericValue;
+            node.id->declarationNode->id->isNumericValueDefined = true;
+        }
+
         // Extend to 32 bit if necessary
         std::string var32bit = node.exp->var;
         if (expType == "i8" || expType == "i1") { 

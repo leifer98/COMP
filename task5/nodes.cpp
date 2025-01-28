@@ -8,9 +8,15 @@ namespace ast {
 
     Node::Node() : line(yylineno) {}
 
-    Num::Num(const char *str) : Exp(), value(std::stoi(str)) {}
+    Num::Num(const char *str) : Exp(), value(std::stoi(str)) {
+        numericValue = value;
+        isNumericValueDefined = true;
+    }
 
-    NumB::NumB(const char *str) : Exp(), value(std::stoi(str)) {}
+    NumB::NumB(const char *str) : Exp(), value(std::stoi(str)) {
+        numericValue = value;
+        isNumericValueDefined = true;
+    }
 
     String::String(const char *str) : Exp(), value(str) {
         // Remove the quotes

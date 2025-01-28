@@ -1,0 +1,10 @@
+void main() {
+    int x = func(2, 2, 3);
+
+    printi(x);
+}
+
+int func(int a, int b, int c) {
+    int x = a - b;
+    return c / x;
+}

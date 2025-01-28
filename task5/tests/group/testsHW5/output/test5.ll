@@ -1,4 +1,4 @@
-@.str0 = constant [9 x i8] c"all good\00"@.str1 = constant [9 x i8] c"all good\00"@.str2 = constant [24 x i8] c"congrats math is broken\00"@.str3 = constant [18 x i8] c"sir that is wrong\00"
+@.str0 = constant [9 x i8] c"all good\00"@.str1 = constant [9 x i8] c"all good\00"@.str2 = constant [23 x i8] c"Error division by zero\00"@.str3 = constant [24 x i8] c"congrats math is broken\00"@.str4 = constant [18 x i8] c"sir that is wrong\00"
 declare i32 @scanf(i8*, ...)
 declare i32 @printf(i8*, ...)
 declare void @exit(i32)
@@ -39,17 +39,20 @@ store i32 %t5, i32* %t4
 call void @print(i8* %t8)
 %t10 = load i32, i32* %t1
 %t11 = add i32 0, 0
+%t12 = getelementptr inbounds [23 x i8], [23 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t12)
+call void @exit(i32 0)
 %t9 = sdiv i32 %t10, %t11
-%t12 = add i32 0, 3
-%t13 = icmp eq i32 %t9, %t12
-br i1 %t13, label %label_0, label %label_1
+%t13 = add i32 0, 3
+%t14 = icmp eq i32 %t9, %t13
+br i1 %t14, label %label_0, label %label_1
 label_0:
-%t14 = getelementptr inbounds [24 x i8], [24 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t14)
+%t15 = getelementptr inbounds [24 x i8], [24 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t15)
 ret void
 br label %label_1
 label_1:
-%t15 = getelementptr inbounds [18 x i8], [18 x i8]* @.str3, i32 0, i32 0
-call void @print(i8* %t15)
+%t16 = getelementptr inbounds [18 x i8], [18 x i8]* @.str4, i32 0, i32 0
+call void @print(i8* %t16)
 ret void
 }
