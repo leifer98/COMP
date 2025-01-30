@@ -1,3 +1,4 @@
-val is true
-val is false
-true
+lli: <stdin>:67:7: error: use of undefined value '%-22066'
+br i1 %-22066, label %label_12, label %label_14
+      ^
+

@@ -34,10 +34,10 @@ call void @printi(i32 %t5)
 ret void
 }
 define i32 @func(i32, i32, i32) {
-%t6 = sub i32 %0, %1
+%t6 = sub i32 %-21861, %-21860
 %t7 = alloca i32 
 store i32 %t6, i32* %t7
 %t9 = load i32, i32* %t7
-%t8 = sdiv i32 %2, %t9
+%t8 = sdiv i32 %-21859, %t9
 ret i32 %t8
 }

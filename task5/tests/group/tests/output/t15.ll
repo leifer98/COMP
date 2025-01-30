@@ -23,7 +23,7 @@ call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
 ret void
 }
 define void @fuckme(i32, i32) {
-%t0 = mul i32 %0, %1
+%t0 = mul i32 %-22086, %-22085
 %t1 = alloca i32 
 store i32 %t0, i32* %t1
 %t3 = load i32, i32* %t1
@@ -43,7 +43,7 @@ ret void
 }
 define void @fuckyou(i32, i32) {
 %t10 = add i32 0, 9
-%t9 = sub i32 %1, %t10
+%t9 = sub i32 %-22085, %t10
 %t11 = alloca i32 
 store i32 %t9, i32* %t11
 %t13 = load i32, i32* %t11
@@ -52,11 +52,11 @@ store i32 %t9, i32* %t11
 br label %label_2
 label_2:
 %t15 = add i32 0, 12
-%t16 = icmp slt i32 %1, %t15
+%t16 = icmp slt i32 %-22085, %t15
 br i1 %t16, label %label_3, label %label_4
 label_3:
 %t18 = add i32 0, 5
-%t17 = add i32 %1, %t18
+%t17 = add i32 %-22085, %t18
 br label %label_2
 label_4:
 ret void

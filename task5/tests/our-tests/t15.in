@@ -1,0 +1,6 @@
+void main() {
+    int x = 10;
+    if (x < 0) {
+        int result = 20 / 0; // Unreachable code
+    }
+}

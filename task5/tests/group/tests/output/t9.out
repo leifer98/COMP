@@ -1,1 +1,4 @@
-70
+lli: lli: tests/group/tests/output/t9.ll:26:15: error: use of undefined value '%-22099'
+%t1 = zext i8 %-22099 to i32
+              ^
+

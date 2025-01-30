@@ -1,0 +1,4 @@
+lli: <stdin>:41:16: error: use of undefined value '%-21943'
+%t8 = sdiv i32 %-21943, %t9
+               ^
+

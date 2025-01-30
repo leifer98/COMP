@@ -1,0 +1,8 @@
+void main() {
+    int value = getConstant();
+    printi(value);
+}
+
+int getConstant() {
+    return 42;
+}

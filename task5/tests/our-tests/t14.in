@@ -1,0 +1,12 @@
+void main() {
+    int a = 10;
+    int b;
+    
+    if (a > 5) {
+        b = 0;
+    } else {
+        b = 2;
+    }
+
+    int result = 100 / b; // Compiler should detect this only if it considers all paths
+}

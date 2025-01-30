@@ -24,15 +24,15 @@ ret void
 }
 define i32 @plusser(i32, i32, i32, i8) {
 %t8 = add i32 0, 9
-%t7 = add i32 %t8, %0
-%t6 = add i32 %t7, %1
-%t5 = add i32 %t6, %2
-%t9 = zext i8 %3 to i32
+%t7 = add i32 %t8, %-22089
+%t6 = add i32 %t7, %-22088
+%t5 = add i32 %t6, %-22087
+%t9 = zext i8 %-22086 to i32
 %t4 = add i32 %t5, %t9
-%t3 = add i32 %t4, %0
-%t2 = add i32 %t3, %1
-%t1 = add i32 %t2, %2
-%t10 = zext i8 %3 to i32
+%t3 = add i32 %t4, %-22089
+%t2 = add i32 %t3, %-22088
+%t1 = add i32 %t2, %-22087
+%t10 = zext i8 %-22086 to i32
 %t0 = add i32 %t1, %t10
 %t11 = alloca i32 
 store i32 %t0, i32* %t11

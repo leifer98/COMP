@@ -1,0 +1,5 @@
+void main() {
+    int x = 0;
+    x = x + 5;  // x is no longer zero
+    int result = 50 / x;
+}

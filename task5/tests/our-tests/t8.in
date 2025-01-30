@@ -1,0 +1,8 @@
+void main() {
+    byte result = sumBytes(10b, 20b);
+    printi(result);
+}
+
+byte sumBytes(byte a, byte b) {
+    return a + b;
+}

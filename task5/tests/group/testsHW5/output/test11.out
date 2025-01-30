@@ -1,4 +1,4 @@
-gimmie gimmie now
-gimmie gimmie now
-zuzuzuzuzu
-Ijen naega neoreul jaba now, imma savage
+lli: <stdin>:28:17: error: use of undefined value '%-22079'
+%t1 = trunc i32 %-22079 to i8
+                ^
+

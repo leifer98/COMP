@@ -1,0 +1,17 @@
+void main() {
+    int a = 10;
+    int b = complexFunction(a);
+    int result = 100 / b;
+}
+
+int complexFunction(int x) {
+    if (x > 5) {
+        return zeroGenerator();
+    }
+    return 1;
+}
+
+int zeroGenerator() {
+    int val = 3 - 3; // Always 0
+    return val;
+}

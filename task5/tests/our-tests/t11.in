@@ -1,0 +1,7 @@
+void main() {
+    int result = 50 / getZero();
+}
+
+int getZero() {
+    return 2 - 2; // Always returns 0
+}

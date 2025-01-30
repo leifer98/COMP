@@ -1,0 +1,8 @@
+void main() {
+    bool result = isPositive(10);
+    printi(result);
+}
+
+bool isPositive(int a) {
+    return a > 0;
+}

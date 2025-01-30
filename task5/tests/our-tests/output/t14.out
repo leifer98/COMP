@@ -1,0 +1,15 @@
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace.
+Stack dump:
+0.	Program arguments: lli
+ #0 0x00007f1825659d01 llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/lib/x86_64-linux-gnu/libLLVM-14.so.1+0xe3fd01)
+ #1 0x00007f1825657a3e llvm::sys::RunSignalHandlers() (/lib/x86_64-linux-gnu/libLLVM-14.so.1+0xe3da3e)
+ #2 0x00007f182565a236 (/lib/x86_64-linux-gnu/libLLVM-14.so.1+0xe40236)
+ #3 0x00007f1824300520 (/lib/x86_64-linux-gnu/libc.so.6+0x42520)
+ #4 0x00007f182b1310a3 
+ #5 0x00007f18270a184d llvm::orc::runAsMain(int (*)(int, char**), llvm::ArrayRef<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, llvm::Optional<llvm::StringRef>) (/lib/x86_64-linux-gnu/libLLVM-14.so.1+0x288784d)
+ #6 0x0000000000418110 runOrcJIT(char const*) (/usr/lib/llvm-14/bin/lli+0x418110)
+ #7 0x0000000000412cc8 main (/usr/lib/llvm-14/bin/lli+0x412cc8)
+ #8 0x00007f18242e7d90 __libc_start_call_main ./csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+ #9 0x00007f18242e7e40 call_init ./csu/../csu/libc-start.c:128:20
+#10 0x00007f18242e7e40 __libc_start_main ./csu/../csu/libc-start.c:379:5
+#11 0x000000000040fe15 _start (/usr/lib/llvm-14/bin/lli+0x40fe15)

@@ -1,0 +1,4 @@
+lli: <stdin>:36:24: error: use of undefined value '%-21863'
+%t5 = mul i32 %-21864, %-21863
+                       ^
+

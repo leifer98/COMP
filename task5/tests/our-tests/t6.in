@@ -1,0 +1,8 @@
+void main() {
+    int result = multiply(4, 3);
+    printi(result);
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}

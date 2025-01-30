@@ -25,7 +25,7 @@ ret void
 define i8 @intify(i32) {
 %t0 = getelementptr inbounds [18 x i8], [18 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t0)
-%t1 = trunc i32 %0 to i8
+%t1 = trunc i32 %-22079 to i8
 ret i8 %t1
 }
 define void @main() {

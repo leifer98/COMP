@@ -1,0 +1,4 @@
+lli: <stdin>:39:23: error: use of undefined value '%-22032'
+%t8 = add i8 %-22033, %-22032
+                      ^
+

@@ -1,20 +1,4 @@
-1
-*
-1
-*
-2
-*
-3
-*
-5
-*
-8
-*
-13
-*
-21
-*
-34
-*
-55
-*
+lli: lli: tests/group/tests/output/t2.ll:27:15: error: use of undefined value '%-21899'
+%t3 = zext i8 %-21899 to i32
+              ^
+

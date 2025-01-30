@@ -1,0 +1,4 @@
+lli: <stdin>:1:1: error: expected top-level entity
+line 3: prototype mismatch, function printi expects parameters (INT)
+^
+
