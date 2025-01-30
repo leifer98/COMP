@@ -33,6 +33,6 @@ call void @printi(i32 %t4)
 ret void
 }
 define i32 @multiply(i32, i32) {
-%t5 = mul i32 %-21864, %-21863
+%t5 = mul i32 %0, %1
 ret i32 %t5
 }

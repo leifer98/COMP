@@ -36,6 +36,6 @@ call void @printi(i32 %t7)
 ret void
 }
 define i8 @sumBytes(i8, i8) {
-%t8 = add i8 %-22033, %-22032
+%t8 = add i8 %0, %1
 ret i8 %t8
 }

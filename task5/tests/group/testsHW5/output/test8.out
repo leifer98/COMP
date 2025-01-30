@@ -1,4 +1,1 @@
-lli: <stdin>:26:24: error: use of undefined value '%-21986'
-%t0 = mul i32 %-21987, %-21986
-                       ^
-
+0

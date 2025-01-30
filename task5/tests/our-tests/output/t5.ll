@@ -33,6 +33,6 @@ ret void
 }
 define i32 @addOne(i32) {
 %t5 = add i32 0, 1
-%t4 = add i32 %-22099, %t5
+%t4 = add i32 %0, %t5
 ret i32 %t4
 }

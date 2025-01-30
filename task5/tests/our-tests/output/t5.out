@@ -1,4 +1,1 @@
-lli: <stdin>:36:15: error: use of undefined value '%-22099'
-%t4 = add i32 %-22099, %t5
-              ^
-
+6

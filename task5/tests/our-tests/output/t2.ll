@@ -34,7 +34,7 @@ call void @printi(i32 %t5)
 ret void
 }
 define i32 @func(i32, i32, i32) {
-%t7 = add i32 %-22046, %-22045
-%t6 = add i32 %t7, %-22044
+%t7 = add i32 %0, %1
+%t6 = add i32 %t7, %2
 ret i32 %t6
 }
