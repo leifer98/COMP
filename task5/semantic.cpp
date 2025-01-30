@@ -51,15 +51,17 @@ FuncSymbol::FuncSymbol(const std::string &name, ast::BuiltInType type, int offse
 ScopeSymbolTable::ScopeSymbolTable(ScopeSymbolTable *parentTable) : parent(parentTable) {
     if (parent) {
         offset = parent->offset;
+        paramOffset = parent->paramOffset; // Inherit from parent
     } else {
         offset = 0;
+        paramOffset = 0; // Initialize explicitly
     }
 }
 
 int ScopeSymbolTable::declareVar(const std::string &name, ast::BuiltInType type, bool isParam, ast::VarDecl* declarationNode) {
     if (isParam) {
         paramOffset--;
-
+        
         std::shared_ptr<VarSymbol> symbolPointer(new VarSymbol(name, type, paramOffset, isParam, declarationNode));
         scopeSymbols.push_back(symbolPointer);
 
