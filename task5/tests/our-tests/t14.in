@@ -8,5 +8,5 @@ void main() {
         b = 2;
     }
 
-    int result = 100 / b; // Compiler should detect this only if it considers all paths
+    int result = 100 / b;
 }
