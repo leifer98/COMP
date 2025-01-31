@@ -1,4 +1,1 @@
-lli: lli: tests/group/tests/output/t15.ll:26:24: error: use of undefined value '%-22085'
-%t0 = mul i32 %-22086, %-22085
-                       ^
-
+0
