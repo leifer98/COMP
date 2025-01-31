@@ -88,7 +88,7 @@ std::string convertBinOpTypeToLLVM(ast::BinOpType type)
     case ast::BinOpType::MUL:
         return "mul";
     case ast::BinOpType::DIV:
-        return "sdiv";
+        return "udiv";
     default:
         return "UNKNOWN";
     }
