@@ -26,23 +26,21 @@ define void @main() {
 %t0 = add i32 0, 10
 %t1 = alloca i32 
 store i32 %t0, i32* %t1
-%t2 = alloca i32 
-store i32 0, i32* %t2
-%t3 = load i32, i32* %t1
-%t4 = add i32 0, 5
-%t5 = icmp sgt i32 %t3, %t4
-br i1 %t5, label %label_0, label %label_2
+br label %label_0
 label_0:
-%t6 = add i32 0, 0
-store i32 %t6, i32* %t2
-br label %label_1
-label_2:
-%t7 = add i32 0, 2
-store i32 %t7, i32* %t2
-br label %label_1
+%t2 = load i32, i32* %t1
+%t3 = add i32 0, 0
+%t4 = icmp sgt i32 %t2, %t3
+br i1 %t4, label %label_1, label %label_2
 label_1:
-%t9 = add i32 0, 100
-%t10 = load i32, i32* %t2
+%t6 = load i32, i32* %t1
+%t7 = add i32 0, 1
+%t5 = sub i32 %t6, %t7
+store i32 %t5, i32* %t1
+br label %label_0
+label_2:
+%t9 = add i32 0, 5
+%t10 = load i32, i32* %t1
 %t11 = icmp eq i32 %t10, 0
 br i1 %t11, label %label_3, label %label_4
 label_3:

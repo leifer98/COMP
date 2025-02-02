@@ -1,4 +1,4 @@
-@.str0 = constant [35 x i8] c"Result of x + y - 2 * 4 / 2 + 8:  \00"@.str1 = constant [35 x i8] c"Result of (x + y) * (2 - 4) + 6:  \00"@.str2 = constant [35 x i8] c"Result of x * y + 2 - 3 * 5 / 2:  \00"
+@.str0 = constant [23 x i8] c"Error division by zero\00"@.str1 = constant [35 x i8] c"Result of x + y - 2 * 4 / 2 + 8:  \00"@.str2 = constant [35 x i8] c"Result of (x + y) * (2 - 4) + 6:  \00"@.str3 = constant [23 x i8] c"Error division by zero\00"@.str4 = constant [35 x i8] c"Result of x * y + 2 - 3 * 5 / 2:  \00"
 declare i32 @scanf(i8*, ...)
 declare i32 @printf(i8*, ...)
 declare void @exit(i32)
@@ -38,45 +38,61 @@ store i32 0, i32* %t4
 %t13 = add i32 0, 4
 %t11 = mul i32 %t12, %t13
 %t14 = add i32 0, 2
-%t10 = sdiv i32 %t11, %t14
-%t6 = sub i32 %t7, %t10
-%t15 = add i32 0, 8
-%t5 = add i32 %t6, %t15
-store i32 %t5, i32* %t4
-%t16 = getelementptr inbounds [35 x i8], [35 x i8]* @.str0, i32 0, i32 0
+%t15 = icmp eq i32 %t14, 0
+br i1 %t15, label %label_0, label %label_1
+label_0:
+%t16 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
 call void @print(i8* %t16)
-%t17 = load i32, i32* %t4
-call void @printi(i32 %t17)
-%t21 = load i32, i32* %t1
-%t22 = load i32, i32* %t3
-%t20 = add i32 %t21, %t22
-%t24 = add i32 0, 2
-%t25 = add i32 0, 4
-%t23 = sub i32 %t24, %t25
-%t19 = mul i32 %t20, %t23
-%t26 = add i32 0, 6
-%t18 = add i32 %t19, %t26
-store i32 %t18, i32* %t4
-%t27 = getelementptr inbounds [35 x i8], [35 x i8]* @.str1, i32 0, i32 0
-call void @print(i8* %t27)
-%t28 = load i32, i32* %t4
-call void @printi(i32 %t28)
-%t32 = load i32, i32* %t1
-%t33 = load i32, i32* %t3
-%t31 = mul i32 %t32, %t33
-%t34 = add i32 0, 2
-%t30 = add i32 %t31, %t34
-%t37 = add i32 0, 3
-%t38 = add i32 0, 5
-%t36 = mul i32 %t37, %t38
-%t39 = add i32 0, 2
-%t35 = sdiv i32 %t36, %t39
-%t29 = sub i32 %t30, %t35
-store i32 %t29, i32* %t4
-%t40 = getelementptr inbounds [35 x i8], [35 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t40)
-%t41 = load i32, i32* %t4
-call void @printi(i32 %t41)
+call void @exit(i32 1)
+br label %label_1
+label_1:
+%t10 = udiv i32 %t11, %t14
+%t6 = sub i32 %t7, %t10
+%t17 = add i32 0, 8
+%t5 = add i32 %t6, %t17
+store i32 %t5, i32* %t4
+%t18 = getelementptr inbounds [35 x i8], [35 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t18)
+%t19 = load i32, i32* %t4
+call void @printi(i32 %t19)
+%t23 = load i32, i32* %t1
+%t24 = load i32, i32* %t3
+%t22 = add i32 %t23, %t24
+%t26 = add i32 0, 2
+%t27 = add i32 0, 4
+%t25 = sub i32 %t26, %t27
+%t21 = mul i32 %t22, %t25
+%t28 = add i32 0, 6
+%t20 = add i32 %t21, %t28
+store i32 %t20, i32* %t4
+%t29 = getelementptr inbounds [35 x i8], [35 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t29)
+%t30 = load i32, i32* %t4
+call void @printi(i32 %t30)
+%t34 = load i32, i32* %t1
+%t35 = load i32, i32* %t3
+%t33 = mul i32 %t34, %t35
+%t36 = add i32 0, 2
+%t32 = add i32 %t33, %t36
+%t39 = add i32 0, 3
+%t40 = add i32 0, 5
+%t38 = mul i32 %t39, %t40
+%t41 = add i32 0, 2
+%t42 = icmp eq i32 %t41, 0
+br i1 %t42, label %label_2, label %label_3
+label_2:
+%t43 = getelementptr inbounds [23 x i8], [23 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t43)
+call void @exit(i32 1)
+br label %label_3
+label_3:
+%t37 = udiv i32 %t38, %t41
+%t31 = sub i32 %t32, %t37
+store i32 %t31, i32* %t4
+%t44 = getelementptr inbounds [35 x i8], [35 x i8]* @.str4, i32 0, i32 0
+call void @print(i8* %t44)
+%t45 = load i32, i32* %t4
+call void @printi(i32 %t45)
 ret void
 ret void
 }

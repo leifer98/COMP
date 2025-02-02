@@ -94,42 +94,23 @@ std::string convertBinOpTypeToLLVM(ast::BinOpType type)
     }
 }
 
-int getNumericValueAndHandleDivisionByZero(CodeGenVisitor &genVisitor, int leftValue, int rightValue, ast::BinOpType type)
-{
-    switch (type)
-    {
-    case ast::BinOpType::ADD:
-        return leftValue + rightValue;
-    case ast::BinOpType::SUB:
-        return leftValue - rightValue;
-    case ast::BinOpType::MUL:
-        return leftValue * rightValue;
-    case ast::BinOpType::DIV:
-        if (rightValue == 0)
-        {
-            // Emit the error message string
-            std::string errorMessage("Error division by zero");
-            std::string strVar = codeBuffer.emitString(errorMessage);
+void handleDivisionByZero() {
+    // Emit the error message string
+    std::string errorMessage("Error division by zero");
+    std::string strVar = codeBuffer.emitString(errorMessage);
 
-            // Get the string in a var and print it
-            int strRealLength = errorMessage.length() + 1; // Add 1 for the \0 at the end
-            std::string tempStringVar = codeBuffer.freshVar();
-            codeBuffer << tempStringVar << " = getelementptr inbounds ["
-                       << strRealLength << " x i8], ["
-                       << strRealLength << " x i8]* "
-                       << strVar << ", i32 0, i32 0"
-                       << std::endl;
+    // Get the string in a var and print it
+    int strRealLength = errorMessage.length() + 1; // Add 1 for the \0 at the end
+    std::string tempStringVar = codeBuffer.freshVar();
+    codeBuffer << tempStringVar << " = getelementptr inbounds ["
+                << strRealLength << " x i8], ["
+                << strRealLength << " x i8]* "
+                << strVar << ", i32 0, i32 0"
+                << std::endl;
 
-            codeBuffer << "call void @print(i8* " << tempStringVar << ")" << std::endl;
-            codeBuffer << "call void @exit(i32 0)" << std::endl;
-        }
-        else
-        {
-            return leftValue / rightValue;
-        }
-    default:
-        return 0;
-    }
+    codeBuffer << "call void @print(i8* " << tempStringVar << ")" << std::endl;
+    // Call the exit function to terminate the program on a division by zero error
+    codeBuffer << "call void @exit(i32 1)" << std::endl;
 }
 
 /* CodeGenVisitor implementation */
@@ -201,12 +182,6 @@ void CodeGenVisitor::visit(ast::ID &node)
         }
         else
         {
-            if (node.declarationNode->id->isNumericValueDefined)
-            {
-                node.numericValue = node.declarationNode->id->numericValue;
-                node.isNumericValueDefined = true;
-            }
-
             std::string symbolPointerRegName = node.declarationNode->var;
 
             // Load the value from stack
@@ -240,49 +215,24 @@ void CodeGenVisitor::visit(ast::BinOp &node)
     node.left->accept(*this);
     node.right->accept(*this);
 
-    // Handle values to detect devision by zero
-    if (node.left->isNumericValueDefined && node.right->isNumericValueDefined)
+    // Insert code to detect devision by zero
+    if (node.op == ast::BinOpType::DIV)
     {
-        node.numericValue = getNumericValueAndHandleDivisionByZero(*this, node.left->numericValue, node.right->numericValue, node.op);
-        node.isNumericValueDefined = true;
-    }
-    else
-    {
-        // If values are not all known at compile time, perform a runtime check for division by zero if operation is division
-        if (node.op == ast::BinOpType::DIV)
-        {
-            std::string zeroCheckVar = codeBuffer.freshVar();
-            std::string divByZeroLabel = codeBuffer.freshLabel();
-            std::string continueLabel = codeBuffer.freshLabel();
+        std::string zeroCheckVar = codeBuffer.freshVar();
+        std::string divByZeroLabel = codeBuffer.freshLabel();
+        std::string continueLabel = codeBuffer.freshLabel();
 
-            // Generate the runtime check for zero divisor
-            codeBuffer << zeroCheckVar << " = icmp eq i32 " << node.right->var << ", 0" << std::endl;
-            codeBuffer << "br i1 " << zeroCheckVar << ", label " << divByZeroLabel << ", label " << continueLabel << std::endl;
+        // Generate the runtime check for zero divisor
+        codeBuffer << zeroCheckVar << " = icmp eq " << convertTypeToLLVM(node.right->type) << " " << node.right->var << ", 0" << std::endl;
+        codeBuffer << "br i1 " << zeroCheckVar << ", label " << divByZeroLabel << ", label " << continueLabel << std::endl;
 
-            // Label to handle division by zero at runtime
-            codeBuffer.emitLabel(divByZeroLabel);
-            // Emit the error message string
-            std::string errorMessage("Error division by zero");
-            std::string strVar = codeBuffer.emitString(errorMessage);
-            // Get the string in a var and print it
-            int strRealLength = errorMessage.length() + 1; // Add 1 for the \0 at the end
-            std::string tempStringVar = codeBuffer.freshVar();
-            codeBuffer << tempStringVar << " = getelementptr inbounds ["
-                       << strRealLength << " x i8], ["
-                       << strRealLength << " x i8]* "
-                       << strVar << ", i32 0, i32 0"
-                       << std::endl;
-            codeBuffer << "call void @print(i8* " << tempStringVar << ")" << std::endl;
-            // Call the exit function to terminate the program on a division by zero error
-            codeBuffer << "call void @exit(i32 1)" << std::endl;
-            codeBuffer << "br label " << continueLabel << std::endl; // Ensure continuation from trap
+        // Label to handle division by zero at runtime
+        codeBuffer.emitLabel(divByZeroLabel);
+        handleDivisionByZero();
+        codeBuffer << "br label " << continueLabel << std::endl; // Ensure continuation from trap
 
-            // Label to continue execution if no division by zero
-            codeBuffer.emitLabel(continueLabel);
-
-            // Since division by zero handling at runtime doesn't produce a numeric result, set this to false
-            node.isNumericValueDefined = false;
-        }
+        // Label to continue execution if no division by zero
+        codeBuffer.emitLabel(continueLabel);
     }
 
     std::string leftVar = node.left->var;
@@ -670,12 +620,6 @@ void CodeGenVisitor::visit(ast::VarDecl &node)
     if (node.init_exp)
     {
         node.init_exp->accept(*this);
-        // Handle values to detect devision by zero
-        if (node.init_exp->isNumericValueDefined)
-        {
-            node.id->numericValue = node.init_exp->numericValue;
-            node.id->isNumericValueDefined = true;
-        }
 
         // Extend to 32 bit if necessary
         std::string type = convertTypeToLLVM(node.init_exp->type);
@@ -706,15 +650,6 @@ void CodeGenVisitor::visit(ast::Assign &node)
 
     if (!node.id->isParam)
     {
-        // Handle values to detect devision by zero
-        if (node.exp->isNumericValueDefined)
-        {
-            node.id->numericValue = node.exp->numericValue;
-            node.id->isNumericValueDefined = true;
-            node.id->declarationNode->id->numericValue = node.exp->numericValue;
-            node.id->declarationNode->id->isNumericValueDefined = true;
-        }
-
         // Extend to 32 bit if necessary
         std::string var32bit = node.exp->var;
         if (expType == "i8" || expType == "i1")
@@ -728,7 +663,7 @@ void CodeGenVisitor::visit(ast::Assign &node)
     }
     else
     {
-        // TODO if needed (in the pdf it says we can assume no assignment into params)
+        // Shouldn't happen as in the pdf it says we can assume no assignment into params
     }
 }
 

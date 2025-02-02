@@ -59,13 +59,18 @@ br i1 %t15, label %label_9, label %label_8
 label_8:
 %t18 = add i32 0, 8
 %t19 = add i32 0, 0
-%t20 = getelementptr inbounds [23 x i8], [23 x i8]* @.str4, i32 0, i32 0
-call void @print(i8* %t20)
-call void @exit(i32 0)
+%t20 = icmp eq i32 %t19, 0
+br i1 %t20, label %label_12, label %label_13
+label_12:
+%t21 = getelementptr inbounds [23 x i8], [23 x i8]* @.str4, i32 0, i32 0
+call void @print(i8* %t21)
+call void @exit(i32 1)
+br label %label_13
+label_13:
 %t17 = udiv i32 %t18, %t19
-%t21 = add i32 0, 10
-%t22 = icmp slt i32 %t17, %t21
-br i1 %t22, label %label_9, label %label_10
+%t22 = add i32 0, 10
+%t23 = icmp slt i32 %t17, %t22
+br i1 %t23, label %label_9, label %label_10
 label_9:
 br label %label_11
 label_10:
@@ -74,61 +79,66 @@ label_11:
 %t12 = phi i1 [ 1, %label_9 ], [ 0, %label_10]
 br i1 %t12, label %label_6, label %label_7
 label_6:
-%t23 = getelementptr inbounds [20 x i8], [20 x i8]* @.str5, i32 0, i32 0
-call void @print(i8* %t23)
+%t24 = getelementptr inbounds [20 x i8], [20 x i8]* @.str5, i32 0, i32 0
+call void @print(i8* %t24)
 br label %label_7
 label_7:
-%t25 = add i32 0, 5
-%t26 = add i8 0, 100
-%t28 = zext i8 %t26 to i32
-%t27 = icmp sgt i32 %t25, %t28
-br i1 %t27, label %label_14, label %label_16
-label_14:
-%t30 = add i8 0, 6
-%t31 = add i8 0, 0
-%t32 = getelementptr inbounds [23 x i8], [23 x i8]* @.str6, i32 0, i32 0
-call void @print(i8* %t32)
-call void @exit(i32 0)
-%t29 = udiv i8 %t30, %t31
-%t33 = add i32 0, 1
-%t35 = zext i8 %t29 to i32
-%t34 = icmp ne i32 %t35, %t33
-br i1 %t34, label %label_15, label %label_16
-label_15:
-br label %label_17
+%t26 = add i32 0, 5
+%t27 = add i8 0, 100
+%t29 = zext i8 %t27 to i32
+%t28 = icmp sgt i32 %t26, %t29
+br i1 %t28, label %label_16, label %label_18
 label_16:
-br label %label_17
-label_17:
-%t24 = phi i1 [ 1, %label_15 ], [ 0, %label_16]
-br i1 %t24, label %label_12, label %label_13
-label_12:
-%t36 = getelementptr inbounds [32 x i8], [32 x i8]* @.str7, i32 0, i32 0
-call void @print(i8* %t36)
-br label %label_13
-label_13:
-%t38 = add i32 0, 1
-%t39 = add i8 0, 1
-%t41 = zext i8 %t39 to i32
-%t40 = icmp ne i32 %t38, %t41
-%t42 = xor i1 1, %t40
-br i1 %t42, label %label_20, label %label_22
+%t31 = add i8 0, 6
+%t32 = add i8 0, 0
+%t33 = icmp eq i8 %t32, 0
+br i1 %t33, label %label_20, label %label_21
 label_20:
-%t43 = add i32 0, 8
-%t44 = add i8 0, 2
-%t46 = zext i8 %t44 to i32
-%t45 = icmp sge i32 %t43, %t46
-br i1 %t45, label %label_21, label %label_22
+%t34 = getelementptr inbounds [23 x i8], [23 x i8]* @.str6, i32 0, i32 0
+call void @print(i8* %t34)
+call void @exit(i32 1)
+br label %label_21
 label_21:
-br label %label_23
-label_22:
-br label %label_23
-label_23:
-%t37 = phi i1 [ 1, %label_21 ], [ 0, %label_22]
-br i1 %t37, label %label_18, label %label_19
+%t30 = udiv i8 %t31, %t32
+%t35 = add i32 0, 1
+%t37 = zext i8 %t30 to i32
+%t36 = icmp ne i32 %t37, %t35
+br i1 %t36, label %label_17, label %label_18
+label_17:
+br label %label_19
 label_18:
-%t47 = getelementptr inbounds [5 x i8], [5 x i8]* @.str8, i32 0, i32 0
-call void @print(i8* %t47)
 br label %label_19
 label_19:
+%t25 = phi i1 [ 1, %label_17 ], [ 0, %label_18]
+br i1 %t25, label %label_14, label %label_15
+label_14:
+%t38 = getelementptr inbounds [32 x i8], [32 x i8]* @.str7, i32 0, i32 0
+call void @print(i8* %t38)
+br label %label_15
+label_15:
+%t40 = add i32 0, 1
+%t41 = add i8 0, 1
+%t43 = zext i8 %t41 to i32
+%t42 = icmp ne i32 %t40, %t43
+%t44 = xor i1 1, %t42
+br i1 %t44, label %label_24, label %label_26
+label_24:
+%t45 = add i32 0, 8
+%t46 = add i8 0, 2
+%t48 = zext i8 %t46 to i32
+%t47 = icmp sge i32 %t45, %t48
+br i1 %t47, label %label_25, label %label_26
+label_25:
+br label %label_27
+label_26:
+br label %label_27
+label_27:
+%t39 = phi i1 [ 1, %label_25 ], [ 0, %label_26]
+br i1 %t39, label %label_22, label %label_23
+label_22:
+%t49 = getelementptr inbounds [5 x i8], [5 x i8]* @.str8, i32 0, i32 0
+call void @print(i8* %t49)
+br label %label_23
+label_23:
 ret void
 }

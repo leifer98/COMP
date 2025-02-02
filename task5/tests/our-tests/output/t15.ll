@@ -33,12 +33,17 @@ br i1 %t4, label %label_0, label %label_1
 label_0:
 %t6 = add i32 0, 20
 %t7 = add i32 0, 0
-%t8 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
-call void @print(i8* %t8)
-call void @exit(i32 0)
-%t5 = sdiv i32 %t6, %t7
-%t9 = alloca i32 
-store i32 %t5, i32* %t9
+%t8 = icmp eq i32 %t7, 0
+br i1 %t8, label %label_2, label %label_3
+label_2:
+%t9 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t9)
+call void @exit(i32 1)
+br label %label_3
+label_3:
+%t5 = udiv i32 %t6, %t7
+%t10 = alloca i32 
+store i32 %t5, i32* %t10
 br label %label_1
 label_1:
 ret void

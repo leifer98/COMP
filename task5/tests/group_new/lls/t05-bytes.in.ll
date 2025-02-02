@@ -1,4 +1,4 @@
-
+@.str0 = constant [23 x i8] c"Error division by zero\00"@.str1 = constant [23 x i8] c"Error division by zero\00"
 declare i32 @scanf(i8*, ...)
 declare i32 @printf(i8*, ...)
 declare void @exit(i32)
@@ -58,13 +58,29 @@ call void @printi(i32 %t21)
 call void @printi(i32 %t25)
 %t27 = add i32 0, 1000
 %t28 = add i8 0, 10
-%t29 = zext i8 %t28 to i32
-%t26 = udiv i32 %t27, %t29
+%t29 = icmp eq i8 %t28, 0
+br i1 %t29, label %label_0, label %label_1
+label_0:
+%t30 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t30)
+call void @exit(i32 1)
+br label %label_1
+label_1:
+%t31 = zext i8 %t28 to i32
+%t26 = udiv i32 %t27, %t31
 call void @printi(i32 %t26)
-%t31 = add i8 0, 200
-%t32 = add i8 0, 5
-%t30 = udiv i8 %t31, %t32
-%t33 = zext i8 %t30 to i32
-call void @printi(i32 %t33)
+%t33 = add i8 0, 200
+%t34 = add i8 0, 5
+%t35 = icmp eq i8 %t34, 0
+br i1 %t35, label %label_2, label %label_3
+label_2:
+%t36 = getelementptr inbounds [23 x i8], [23 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t36)
+call void @exit(i32 1)
+br label %label_3
+label_3:
+%t32 = udiv i8 %t33, %t34
+%t37 = zext i8 %t32 to i32
+call void @printi(i32 %t37)
 ret void
 }

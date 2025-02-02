@@ -61,8 +61,6 @@ namespace ast {
     public:
         BuiltInType type;
         std::string var;
-        bool isNumericValueDefined = false;
-        int numericValue = 0;
         
         Exp() = default;
     };
@@ -142,7 +140,7 @@ namespace ast {
         int offset;
         // whether or not this is a formal var
         bool isParam;
-        // Pointers to declaration nodes
+        // Pointer to declaration node
         VarDecl* declarationNode = nullptr;
 
 

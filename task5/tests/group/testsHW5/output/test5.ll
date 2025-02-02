@@ -39,20 +39,25 @@ store i32 %t5, i32* %t4
 call void @print(i8* %t8)
 %t10 = load i32, i32* %t1
 %t11 = add i32 0, 0
-%t12 = getelementptr inbounds [23 x i8], [23 x i8]* @.str2, i32 0, i32 0
-call void @print(i8* %t12)
-call void @exit(i32 0)
-%t9 = sdiv i32 %t10, %t11
-%t13 = add i32 0, 3
-%t14 = icmp eq i32 %t9, %t13
-br i1 %t14, label %label_0, label %label_1
+%t12 = icmp eq i32 %t11, 0
+br i1 %t12, label %label_2, label %label_3
+label_2:
+%t13 = getelementptr inbounds [23 x i8], [23 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t13)
+call void @exit(i32 1)
+br label %label_3
+label_3:
+%t9 = udiv i32 %t10, %t11
+%t14 = add i32 0, 3
+%t15 = icmp eq i32 %t9, %t14
+br i1 %t15, label %label_0, label %label_1
 label_0:
-%t15 = getelementptr inbounds [24 x i8], [24 x i8]* @.str3, i32 0, i32 0
-call void @print(i8* %t15)
+%t16 = getelementptr inbounds [24 x i8], [24 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t16)
 ret void
 br label %label_1
 label_1:
-%t16 = getelementptr inbounds [18 x i8], [18 x i8]* @.str4, i32 0, i32 0
-call void @print(i8* %t16)
+%t17 = getelementptr inbounds [18 x i8], [18 x i8]* @.str4, i32 0, i32 0
+call void @print(i8* %t17)
 ret void
 }

@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -46,10 +46,10 @@
    USER NAME SPACE" below.  */
 
 /* Identify Bison output, and Bison version.  */
-#define YYBISON 30802
+#define YYBISON 30706
 
 /* Bison version string.  */
-#define YYBISON_VERSION "3.8.2"
+#define YYBISON_VERSION "3.7.6"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -322,18 +322,12 @@ typedef int yy_state_fast_t;
 # define YY_USE(E) /* empty */
 #endif
 
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-#if defined __GNUC__ && ! defined __ICC && 406 <= __GNUC__ * 100 + __GNUC_MINOR__
-# if __GNUC__ * 100 + __GNUC_MINOR__ < 407
-#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
-    _Pragma ("GCC diagnostic push")                                     \
-    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")
-# else
-#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
     _Pragma ("GCC diagnostic push")                                     \
     _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-# endif
 # define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
@@ -527,7 +521,7 @@ static const yytype_int8 yytranslate[] =
 };
 
 #if YYDEBUG
-/* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
        0,    44,    44,    48,    49,    56,    67,    68,    72,    73,
@@ -568,6 +562,18 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
+#ifdef YYPRINT
+/* YYTOKNUM[NUM] -- (External) token number corresponding to the
+   (internal) symbol number NUM (which must be that of a token).  */
+static const yytype_int16 yytoknum[] =
+{
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286,   287,   288,   289,   290,   291
+};
+#endif
+
 #define YYPACT_NINF (-30)
 
 #define yypact_value_is_default(Yyn) \
@@ -578,8 +584,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 #define yytable_value_is_error(Yyn) \
   0
 
-/* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-   STATE-NUM.  */
+  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+     STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
        9,   -30,   -30,   -30,   -30,    10,   -30,     9,     8,   -30,
@@ -595,9 +601,9 @@ static const yytype_int16 yypact[] =
       22,   -30
 };
 
-/* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-   Performed when YYTABLE does not specify something else to do.  Zero
-   means the default is an error.  */
+  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+     Performed when YYTABLE does not specify something else to do.  Zero
+     means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
        3,     7,    31,    32,    33,     0,     2,     3,     0,     6,
@@ -613,23 +619,23 @@ static const yytype_int8 yydefact[] =
        0,    23
 };
 
-/* YYPGOTO[NTERM-NUM].  */
+  /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
      -30,   -30,    61,   -30,   -30,   -30,    62,   -30,    67,   -29,
      -21,     6,     4,    21
 };
 
-/* YYDEFGOTO[NTERM-NUM].  */
+  /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
        0,     5,     6,     7,     8,    14,    15,    16,    30,    31,
       44,    73,    33,    74
 };
 
-/* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-   positive, shift that token.  If negative, reduce the rule whose
-   number is the opposite.  If YYTABLE_NINF, syntax error.  */
+  /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+     positive, shift that token.  If negative, reduce the rule whose
+     number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
       32,    53,    76,    49,     9,    63,    64,    50,    32,    32,
@@ -696,8 +702,8 @@ static const yytype_int8 yycheck[] =
       -1,    -1,    30
 };
 
-/* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
-   state STATE-NUM.  */
+  /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+     symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
        0,     3,     4,     5,     6,    38,    39,    40,    41,    49,
@@ -713,7 +719,7 @@ static const yytype_int8 yystos[] =
       36,    46
 };
 
-/* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
+  /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
        0,    37,    38,    39,    39,    40,    41,    41,    42,    42,
@@ -724,7 +730,7 @@ static const yytype_int8 yyr1[] =
       50,    50,    50
 };
 
-/* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
+  /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     0,     2,     8,     1,     1,     0,     1,
@@ -744,7 +750,6 @@ enum { YYENOMEM = -2 };
 #define YYACCEPT        goto yyacceptlab
 #define YYABORT         goto yyabortlab
 #define YYERROR         goto yyerrorlab
-#define YYNOMEM         goto yyexhaustedlab
 
 
 #define YYRECOVERING()  (!!yyerrstatus)
@@ -785,7 +790,10 @@ do {                                            \
     YYFPRINTF Args;                             \
 } while (0)
 
-
+/* This macro is provided for backward compatibility. */
+# ifndef YY_LOCATION_PRINT
+#  define YY_LOCATION_PRINT(File, Loc) ((void) 0)
+# endif
 
 
 # define YY_SYMBOL_PRINT(Title, Kind, Value, Location)                    \
@@ -812,6 +820,10 @@ yy_symbol_value_print (FILE *yyo,
   YY_USE (yyoutput);
   if (!yyvaluep)
     return;
+# ifdef YYPRINT
+  if (yykind < YYNTOKENS)
+    YYPRINT (yyo, yytoknum[yykind], *yyvaluep);
+# endif
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
@@ -1389,7 +1401,6 @@ yypush_parse (yypstate *yyps)
   YYDPRINTF ((stderr, "Starting parse\n"));
 
   yychar = YYEMPTY; /* Cause a token to be read.  */
-
   goto yysetstate;
 
 
@@ -1415,7 +1426,7 @@ yysetstate:
 
   if (yyss + yystacksize - 1 <= yyssp)
 #if !defined yyoverflow && !defined YYSTACK_RELOCATE
-    YYNOMEM;
+    goto yyexhaustedlab;
 #else
     {
       /* Get the current used size of the three stacks, in elements.  */
@@ -1443,7 +1454,7 @@ yysetstate:
 # else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
-        YYNOMEM;
+        goto yyexhaustedlab;
       yystacksize *= 2;
       if (YYMAXDEPTH < yystacksize)
         yystacksize = YYMAXDEPTH;
@@ -1454,7 +1465,7 @@ yysetstate:
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
-          YYNOMEM;
+          goto yyexhaustedlab;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
 #  undef YYSTACK_RELOCATE
@@ -1475,7 +1486,6 @@ yysetstate:
         YYABORT;
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
-
 
   if (yystate == YYFINAL)
     YYACCEPT;
@@ -1603,13 +1613,13 @@ yyreduce:
   case 2: /* Program: Funcs  */
 #line 44 "parser.y"
                { program = yyvsp[0]; }
-#line 1607 "parser.tab.c"
+#line 1617 "parser.tab.c"
     break;
 
   case 3: /* Funcs: %empty  */
 #line 48 "parser.y"
                           { yyval = std::make_shared<ast::Funcs>(); }
-#line 1613 "parser.tab.c"
+#line 1623 "parser.tab.c"
     break;
 
   case 4: /* Funcs: FuncDecl Funcs  */
@@ -1619,7 +1629,7 @@ yyreduce:
                 funcs->push_front(std::dynamic_pointer_cast<ast::FuncDecl>(yyvsp[-1]));
                 yyval = funcs; 
             }
-#line 1623 "parser.tab.c"
+#line 1633 "parser.tab.c"
     break;
 
   case 5: /* FuncDecl: RetType ID LPAREN Formals RPAREN LBRACE Statements RBRACE  */
@@ -1632,31 +1642,31 @@ yyreduce:
                 std::dynamic_pointer_cast<ast::Statements>(yyvsp[-1])
                 );
             }
-#line 1636 "parser.tab.c"
+#line 1646 "parser.tab.c"
     break;
 
   case 6: /* RetType: Type  */
 #line 67 "parser.y"
                  { yyval = std::dynamic_pointer_cast<ast::Type>(yyvsp[0]); }
-#line 1642 "parser.tab.c"
+#line 1652 "parser.tab.c"
     break;
 
   case 7: /* RetType: VOID  */
 #line 68 "parser.y"
                    { yyval = std::dynamic_pointer_cast<ast::Type>(yyvsp[0]); }
-#line 1648 "parser.tab.c"
+#line 1658 "parser.tab.c"
     break;
 
   case 8: /* Formals: %empty  */
 #line 72 "parser.y"
                           { yyval = std::make_shared<ast::Formals>(); }
-#line 1654 "parser.tab.c"
+#line 1664 "parser.tab.c"
     break;
 
   case 9: /* Formals: FormalsList  */
 #line 73 "parser.y"
                           { yyval = std::dynamic_pointer_cast<ast::Formals>(yyvsp[0]); }
-#line 1660 "parser.tab.c"
+#line 1670 "parser.tab.c"
     break;
 
   case 10: /* FormalsList: FormalDecl  */
@@ -1666,7 +1676,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Formal>(yyvsp[0])
                 );
              }
-#line 1670 "parser.tab.c"
+#line 1680 "parser.tab.c"
     break;
 
   case 11: /* FormalsList: FormalDecl COMMA FormalsList  */
@@ -1676,7 +1686,7 @@ yyreduce:
                 formals->push_front(std::dynamic_pointer_cast<ast::Formal>(yyvsp[-2]));
                 yyval = formals; 
             }
-#line 1680 "parser.tab.c"
+#line 1690 "parser.tab.c"
     break;
 
   case 12: /* FormalDecl: Type ID  */
@@ -1687,7 +1697,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Type>(yyvsp[-1])
                 ); 
             }
-#line 1691 "parser.tab.c"
+#line 1701 "parser.tab.c"
     break;
 
   case 13: /* Statements: Statement  */
@@ -1695,7 +1705,7 @@ yyreduce:
                       { 
                 yyval = std::make_shared<ast::Statements>(std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]));
             }
-#line 1699 "parser.tab.c"
+#line 1709 "parser.tab.c"
     break;
 
   case 14: /* Statements: Statements Statement  */
@@ -1705,7 +1715,7 @@ yyreduce:
                 stmts->push_back(std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]));
                 yyval = stmts; 
             }
-#line 1709 "parser.tab.c"
+#line 1719 "parser.tab.c"
     break;
 
   case 15: /* Statement: LBRACE Statements RBRACE  */
@@ -1713,7 +1723,7 @@ yyreduce:
                                      {
                 yyval = std::dynamic_pointer_cast<ast::Statements>(yyvsp[-1]);
             }
-#line 1717 "parser.tab.c"
+#line 1727 "parser.tab.c"
     break;
 
   case 16: /* Statement: Type ID SC  */
@@ -1724,7 +1734,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Type>(yyvsp[-2]) // Variable type
                 );
             }
-#line 1728 "parser.tab.c"
+#line 1738 "parser.tab.c"
     break;
 
   case 17: /* Statement: Type ID ASSIGN Exp SC  */
@@ -1736,7 +1746,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[-1]) // Initial value
                 );
             }
-#line 1740 "parser.tab.c"
+#line 1750 "parser.tab.c"
     break;
 
   case 18: /* Statement: ID ASSIGN Exp SC  */
@@ -1747,7 +1757,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[-1]) // Initial value
                 );
             }
-#line 1751 "parser.tab.c"
+#line 1761 "parser.tab.c"
     break;
 
   case 19: /* Statement: Call SC  */
@@ -1755,7 +1765,7 @@ yyreduce:
                       {
                 yyval = std::dynamic_pointer_cast<ast::Call>(yyvsp[-1]);
             }
-#line 1759 "parser.tab.c"
+#line 1769 "parser.tab.c"
     break;
 
   case 20: /* Statement: RETURN SC  */
@@ -1763,7 +1773,7 @@ yyreduce:
                         {
                 yyval = std::make_shared<ast::Return>();
             }
-#line 1767 "parser.tab.c"
+#line 1777 "parser.tab.c"
     break;
 
   case 21: /* Statement: RETURN Exp SC  */
@@ -1773,7 +1783,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[-1])
                 );
             }
-#line 1777 "parser.tab.c"
+#line 1787 "parser.tab.c"
     break;
 
   case 22: /* Statement: IF LPAREN Exp RPAREN Statement  */
@@ -1784,7 +1794,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]) // Body
                 );
             }
-#line 1788 "parser.tab.c"
+#line 1798 "parser.tab.c"
     break;
 
   case 23: /* Statement: IF LPAREN Exp RPAREN Statement ELSE Statement  */
@@ -1796,7 +1806,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]) // Else body
                 );
             }
-#line 1800 "parser.tab.c"
+#line 1810 "parser.tab.c"
     break;
 
   case 24: /* Statement: WHILE LPAREN Exp RPAREN Statement  */
@@ -1807,7 +1817,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Statement>(yyvsp[0]) // Body
                 );
             }
-#line 1811 "parser.tab.c"
+#line 1821 "parser.tab.c"
     break;
 
   case 25: /* Statement: BREAK SC  */
@@ -1815,7 +1825,7 @@ yyreduce:
                        {
                 yyval = std::dynamic_pointer_cast<ast::Break>(yyvsp[-1]);
             }
-#line 1819 "parser.tab.c"
+#line 1829 "parser.tab.c"
     break;
 
   case 26: /* Statement: CONTINUE SC  */
@@ -1823,7 +1833,7 @@ yyreduce:
                           {
                 yyval = std::dynamic_pointer_cast<ast::Continue>(yyvsp[-1]);
             }
-#line 1827 "parser.tab.c"
+#line 1837 "parser.tab.c"
     break;
 
   case 27: /* Call: ID LPAREN ExpList RPAREN  */
@@ -1834,7 +1844,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::ExpList>(yyvsp[-1]) // Arguments
                 );
             }
-#line 1838 "parser.tab.c"
+#line 1848 "parser.tab.c"
     break;
 
   case 28: /* Call: ID LPAREN RPAREN  */
@@ -1845,7 +1855,7 @@ yyreduce:
                     std::make_shared<ast::ExpList>() // Arguments
                 );
             }
-#line 1849 "parser.tab.c"
+#line 1859 "parser.tab.c"
     break;
 
   case 29: /* ExpList: Exp  */
@@ -1855,7 +1865,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[0])
                 );
             }
-#line 1859 "parser.tab.c"
+#line 1869 "parser.tab.c"
     break;
 
   case 30: /* ExpList: Exp COMMA ExpList  */
@@ -1865,31 +1875,31 @@ yyreduce:
                 expList->push_front(std::dynamic_pointer_cast<ast::Exp>(yyvsp[-2]));
                 yyval = expList; 
             }
-#line 1869 "parser.tab.c"
+#line 1879 "parser.tab.c"
     break;
 
   case 31: /* Type: INT  */
 #line 211 "parser.y"
           { yyval = std::dynamic_pointer_cast<ast::Type>(yyvsp[0]); }
-#line 1875 "parser.tab.c"
+#line 1885 "parser.tab.c"
     break;
 
   case 32: /* Type: BYTE  */
 #line 212 "parser.y"
            { yyval = std::dynamic_pointer_cast<ast::Type>(yyvsp[0]); }
-#line 1881 "parser.tab.c"
+#line 1891 "parser.tab.c"
     break;
 
   case 33: /* Type: BOOL  */
 #line 213 "parser.y"
            { yyval = std::dynamic_pointer_cast<ast::Type>(yyvsp[0]); }
-#line 1887 "parser.tab.c"
+#line 1897 "parser.tab.c"
     break;
 
   case 34: /* Exp: LPAREN Exp RPAREN  */
 #line 236 "parser.y"
                               { yyval = yyvsp[-1]; }
-#line 1893 "parser.tab.c"
+#line 1903 "parser.tab.c"
     break;
 
   case 35: /* Exp: Exp PLUS Exp  */
@@ -1901,7 +1911,7 @@ yyreduce:
                     ast::BinOpType::ADD
                 );
             }
-#line 1905 "parser.tab.c"
+#line 1915 "parser.tab.c"
     break;
 
   case 36: /* Exp: Exp MINUS Exp  */
@@ -1913,7 +1923,7 @@ yyreduce:
                     ast::BinOpType::SUB
                 );
             }
-#line 1917 "parser.tab.c"
+#line 1927 "parser.tab.c"
     break;
 
   case 37: /* Exp: Exp MULTIPLY Exp  */
@@ -1925,7 +1935,7 @@ yyreduce:
                     ast::BinOpType::MUL
                 );
             }
-#line 1929 "parser.tab.c"
+#line 1939 "parser.tab.c"
     break;
 
   case 38: /* Exp: Exp DIVIDE Exp  */
@@ -1937,49 +1947,49 @@ yyreduce:
                     ast::BinOpType::DIV
                 );
             }
-#line 1941 "parser.tab.c"
+#line 1951 "parser.tab.c"
     break;
 
   case 39: /* Exp: ID  */
 #line 265 "parser.y"
                  { yyval = std::dynamic_pointer_cast<ast::ID>(yyvsp[0]); }
-#line 1947 "parser.tab.c"
+#line 1957 "parser.tab.c"
     break;
 
   case 40: /* Exp: Call  */
 #line 266 "parser.y"
                    { yyval = std::dynamic_pointer_cast<ast::Call>(yyvsp[0]); }
-#line 1953 "parser.tab.c"
+#line 1963 "parser.tab.c"
     break;
 
   case 41: /* Exp: NUM  */
 #line 267 "parser.y"
                   { yyval = std::dynamic_pointer_cast<ast::Num>(yyvsp[0]); }
-#line 1959 "parser.tab.c"
+#line 1969 "parser.tab.c"
     break;
 
   case 42: /* Exp: NUM_B  */
 #line 268 "parser.y"
                     { yyval = std::dynamic_pointer_cast<ast::NumB>(yyvsp[0]); }
-#line 1965 "parser.tab.c"
+#line 1975 "parser.tab.c"
     break;
 
   case 43: /* Exp: STRING  */
 #line 269 "parser.y"
                      { yyval = std::dynamic_pointer_cast<ast::String>(yyvsp[0]); }
-#line 1971 "parser.tab.c"
+#line 1981 "parser.tab.c"
     break;
 
   case 44: /* Exp: TRUE  */
 #line 270 "parser.y"
                    { yyval = std::dynamic_pointer_cast<ast::Bool>(yyvsp[0]); }
-#line 1977 "parser.tab.c"
+#line 1987 "parser.tab.c"
     break;
 
   case 45: /* Exp: FALSE  */
 #line 271 "parser.y"
                     { yyval = std::dynamic_pointer_cast<ast::Bool>(yyvsp[0]); }
-#line 1983 "parser.tab.c"
+#line 1993 "parser.tab.c"
     break;
 
   case 46: /* Exp: NOT Exp  */
@@ -1989,7 +1999,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[0])
                 );
             }
-#line 1993 "parser.tab.c"
+#line 2003 "parser.tab.c"
     break;
 
   case 47: /* Exp: Exp AND Exp  */
@@ -2000,7 +2010,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[0])
                 );
             }
-#line 2004 "parser.tab.c"
+#line 2014 "parser.tab.c"
     break;
 
   case 48: /* Exp: Exp OR Exp  */
@@ -2011,7 +2021,7 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Exp>(yyvsp[0])
                 );
             }
-#line 2015 "parser.tab.c"
+#line 2025 "parser.tab.c"
     break;
 
   case 49: /* Exp: Exp RELOP Exp  */
@@ -2024,7 +2034,7 @@ yyreduce:
                     relop->op // Extract the operation type
                 );
             }
-#line 2028 "parser.tab.c"
+#line 2038 "parser.tab.c"
     break;
 
   case 50: /* Exp: Exp EQ Exp  */
@@ -2036,7 +2046,7 @@ yyreduce:
                     ast::RelOpType::EQ
                 );
             }
-#line 2040 "parser.tab.c"
+#line 2050 "parser.tab.c"
     break;
 
   case 51: /* Exp: Exp NE Exp  */
@@ -2048,7 +2058,7 @@ yyreduce:
                     ast::RelOpType::NE
                 );
             }
-#line 2052 "parser.tab.c"
+#line 2062 "parser.tab.c"
     break;
 
   case 52: /* Exp: LPAREN Type RPAREN Exp  */
@@ -2059,11 +2069,11 @@ yyreduce:
                     std::dynamic_pointer_cast<ast::Type>(yyvsp[-2])
                 );
             }
-#line 2063 "parser.tab.c"
+#line 2073 "parser.tab.c"
     break;
 
 
-#line 2067 "parser.tab.c"
+#line 2077 "parser.tab.c"
 
       default: break;
     }
@@ -2139,7 +2149,7 @@ yyerrlab:
           }
         yyerror (yymsgp);
         if (yysyntax_error_status == YYENOMEM)
-          YYNOMEM;
+          goto yyexhaustedlab;
       }
     }
 
@@ -2175,7 +2185,6 @@ yyerrorlab:
      label yyerrorlab therefore never appears in user code.  */
   if (0)
     YYERROR;
-  ++yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -2236,7 +2245,7 @@ yyerrlab1:
 `-------------------------------------*/
 yyacceptlab:
   yyresult = 0;
-  goto yyreturnlab;
+  goto yyreturn;
 
 
 /*-----------------------------------.
@@ -2244,22 +2253,24 @@ yyacceptlab:
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
-  goto yyreturnlab;
+  goto yyreturn;
 
 
-/*-----------------------------------------------------------.
-| yyexhaustedlab -- YYNOMEM (memory exhaustion) comes here.  |
-`-----------------------------------------------------------*/
+#if 1
+/*-------------------------------------------------.
+| yyexhaustedlab -- memory exhaustion comes here.  |
+`-------------------------------------------------*/
 yyexhaustedlab:
   yyerror (YY_("memory exhausted"));
   yyresult = 2;
-  goto yyreturnlab;
+  goto yyreturn;
+#endif
 
 
-/*----------------------------------------------------------.
-| yyreturnlab -- parsing is finished, clean up and return.  |
-`----------------------------------------------------------*/
-yyreturnlab:
+/*-------------------------------------------------------.
+| yyreturn -- parsing is finished, clean up and return.  |
+`-------------------------------------------------------*/
+yyreturn:
   if (yychar != YYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at

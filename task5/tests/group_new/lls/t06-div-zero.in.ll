@@ -25,9 +25,14 @@ ret void
 define void @main() {
 %t1 = add i32 0, 9
 %t2 = add i32 0, 0
-%t3 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
-call void @print(i8* %t3)
-call void @exit(i32 0)
+%t3 = icmp eq i32 %t2, 0
+br i1 %t3, label %label_0, label %label_1
+label_0:
+%t4 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t4)
+call void @exit(i32 1)
+br label %label_1
+label_1:
 %t0 = udiv i32 %t1, %t2
 call void @printi(i32 %t0)
 ret void

@@ -33,7 +33,7 @@ call void @print(i8* %t4)
 call void @exit(i32 1)
 br label %label_1
 label_1:
-%t0 = sdiv i32 %t1, %t2
+%t0 = udiv i32 %t1, %t2
 %t5 = alloca i32 
 store i32 %t0, i32* %t5
 ret void
