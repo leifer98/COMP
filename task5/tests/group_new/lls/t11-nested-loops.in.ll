@@ -68,7 +68,7 @@ call void @print(i8* %t30)
 call void @exit(i32 1)
 br label %label_9
 label_9:
-%t22 = udiv i32 %t23, %t28
+%t22 = sdiv i32 %t23, %t28
 %t31 = add i32 0, 10
 %t21 = mul i32 %t22, %t31
 %t15 = sub i32 %t16, %t21
@@ -107,7 +107,7 @@ call void @print(i8* %t50)
 call void @exit(i32 1)
 br label %label_16
 label_16:
-%t46 = udiv i32 %t47, %t48
+%t46 = sdiv i32 %t47, %t48
 %t51 = add i32 0, 0
 %t52 = icmp eq i32 %t46, %t51
 br i1 %t52, label %label_13, label %label_14
@@ -130,7 +130,7 @@ call void @print(i8* %t62)
 call void @exit(i32 1)
 br label %label_20
 label_20:
-%t58 = udiv i32 %t59, %t60
+%t58 = sdiv i32 %t59, %t60
 %t63 = add i32 0, 2
 %t57 = mul i32 %t58, %t63
 %t55 = sub i32 %t56, %t57

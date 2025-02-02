@@ -1,0 +1,19 @@
+void main() {
+    int x = 20;
+    x = x - 40;
+
+    int y = 5;
+    y = y - 10;
+
+    printi(x/5b);  // -20/5
+    printi(x/y);  // -20/(-5)
+
+    x = x + 19;
+    printi(x/10b);  // -1/10
+    printi(x/1b);  // -1/1
+
+    printi(x/y);  // -1/(-5)
+    printi(x*y);  // -1*(-5)
+
+    printi(245b/5b);
+}

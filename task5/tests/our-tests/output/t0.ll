@@ -46,6 +46,6 @@ call void @print(i8* %t11)
 call void @exit(i32 1)
 br label %label_1
 label_1:
-%t8 = udiv i32 %2, %t9
+%t8 = sdiv i32 %2, %t9
 ret i32 %t8
 }

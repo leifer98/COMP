@@ -67,7 +67,7 @@ call void @exit(i32 1)
 br label %label_1
 label_1:
 %t31 = zext i8 %t28 to i32
-%t26 = udiv i32 %t27, %t31
+%t26 = sdiv i32 %t27, %t31
 call void @printi(i32 %t26)
 %t33 = add i8 0, 200
 %t34 = add i8 0, 5

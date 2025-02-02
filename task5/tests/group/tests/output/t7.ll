@@ -46,7 +46,7 @@ call void @print(i8* %t16)
 call void @exit(i32 1)
 br label %label_1
 label_1:
-%t10 = udiv i32 %t11, %t14
+%t10 = sdiv i32 %t11, %t14
 %t6 = sub i32 %t7, %t10
 %t17 = add i32 0, 8
 %t5 = add i32 %t6, %t17
@@ -86,7 +86,7 @@ call void @print(i8* %t43)
 call void @exit(i32 1)
 br label %label_3
 label_3:
-%t37 = udiv i32 %t38, %t41
+%t37 = sdiv i32 %t38, %t41
 %t31 = sub i32 %t32, %t37
 store i32 %t31, i32* %t4
 %t44 = getelementptr inbounds [35 x i8], [35 x i8]* @.str4, i32 0, i32 0

@@ -47,7 +47,7 @@ call void @print(i8* %t13)
 call void @exit(i32 1)
 br label %label_3
 label_3:
-%t9 = udiv i32 %t10, %t11
+%t9 = sdiv i32 %t10, %t11
 %t14 = add i32 0, 3
 %t15 = icmp eq i32 %t9, %t14
 br i1 %t15, label %label_0, label %label_1

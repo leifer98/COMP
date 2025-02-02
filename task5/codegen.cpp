@@ -77,7 +77,7 @@ std::string convertRelOpTypeToLLVM(ast::RelOpType type)
     }
 }
 
-std::string convertBinOpTypeToLLVM(ast::BinOpType type)
+std::string convertBinOpTypeToLLVM(ast::BinOpType type, ast::BuiltInType resultType)
 {
     switch (type)
     {
@@ -88,7 +88,11 @@ std::string convertBinOpTypeToLLVM(ast::BinOpType type)
     case ast::BinOpType::MUL:
         return "mul";
     case ast::BinOpType::DIV:
-        return "udiv";
+        if (resultType == ast::BuiltInType::INT) {
+            return "sdiv";
+        } else {
+            return "udiv";
+        }
     default:
         return "UNKNOWN";
     }
@@ -255,7 +259,7 @@ void CodeGenVisitor::visit(ast::BinOp &node)
 
     // Convert type and operation to llvm format for the command
     std::string type = convertTypeToLLVM(node.type);
-    std::string operation = convertBinOpTypeToLLVM(node.op);
+    std::string operation = convertBinOpTypeToLLVM(node.op, node.type);
 
     // Generate the operation command
     codeBuffer << node.var << " = " << operation << " " << type << " " << leftVar << ", " << rightVar << std::endl;
