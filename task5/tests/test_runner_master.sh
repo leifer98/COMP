@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Directories fail
-input_dir="tests/TestMaster/input_fail"
-expected_dir="tests/TestMaster/expected_fail"
-output_dir="tests/TestMaster/output_fail"
+input_dir="TestMaster/input_fail"
+expected_dir="TestMaster/expected_fail"
+output_dir="TestMaster/output_fail"
 # Directories succ
-input_dir_succ="tests/TestMaster/input"
-expected_dir_succ="tests/TestMaster/expected"
-output_dir_succ="tests/TestMaster/output"
+input_dir_succ="TestMaster/input"
+expected_dir_succ="TestMaster/expected"
+output_dir_succ="TestMaster/output"
 # Directory .out
-program="./hw5"
+program="../hw5"
 
 # Create output directories if they don't exist
 mkdir -p "$output_dir"
