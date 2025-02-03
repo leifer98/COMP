@@ -71,6 +71,8 @@ namespace ast {
         bool isInWhile = false;
         std::string whileConditionLabel = "";
         std::string whileNextLabel = "";
+
+        ast::FuncDecl* funcDeclarationNode;
     };
 
     /* Number literal */

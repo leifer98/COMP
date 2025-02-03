@@ -348,6 +348,7 @@ void SemanticVisitor::visit(ast::Statements &node) {
     // Visit all statements:
     for (std::shared_ptr<ast::Statement> statement: node.statements) {
         statement->isInWhile = node.isInWhile;
+        statement->funcDeclarationNode = node.funcDeclarationNode;
         statement->accept(*this);
     }
 
@@ -374,6 +375,14 @@ void SemanticVisitor::visit(ast::Continue &node) {
 void SemanticVisitor::visit(ast::Return &node) {
     if (node.exp) {
         node.exp->accept(*this);
+
+        if (!isValidAssignment(node.funcDeclarationNode->return_type->type, node.exp->type)) {
+            output::errorMismatch(node.line);
+        }
+    } else {
+        if (node.funcDeclarationNode->return_type->type != ast::BuiltInType::VOID) {
+            output::errorMismatch(node.line);
+        }
     }
 }
 
@@ -383,12 +392,14 @@ void SemanticVisitor::visit(ast::If &node) {
 
     symTable.startScope();
     node.then->isInWhile = node.isInWhile;
+    node.then->funcDeclarationNode = node.funcDeclarationNode;
     node.then->accept(*this);
     symTable.endScope();
 
     if (node.otherwise) {
         symTable.startScope();
         node.otherwise->isInWhile = node.isInWhile;
+        node.otherwise->funcDeclarationNode = node.funcDeclarationNode;
         node.otherwise->accept(*this);
         symTable.endScope();
     }
@@ -405,6 +416,7 @@ void SemanticVisitor::visit(ast::While &node) {
 
     symTable.startScope();
     node.body->isInWhile = true;
+    node.body->funcDeclarationNode = node.funcDeclarationNode;
     node.body->accept(*this);
     symTable.endScope();
 
@@ -472,6 +484,7 @@ void SemanticVisitor::visit(ast::FuncDecl &node) {
     node.formals->accept(*this);
 
     node.body->isFuncBody = true;
+    node.body->funcDeclarationNode = &node;
     node.body->accept(*this);
     
     symTable.endScope();

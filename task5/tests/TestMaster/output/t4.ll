@@ -1,0 +1,71 @@
+@.str0 = constant [23 x i8] c"Outer loop iteration: \00"@.str1 = constant [3 x i8] c"\n\00"@.str2 = constant [25 x i8] c"\tInner loop iteration: \00"@.str3 = constant [3 x i8] c"\n\00"
+declare i32 @scanf(i8*, ...)
+declare i32 @printf(i8*, ...)
+declare void @exit(i32)
+@.int_specifier_scan = constant [3 x i8] c"%d\00"
+@.int_specifier = constant [4 x i8] c"%d\0A\00"
+@.str_specifier = constant [4 x i8] c"%s\0A\00"
+define i32 @readi(i32) {
+%ret_val = alloca i32
+%spec_ptr = getelementptr [3 x i8], [3 x i8]* @.int_specifier_scan, i32 0, i32 0
+call i32 (i8*, ...) @scanf(i8* %spec_ptr, i32* %ret_val)
+%val = load i32, i32* %ret_val
+ret i32 %val
+}
+define void @printi(i32) {
+%spec_ptr = getelementptr [4 x i8], [4 x i8]* @.int_specifier, i32 0, i32 0
+call i32 (i8*, ...) @printf(i8* %spec_ptr, i32 %0)
+ret void
+}
+define void @print(i8*) {
+%spec_ptr = getelementptr [4 x i8], [4 x i8]* @.str_specifier, i32 0, i32 0
+call i32 (i8*, ...) @printf(i8* %spec_ptr, i8* %0)
+ret void
+}
+define void @main() {
+%t0 = add i32 0, 0
+%t1 = alloca i32 
+store i32 %t0, i32* %t1
+br label %label_0
+label_0:
+%t2 = load i32, i32* %t1
+%t3 = add i32 0, 10
+%t4 = icmp slt i32 %t2, %t3
+br i1 %t4, label %label_1, label %label_2
+label_1:
+%t5 = getelementptr inbounds [23 x i8], [23 x i8]* @.str0, i32 0, i32 0
+call void @print(i8* %t5)
+%t6 = load i32, i32* %t1
+call void @printi(i32 %t6)
+%t7 = getelementptr inbounds [3 x i8], [3 x i8]* @.str1, i32 0, i32 0
+call void @print(i8* %t7)
+%t8 = add i32 0, 1
+%t9 = alloca i32 
+store i32 %t8, i32* %t9
+br label %label_3
+label_3:
+%t10 = load i32, i32* %t9
+%t11 = add i32 0, 3
+%t12 = icmp sle i32 %t10, %t11
+br i1 %t12, label %label_4, label %label_5
+label_4:
+%t13 = getelementptr inbounds [25 x i8], [25 x i8]* @.str2, i32 0, i32 0
+call void @print(i8* %t13)
+%t14 = load i32, i32* %t9
+call void @printi(i32 %t14)
+%t15 = getelementptr inbounds [3 x i8], [3 x i8]* @.str3, i32 0, i32 0
+call void @print(i8* %t15)
+%t17 = load i32, i32* %t9
+%t18 = add i32 0, 1
+%t16 = add i32 %t17, %t18
+store i32 %t16, i32* %t9
+br label %label_3
+label_5:
+%t20 = load i32, i32* %t1
+%t21 = add i32 0, 1
+%t19 = add i32 %t20, %t21
+store i32 %t19, i32* %t1
+br label %label_0
+label_2:
+ret void
+}
