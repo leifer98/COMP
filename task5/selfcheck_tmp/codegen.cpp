@@ -517,8 +517,19 @@ void CodeGenVisitor::visit(ast::Return &node)
     if (node.exp)
     {
         node.exp->accept(*this);
-        retType = convertTypeToLLVM(node.exp->type);
-        retValue = " " + node.exp->var;
+
+        if (node.funcDeclarationNode->return_type->type == ast::BuiltInType::INT && node.exp->type == ast::BuiltInType::BYTE) {
+            retType = convertTypeToLLVM(ast::BuiltInType::INT);
+
+            // Convert to int:
+            std::string var32bit = codeBuffer.freshVar();
+            codeBuffer << var32bit << " = zext " << convertTypeToLLVM(node.exp->type) 
+                                   << " " << node.exp->var << " to i32" << std::endl;
+            retValue = " " + var32bit;
+        } else {
+            retType = convertTypeToLLVM(node.exp->type);
+            retValue = " " + node.exp->var;
+        }
     }
 
     // Generate code for ret command
